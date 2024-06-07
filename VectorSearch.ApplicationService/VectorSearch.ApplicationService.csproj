@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\VectorSearch.Core\VectorSearch.Core.csproj" />
+    <ProjectReference Include="..\VectorSearch.EntityFramework\VectorSearch.EntityFramework.csproj" />
   </ItemGroup>
 
 </Project>

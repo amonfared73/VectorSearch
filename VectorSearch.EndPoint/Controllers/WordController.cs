@@ -11,11 +11,11 @@ namespace VectorSearch.EndPoint.Controllers
             _wordService = wordService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(string? word)
         {
             try
             {
-                var result = await _wordService.GetAll();
+                var result = await _wordService.GetAll(word);
                 return Ok(result);
             }
             catch (Exception ex)
