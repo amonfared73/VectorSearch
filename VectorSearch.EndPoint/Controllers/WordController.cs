@@ -3,6 +3,8 @@ using VectorSearch.ApplicationService.Services;
 
 namespace VectorSearch.EndPoint.Controllers
 {
+    [Route("api/[controller]/[action]")]
+    [ApiController]
     public class WordController : ControllerBase
     {
         private readonly IWordService _wordService;
