@@ -7,7 +7,7 @@ namespace VectorSearch.EntityFramework.DbContexts
     {
         public VSDbContext CreateDbContext(string[] args)
         {
-            var connectionString = "Data Source=Eva.db";
+            var connectionString = "Data Source=VectorSearch.db";
             var optionsBuilder = new DbContextOptionsBuilder().UseSqlite(connectionString);
             return new VSDbContext(optionsBuilder.Options);
         }
