@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VectorSearch.ApplicationService.Services;
+using VectorSearch.Core.Models;
+using VectorSearch.Core.ViewModels;
 
 namespace VectorSearch.EndPoint.Controllers
 {
@@ -75,6 +77,32 @@ namespace VectorSearch.EndPoint.Controllers
                 return Ok($"Word: {word} deleted successfully!");
             }
             catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> BulkInsert(IEnumerable<WordViewModel> words)
+        {
+            try
+            {
+                await _wordService.BulkInsert(words);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete]
+        public async Task<IActionResult> ClearAllWords()
+        {
+            try
+            {
+                await _wordService.ClearAllWords();
+                return Ok();
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

@@ -1,4 +1,5 @@
 ﻿using VectorSearch.Core.Models;
+using VectorSearch.Core.ViewModels;
 
 namespace VectorSearch.ApplicationService.Services
 {
@@ -9,5 +10,7 @@ namespace VectorSearch.ApplicationService.Services
         Task<IQueryable<Word>> VectorSearch(string word);
         Task Insert(string word);
         Task Delete(string word);
+        Task ClearAllWords();
+        Task BulkInsert(IEnumerable<WordViewModel> words);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VectorSearch.ApplicationService.Services;
 using VectorSearch.Core.Models;
+using VectorSearch.Core.ViewModels;
 using VectorSearch.EntityFramework.DbContexts;
 
 namespace VectorSearch.ApplicationService.Queries
@@ -65,6 +66,29 @@ namespace VectorSearch.ApplicationService.Queries
                     throw new Exception($"Word: {word} not found!");
 
                 context.Words.Remove(selectedWord);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task BulkInsert(IEnumerable<WordViewModel> words)
+        {
+            using (var context = _dbContextFactory.CreateDbContext())
+            {
+                var list = new List<Word>();
+                foreach(var word in words)
+                {
+                    list.Add(new Word() { Text = word.Title});
+                }
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task ClearAllWords()
+        {
+            using (var context = _dbContextFactory.CreateDbContext())
+            {
+                var words = await context.Words.ToListAsync();
+                context.Words.RemoveRange(words);
                 await context.SaveChangesAsync();
             }
         }
