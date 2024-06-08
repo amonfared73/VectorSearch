@@ -77,9 +77,9 @@ namespace VectorSearch.ApplicationService.Queries
                 var list = new List<Word>();
                 foreach(var word in words)
                 {
-                    list.Add(new Word() { Text = word.Title});
+                    await context.Words.AddAsync(new Word() { Text = word.Title });
                 }
-                await context.SaveChangesAsync();
+                //await context.SaveChangesAsync();
             }
         }
 
