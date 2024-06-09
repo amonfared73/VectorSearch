@@ -74,10 +74,10 @@ namespace VectorSearch.ApplicationService.Queries
         {
             using (var context = _dbContextFactory.CreateDbContext())
             {
-                var list = new List<Word>();
+                //var list = new List<Word>();
                 foreach(var word in words)
                 {
-                    await context.Words.AddAsync(new Word() { Text = word.Title });
+                    await Insert(word.Title);
                 }
                 //await context.SaveChangesAsync();
             }
