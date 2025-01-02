@@ -7,8 +7,8 @@ namespace VectorSearch.WPF.ViewModels
     public class VectorSearchViewModel : ViewModelBase
     {
         private string _searchText;
-        private bool _searchTypeCode;
-        private ObservableCollection<WordDto> _words;
+        private bool _isVectorSearchEnabled;
+        private IEnumerable<WordDto> _words;
 
         public string SearchText
         {
@@ -22,19 +22,19 @@ namespace VectorSearch.WPF.ViewModels
                 OnPropertyChanged();
             }
         }
-        public bool SearchTypeCode
+        public bool IsVectorSearchEnabled
         {
             get
             {
-                return _searchTypeCode;
+                return _isVectorSearchEnabled;
             }
             set
             {
-                _searchTypeCode = value;
+                _isVectorSearchEnabled = value;
                 OnPropertyChanged();
             }
         }
-        public ObservableCollection<WordDto> Words
+        public IEnumerable<WordDto> Words
         {
             get
             {

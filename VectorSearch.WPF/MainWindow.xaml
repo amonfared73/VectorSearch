@@ -27,7 +27,7 @@
             <!-- Search Type Toggle -->
             <CheckBox Grid.Row="0" Grid.Column="1" Margin="0,0,10,10" 
                   Content="Vector Search" 
-                  IsChecked="{Binding IsAdvancedSearch}" />
+                  IsChecked="{Binding IsVectorSearchEnabled}" />
 
             <!-- Execute Button -->
             <Button Grid.Row="1" Grid.Column="1" Margin="0,10,10,10" 
@@ -35,7 +35,7 @@
                 Command="{Binding SearchCommand}" />
 
             <!-- Results Grid -->
-            <DataGrid Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding SearchResults}" 
+            <DataGrid Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Words}" 
                   AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="100" />
