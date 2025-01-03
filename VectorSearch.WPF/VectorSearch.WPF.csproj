@@ -12,4 +12,9 @@
     <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\VectorSearch.ApplicationService\VectorSearch.ApplicationService.csproj" />
+    <ProjectReference Include="..\VectorSearch.EF\VectorSearch.EF.csproj" />
+  </ItemGroup>
+
 </Project>
