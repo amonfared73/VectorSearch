@@ -83,6 +83,22 @@ namespace VectorSearch.WPF.ViewModels
         {
             Words = new ObservableCollection<WordDto>();
             SearchCommand = new LoadWordsCommand(this, store);
+            store.WordsLoaded += OnWordsLoaded;
+        }
+
+        private void OnWordsLoaded()
+        {
+            _words.Clear();
+            foreach(var word in _words)
+            {
+                AddWord(word);
+            }
+        }
+
+        private void AddWord(WordDto word)
+        {
+            var item = new WordDto() { Id = word.Id, Text = word.Text };
+            _words.Add(item);
         }
     }
 }
