@@ -1,6 +1,7 @@
 ﻿using VectorSearch.ApplicationService.Commands;
 using VectorSearch.Domain.DTOs;
 using VectorSearch.Domain.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace VectorSearch.WPF.Stores
 {
