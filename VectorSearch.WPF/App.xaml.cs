@@ -1,8 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
+using System.IO;
+using System.Text.Json;
 using System.Windows;
 using VectorSearch.ApplicationService.Commands;
 using VectorSearch.EF.Commands;
 using VectorSearch.EF.Contexts;
+using VectorSearch.WPF.Configurations;
 using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
 
@@ -17,10 +21,11 @@ namespace VectorSearch.WPF
         private readonly VectorSearchStore _store;
         private readonly VectorSearchDbContextFactory _contextFactory;
 
+        public VectorSearchOptions Options { get; set; }
         public App()
         {
-            var connectionString = "Server=localhost;Database=VectorSearch;Trusted_Connection=True;TrustServerCertificate=True;";
-            _contextFactory = new VectorSearchDbContextFactory(new DbContextOptionsBuilder<VectorSearchDbContext>().UseSqlServer(connectionString).Options);
+            LoadConfigurations();
+            _contextFactory = new VectorSearchDbContextFactory(new DbContextOptionsBuilder<VectorSearchDbContext>().UseSqlServer(Options.ConnectionString).Options);
             _service = new WordService(_contextFactory);
             _store = new VectorSearchStore(_service);
         }
@@ -38,6 +43,13 @@ namespace VectorSearch.WPF
             };
             mainWindow.Show();
             base.OnStartup(e);
+        }
+
+        private void LoadConfigurations()
+        {
+            var configFilePath = "./../../../appsettings.json";
+            var json = File.ReadAllText(configFilePath);
+            Options = JsonSerializer.Deserialize<VectorSearchOptions>(json);
         }
     }
 
