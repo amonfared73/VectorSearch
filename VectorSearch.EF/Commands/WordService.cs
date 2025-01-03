@@ -18,6 +18,7 @@ namespace VectorSearch.EF.Commands
         {
             using (var context = _contextFactory.Create())
             {
+                var options = new SearchOptions();
                 return await context.Words.Select(w => new WordDto() { Id = w.Id, Text = w.Text}).ToListAsync();
             }
         }
