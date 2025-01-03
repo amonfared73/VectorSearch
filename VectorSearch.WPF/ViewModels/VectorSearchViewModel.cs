@@ -14,7 +14,6 @@ namespace VectorSearch.WPF.ViewModels
         private bool _isVectorSearchEnabled;
         private ObservableCollection<WordDto> _words;
         private readonly VectorSearchStore _store;
-
         public bool IsLoading
         {
             get

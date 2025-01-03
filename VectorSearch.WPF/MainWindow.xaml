@@ -9,7 +9,7 @@
         xmlns:loadingspinnercontrol="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
         ui:WindowHelper.UseModernWindowStyle="True"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Vector Search" Height="450" Width="800">
 
     <Grid>
         <StackPanel VerticalAlignment="Center">
