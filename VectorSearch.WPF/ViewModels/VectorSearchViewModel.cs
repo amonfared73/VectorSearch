@@ -77,7 +77,7 @@ namespace VectorSearch.WPF.ViewModels
             }
         }
 
-        public ICommand SearchCommand;
+        public ICommand SearchCommand { get; set; }
 
         public VectorSearchViewModel(VectorSearchStore store)
         {
