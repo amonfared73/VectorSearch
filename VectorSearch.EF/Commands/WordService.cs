@@ -14,12 +14,12 @@ namespace VectorSearch.EF.Commands
             _contextFactory = contextFactory;
         }
 
-        public async Task<IEnumerable<WordDto>> GetAllAsync()
+        public async Task<IEnumerable<WordDto>> GetAllAsync(string searchText)
         {
             using (var context = _contextFactory.Create())
             {
                 var options = new SearchOptions();
-                return await context.Words.Select(w => new WordDto() { Id = w.Id, Text = w.Text}).ToListAsync();
+                return await context.Words.Where(x => string.IsNullOrEmpty(searchText) || x.Text.Contains(searchText)).Select(w => new WordDto() { Id = w.Id, Text = w.Text}).ToListAsync();
             }
         }
     }

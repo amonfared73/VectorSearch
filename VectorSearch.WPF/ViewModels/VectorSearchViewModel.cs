@@ -50,8 +50,11 @@ namespace VectorSearch.WPF.ViewModels
             }
             set
             {
-                _searchText = value;
-                OnPropertyChanged(nameof(SearchText));
+                if(_searchText != value)
+                {
+                    _searchText = value;
+                    OnPropertyChanged(nameof(SearchText));
+                }
             }
         }
         public bool IsVectorSearchEnabled

@@ -21,7 +21,8 @@ namespace VectorSearch.WPF.Commands
             _vectorSearchViewModel.IsLoading = true;
             try
             {
-                await _vectorSearchStore.Load();
+                var currentSearchText = _vectorSearchViewModel.SearchText;
+                await _vectorSearchStore.Load(currentSearchText);
             }
             catch (Exception ex)
             {

@@ -18,9 +18,9 @@ namespace VectorSearch.WPF.Stores
             _words = new List<WordDto>();
         }
 
-        public async Task Load()
+        public async Task Load(string searchText)
         {
-            IEnumerable<WordDto> words = await _wordService.GetAllAsync();
+            IEnumerable<WordDto> words = await _wordService.GetAllAsync(searchText);
             _words.Clear();
             _words.AddRange(words);
             WordsLoaded?.Invoke();
