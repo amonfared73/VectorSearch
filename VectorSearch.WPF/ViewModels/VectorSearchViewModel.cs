@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using VectorSearch.Domain.DTOs;
 using VectorSearch.WPF.Commands;
-using VectorSearch.WPF.DTOs;
 using VectorSearch.WPF.Stores;
 
 namespace VectorSearch.WPF.ViewModels
@@ -12,7 +12,7 @@ namespace VectorSearch.WPF.ViewModels
         private bool _isLoading;
         private string _searchText;
         private bool _isVectorSearchEnabled;
-        private IEnumerable<WordDto> _words;
+        private ObservableCollection<WordDto> _words;
         public bool IsLoading
         {
             get
@@ -49,7 +49,7 @@ namespace VectorSearch.WPF.ViewModels
             set
             {
                 _searchText = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(SearchText));
             }
         }
         public bool IsVectorSearchEnabled
@@ -61,10 +61,10 @@ namespace VectorSearch.WPF.ViewModels
             set
             {
                 _isVectorSearchEnabled = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsVectorSearchEnabled));
             }
         }
-        public IEnumerable<WordDto> Words
+        public ObservableCollection<WordDto> Words
         {
             get
             {
@@ -73,7 +73,7 @@ namespace VectorSearch.WPF.ViewModels
             set
             {
                 _words = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(Words));
             }
         }
 
