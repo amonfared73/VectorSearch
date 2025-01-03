@@ -13,6 +13,8 @@ namespace VectorSearch.WPF.ViewModels
         private string _searchText;
         private bool _isVectorSearchEnabled;
         private ObservableCollection<WordDto> _words;
+        private readonly VectorSearchStore _store;
+
         public bool IsLoading
         {
             get
@@ -81,15 +83,16 @@ namespace VectorSearch.WPF.ViewModels
 
         public VectorSearchViewModel(VectorSearchStore store)
         {
+            _store = store;
             Words = new ObservableCollection<WordDto>();
-            SearchCommand = new LoadWordsCommand(this, store);
-            store.WordsLoaded += OnWordsLoaded;
+            SearchCommand = new LoadWordsCommand(this, _store);
+            _store.WordsLoaded += OnWordsLoaded;
         }
 
         private void OnWordsLoaded()
         {
             _words.Clear();
-            foreach(var word in _words)
+            foreach(var word in _store.Words)
             {
                 AddWord(word);
             }
