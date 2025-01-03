@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Windows;
+using VectorSearch.WPF.ViewModels;
 
 namespace VectorSearch.WPF
 {
@@ -11,9 +12,12 @@ namespace VectorSearch.WPF
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
-            var mainWindow = new MainWindow();
+            var mainWindow = new MainWindow()
+            {
+                DataContext = new VectorSearchViewModel()
+            };
             mainWindow.Show();
+            base.OnStartup(e);
         }
     }
 

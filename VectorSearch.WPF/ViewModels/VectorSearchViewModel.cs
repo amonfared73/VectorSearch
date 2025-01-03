@@ -49,7 +49,7 @@ namespace VectorSearch.WPF.ViewModels
 
         public ICommand SearchCommand;
 
-        public VectorSearchViewModel(ICommand searchCommand)
+        public VectorSearchViewModel(ICommand searchCommand = null)
         {
             Words = new ObservableCollection<WordDto>();
             SearchCommand = searchCommand;
