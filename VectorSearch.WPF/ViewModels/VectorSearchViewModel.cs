@@ -102,7 +102,7 @@ namespace VectorSearch.WPF.ViewModels
 
         private void AddWord(WordDto word)
         {
-            var item = new WordDto() { Id = word.Id, Text = word.Text };
+            var item = new WordDto() { Id = word.Id, Text = word.Text, Vector = word.Vector };
             _words.Add(item);
         }
     }

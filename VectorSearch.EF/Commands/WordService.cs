@@ -22,7 +22,7 @@ namespace VectorSearch.EF.Commands
                     context
                     .Words
                     .Where(x => string.IsNullOrEmpty(searchText) || x.Text.Contains(searchText))
-                    .Select(w => new WordDto() { Id = w.Id, Text = w.Text, Vector = string.Join(", ", w.Vector)})
+                    .Select(w => new WordDto() { Id = w.Id, Text = w.Text, Vector = w.Vector})
                     .Take(15)
                     .ToListAsync();
             }
