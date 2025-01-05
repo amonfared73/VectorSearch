@@ -3,6 +3,6 @@
     public class Word : DomainObject
     {
         public string Text { get; set; }
-        public double[] Vector { get; set; }
+        public string Vector { get; set; }
     }
 }

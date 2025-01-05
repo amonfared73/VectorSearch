@@ -10,8 +10,7 @@ namespace VectorSearch.EF.Configurations
         public void Configure(EntityTypeBuilder<Word> builder)
         {
             builder
-                .Property(w => w.Vector)
-                .HasConversion(v => JsonSerializer.Serialize<double[]>(v, (JsonSerializerOptions?)null), v => JsonSerializer.Deserialize<double[]>(v, (JsonSerializerOptions?)null));
+                .ToTable("Words", "dbo");
         }
     }
 }
