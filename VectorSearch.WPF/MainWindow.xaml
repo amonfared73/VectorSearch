@@ -32,6 +32,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -68,6 +69,11 @@
                     <DataGridTextColumn Header="Vector" Binding="{Binding Vector}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
+
+            <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Margin="5" Content="Previous" Width="75" Height="30" Command="{Binding PreviousPageCommand}" />
+                <Button Margin="5" Content="Next" Width="75" Height="30" Command="{Binding NextPageCommand}" />
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

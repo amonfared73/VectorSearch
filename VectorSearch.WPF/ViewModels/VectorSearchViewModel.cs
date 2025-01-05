@@ -14,6 +14,20 @@ namespace VectorSearch.WPF.ViewModels
         private bool _isVectorSearchEnabled;
         private ObservableCollection<WordDto> _words;
         private readonly VectorSearchStore _store;
+        private int _currentPage;
+        private int _totalPages;
+
+        public int CurrentPage
+        {
+            get { return _currentPage; }
+            set { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); }
+        }
+
+        public int TotalPages
+        {
+            get { return _totalPages; }
+            set { _totalPages = value; OnPropertyChanged(nameof(TotalPages)); }
+        }
         public bool IsLoading
         {
             get
@@ -49,7 +63,7 @@ namespace VectorSearch.WPF.ViewModels
             }
             set
             {
-                if(_searchText != value)
+                if (_searchText != value)
                 {
                     _searchText = value;
                     OnPropertyChanged(nameof(SearchText));
@@ -82,19 +96,23 @@ namespace VectorSearch.WPF.ViewModels
         }
 
         public ICommand SearchCommand { get; set; }
+        public ICommand PreviousPageCommand { get; set; }
+        public ICommand NextPageCommand { get; set; }
 
         public VectorSearchViewModel(VectorSearchStore store)
         {
             _store = store;
             Words = new ObservableCollection<WordDto>();
             SearchCommand = new LoadWordsCommand(this, _store);
+            PreviousPageCommand = null;
+            NextPageCommand = null;
             _store.WordsLoaded += OnWordsLoaded;
         }
 
         private void OnWordsLoaded()
         {
             _words.Clear();
-            foreach(var word in _store.Words)
+            foreach (var word in _store.Words)
             {
                 AddWord(word);
             }
