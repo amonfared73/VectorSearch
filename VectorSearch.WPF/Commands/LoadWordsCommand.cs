@@ -1,4 +1,5 @@
 ﻿
+using VectorSearch.Domain.DTOs;
 using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
 
@@ -21,8 +22,7 @@ namespace VectorSearch.WPF.Commands
             _vectorSearchViewModel.IsLoading = true;
             try
             {
-                var currentSearchText = _vectorSearchViewModel.SearchText;
-                await _vectorSearchStore.Load(currentSearchText);
+                await _vectorSearchStore.Load(new SearchOptions() { Text = _vectorSearchViewModel.SearchText, IsVectorSearchEnabled = _vectorSearchViewModel .IsVectorSearchEnabled});
             }
             catch (Exception ex)
             {

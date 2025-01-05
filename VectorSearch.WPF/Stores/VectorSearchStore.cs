@@ -16,9 +16,10 @@ namespace VectorSearch.WPF.Stores
             _words = new List<WordDto>();
         }
 
-        public async Task Load(string searchText)
+        public async Task Load(SearchOptions options)
         {
-            IEnumerable<WordDto> words = await _wordService.GetAllSimilarWords(searchText);
+            Func<string, Task<IEnumerable<WordDto>>> searchMethod = options.IsVectorSearchEnabled ? _wordService.GetAllSimilarWords : _wordService.GetAllAsync;
+            IEnumerable<WordDto> words = await searchMethod(options.Text ?? string.Empty);
             _words.Clear();
             _words.AddRange(words);
             WordsLoaded?.Invoke();
