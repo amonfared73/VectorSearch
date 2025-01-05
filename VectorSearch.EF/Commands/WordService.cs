@@ -19,7 +19,7 @@ namespace VectorSearch.EF.Commands
             using (var context = _contextFactory.Create())
             {
                 var options = new SearchOptions();
-                return await context.Words.Where(x => string.IsNullOrEmpty(searchText) || x.Text.Contains(searchText)).Select(w => new WordDto() { Id = w.Id, Text = w.Text}).Take(15).ToListAsync();
+                return await context.Words.Where(x => string.IsNullOrEmpty(searchText) || x.Text.Contains(searchText)).Select(w => new WordDto() { Id = w.Id, Text = w.Text, Vector = string.Join(", ", w.Vector)}).Take(15).ToListAsync();
             }
         }
     }
