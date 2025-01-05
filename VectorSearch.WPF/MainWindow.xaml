@@ -64,6 +64,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="100" />
                     <DataGridTextColumn Header="Text" Binding="{Binding Text}" Width="120" />
+                    <DataGridTextColumn Header="Similarity" Binding="{Binding Similarity}" Width="100" />
                     <DataGridTextColumn Header="Vector" Binding="{Binding Vector}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>

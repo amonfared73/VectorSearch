@@ -44,14 +44,13 @@ namespace VectorSearch.EF.Commands
                 var words = await context.Words.Select(w => new WordDto { Id = w.Id, Text = w.Text, Vector = w.Vector }).ToListAsync();
 
                 return words
-                    .Select(word => new
+                    .Select(word => 
                     {
-                        Word = word,
-                        Similarity = VectorMath.ComputeCosineSimilarity(targetVector, word.Vector.ParseVector())
+                        word.Similarity = VectorMath.ComputeCosineSimilarity(targetVector, word.Vector.ParseVector());
+                        return word;
                     })
                     .OrderByDescending(x => x.Similarity)
                     .Take(15)
-                    .Select(x => x.Word)
                     .ToList();
             }
         }
