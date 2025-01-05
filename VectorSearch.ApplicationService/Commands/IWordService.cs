@@ -6,5 +6,6 @@ namespace VectorSearch.ApplicationService.Commands
     public interface IWordService : IBaseService<Word>
     {
         Task<IEnumerable<WordDto>> GetAllAsync(string searchText);
+        Task<IEnumerable<WordDto>> GetAllSimilarWords(string searchText);
     }
 }

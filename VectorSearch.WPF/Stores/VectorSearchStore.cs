@@ -1,7 +1,5 @@
 ﻿using VectorSearch.ApplicationService.Commands;
 using VectorSearch.Domain.DTOs;
-using VectorSearch.Domain.Models;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace VectorSearch.WPF.Stores
 {
@@ -20,7 +18,7 @@ namespace VectorSearch.WPF.Stores
 
         public async Task Load(string searchText)
         {
-            IEnumerable<WordDto> words = await _wordService.GetAllAsync(searchText);
+            IEnumerable<WordDto> words = await _wordService.GetAllSimilarWords(searchText);
             _words.Clear();
             _words.AddRange(words);
             WordsLoaded?.Invoke();
