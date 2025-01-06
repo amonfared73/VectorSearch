@@ -16,27 +16,28 @@ namespace VectorSearch.EF.Commands
             _contextFactory = contextFactory;
         }
 
-        public async Task<IEnumerable<WordDto>> GetAllAsync(string searchText)
+        public async Task<IEnumerable<WordDto>> GetAllAsync(SearchOptions searchOptions)
         {
             using (var context = _contextFactory.Create())
             {
                 return await
                     context
                     .Words
-                    .Where(x => string.IsNullOrEmpty(searchText) || x.Text.Contains(searchText))
+                    .Where(x => string.IsNullOrEmpty(searchOptions.Text) || x.Text.Contains(searchOptions.Text))
                     .Select(w => new WordDto() { Id = w.Id, Text = w.Text, Vector = w.Vector })
-                    .Take(15)
+                    .Skip((searchOptions.PageNumber - 1) * searchOptions.PageSize)
+                    .Take(searchOptions.PageSize)
                     .ToListAsync();
             }
         }
 
-        public async Task<IEnumerable<WordDto>> GetAllSimilarWords(string searchText)
+        public async Task<IEnumerable<WordDto>> GetAllSimilarWords(SearchOptions searchOptions)
         {
             using (var context = _contextFactory.Create())
             {
-                var searchWord = await context.Words.FirstOrDefaultAsync(w => w.Text == searchText);
+                var searchWord = await context.Words.FirstOrDefaultAsync(w => w.Text == searchOptions.Text);
 
-                if (searchText == null || string.IsNullOrEmpty(searchWord.Vector))
+                if (searchOptions.Text == null || string.IsNullOrEmpty(searchWord.Vector))
                     return Enumerable.Empty<WordDto>();
 
                 var targetVector = searchWord.Vector.ParseVector();
@@ -50,7 +51,8 @@ namespace VectorSearch.EF.Commands
                         return word;
                     })
                     .OrderByDescending(x => x.Similarity)
-                    .Take(15)
+                    .Skip((searchOptions.PageNumber - 1) * searchOptions.PageSize)
+                    .Take(searchOptions.PageSize)
                     .ToList();
             }
         }

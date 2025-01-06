@@ -22,7 +22,11 @@ namespace VectorSearch.WPF.Commands
             _vectorSearchViewModel.IsLoading = true;
             try
             {
-                await _vectorSearchStore.Load(new SearchOptions() { Text = _vectorSearchViewModel.SearchText, IsVectorSearchEnabled = _vectorSearchViewModel .IsVectorSearchEnabled});
+                await _vectorSearchStore.Load(new SearchOptions()
+                {
+                    Text = _vectorSearchViewModel.SearchText,
+                    IsVectorSearchEnabled = _vectorSearchViewModel.IsVectorSearchEnabled
+                });
             }
             catch (Exception ex)
             {
