@@ -8,7 +8,7 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         xmlns:loadingspinnercontrol="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
         ui:WindowHelper.UseModernWindowStyle="True"
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowState="Maximized"
         Title="Vector Search" Height="450" Width="800">
 
     <Grid>
