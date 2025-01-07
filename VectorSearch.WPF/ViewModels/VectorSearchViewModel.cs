@@ -108,10 +108,11 @@ namespace VectorSearch.WPF.ViewModels
         public VectorSearchViewModel(VectorSearchStore store)
         {
             _store = store;
+            _currentPage = 1;
             Words = new ObservableCollection<WordDto>();
             SearchCommand = new LoadWordsCommand(this, _store);
-            PreviousPageCommand = null;
-            NextPageCommand = null;
+            PreviousPageCommand = new PreviousPageCommand(this, _store);
+            NextPageCommand = new NextPageCommand(this, _store);
             _store.WordsLoaded += OnWordsLoaded;
         }
 

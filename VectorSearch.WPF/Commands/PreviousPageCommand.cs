@@ -1,25 +1,29 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using VectorSearch.Domain.DTOs;
 using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
 
 namespace VectorSearch.WPF.Commands
 {
-    public class LoadWordsCommand : AsyncCommandBase
+    public class PreviousPageCommand : AsyncCommandBase
     {
         private readonly VectorSearchViewModel _vectorSearchViewModel;
         private readonly VectorSearchStore _vectorSearchStore;
 
-        public LoadWordsCommand(VectorSearchViewModel vectorSearchViewModel, VectorSearchStore vectorSearchStore)
+        public PreviousPageCommand(VectorSearchViewModel vectorSearchViewModel, VectorSearchStore vectorSearchStore)
         {
             _vectorSearchViewModel = vectorSearchViewModel;
             _vectorSearchStore = vectorSearchStore;
         }
         public override bool CanExecute(object? parameter)
         {
-            return !IsExecuting && base.CanExecute(parameter);
+            return !IsExecuting && _vectorSearchViewModel.CurrentPage > 1;
         }
-        public override async Task ExecuteAsync(object? parameter)
+        public async override Task ExecuteAsync(object? parameter)
         {
             _vectorSearchViewModel.ErrorMessage = null;
             _vectorSearchViewModel.IsLoading = true;
@@ -29,7 +33,7 @@ namespace VectorSearch.WPF.Commands
                 {
                     Text = _vectorSearchViewModel.SearchText,
                     IsVectorSearchEnabled = _vectorSearchViewModel.IsVectorSearchEnabled,
-                    PageNumber = _vectorSearchViewModel.CurrentPage,
+                    PageNumber = _vectorSearchViewModel.CurrentPage > 1 ? _vectorSearchViewModel.CurrentPage - 1 : 1,
                 });
             }
             catch (Exception ex)
