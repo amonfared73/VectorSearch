@@ -36,69 +36,30 @@ namespace VectorSearch.WPF.ViewModels
         }
         public bool IsLoading
         {
-            get
-            {
-                return _isLoading;
-            }
-            set
-            {
-                _isLoading = value;
-                OnPropertyChanged(nameof(IsLoading));
-            }
+            get { return _isLoading; }
+            set { _isLoading = value; OnPropertyChanged(nameof(IsLoading)); }
         }
         public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
         public string ErrorMessage
         {
-            get
-            {
-                return _errorMessage;
-            }
-            set
-            {
-                _errorMessage = value;
-                OnPropertyChanged(nameof(ErrorMessage));
-                OnPropertyChanged(nameof(HasErrorMessage));
-            }
+            get { return _errorMessage; }
+            set { _errorMessage = value; OnPropertyChanged(nameof(ErrorMessage)); OnPropertyChanged(nameof(HasErrorMessage)); }
         }
 
         public string SearchText
         {
-            get
-            {
-                return _searchText;
-            }
-            set
-            {
-                if (_searchText != value)
-                {
-                    _searchText = value;
-                    OnPropertyChanged(nameof(SearchText));
-                }
-            }
+            get { return _searchText; }
+            set { if (_searchText != value) { _searchText = value; OnPropertyChanged(nameof(SearchText)); } }
         }
         public bool IsVectorSearchEnabled
         {
-            get
-            {
-                return _isVectorSearchEnabled;
-            }
-            set
-            {
-                _isVectorSearchEnabled = value;
-                OnPropertyChanged(nameof(IsVectorSearchEnabled));
-            }
+            get { return _isVectorSearchEnabled; }
+            set { _isVectorSearchEnabled = value; OnPropertyChanged(nameof(IsVectorSearchEnabled)); }
         }
         public ObservableCollection<WordDto> Words
         {
-            get
-            {
-                return _words;
-            }
-            set
-            {
-                _words = value;
-                OnPropertyChanged(nameof(Words));
-            }
+            get { return _words; }
+            set { _words = value; OnPropertyChanged(nameof(Words)); }
         }
 
         public ICommand SearchCommand { get; set; }
