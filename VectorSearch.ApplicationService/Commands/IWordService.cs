@@ -1,11 +1,12 @@
 ﻿using VectorSearch.Domain.DTOs;
 using VectorSearch.Domain.Models;
+using VectorSearch.Domain.ViewModels;
 
 namespace VectorSearch.ApplicationService.Commands
 {
     public interface IWordService : IBaseService<Word>
     {
-        Task<IEnumerable<WordDto>> GetAllAsync(SearchOptions searchOptions);
-        Task<IEnumerable<WordDto>> GetAllSimilarWords(SearchOptions searchOptions);
+        Task<PagedResult<WordDto>> GetAllAsync(SearchOptions searchOptions);
+        Task<PagedResult<WordDto>> GetAllSimilarWords(SearchOptions searchOptions);
     }
 }

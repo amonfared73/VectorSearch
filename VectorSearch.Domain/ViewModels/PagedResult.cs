@@ -2,9 +2,13 @@
 {
     public class PagedResult<T> where T : class
     {
-        public IEnumerable<T> Data { get; set; }
+        public List<T> Data { get; set; }
         public int CurrentPage { get; set; } = 1;
         public int TotalPages { get; set; }
-        public long? TotalRecords { get; set; }
+        public int? TotalRecords { get; set; }
+        public PagedResult()
+        {
+            Data = new List<T>();
+        }
     }
 }

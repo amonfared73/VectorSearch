@@ -16,6 +16,7 @@ namespace VectorSearch.WPF.ViewModels
         private readonly VectorSearchStore _store;
         private int _currentPage;
         private int _totalPages;
+        private int? _totalRecords;
 
         public int CurrentPage
         {
@@ -27,6 +28,11 @@ namespace VectorSearch.WPF.ViewModels
         {
             get { return _totalPages; }
             set { _totalPages = value; OnPropertyChanged(nameof(TotalPages)); }
+        }
+        public int? TotalRecords
+        {
+            get { return _totalRecords; }
+            set { _totalRecords = value; OnPropertyChanged(nameof(TotalRecords)); }
         }
         public bool IsLoading
         {
@@ -112,10 +118,13 @@ namespace VectorSearch.WPF.ViewModels
         private void OnWordsLoaded()
         {
             _words.Clear();
-            foreach (var word in _store.Words)
+            foreach (var word in _store.PagedWords.Data)
             {
                 AddWord(word);
             }
+            _currentPage = _store.PagedWords.CurrentPage;
+            _totalPages = _store.PagedWords.TotalPages;
+            _totalRecords = _store.PagedWords.TotalRecords;
         }
 
         private void AddWord(WordDto word)
