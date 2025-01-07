@@ -21,14 +21,7 @@ namespace VectorSearch.WPF.ViewModels
         public int CurrentPage
         {
             get { return _currentPage; }
-            set
-            {
-                if (_currentPage != value)
-                {
-                    _currentPage = value; 
-                    OnPropertyChanged(nameof(CurrentPage));
-                }
-            }
+            set { if (_currentPage != value) { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); OnPropertyChanged(nameof(Words)); } }
         }
 
         public int TotalPages
