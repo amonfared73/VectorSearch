@@ -2,7 +2,6 @@
 {
     public class VectorSearchOptions
     {
-        public string ConnectionString { get; set; }
-        public string WindowTitle { get; set; }
+        public string ConnectionString { get; set; } = string.Empty;
     }
 }
