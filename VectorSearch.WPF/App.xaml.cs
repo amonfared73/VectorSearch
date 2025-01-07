@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
 using VectorSearch.ApplicationService.Commands;
 using VectorSearch.EF.Commands;
 using VectorSearch.EF.Contexts;
+using VectorSearch.EF.Tools;
 using VectorSearch.WPF.Configurations;
 using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
@@ -17,6 +17,7 @@ namespace VectorSearch.WPF
     /// </summary>
     public partial class App : Application
     {
+        private readonly IMathService _mathService;
         private readonly IWordService _service;
         private readonly VectorSearchStore _store;
         private readonly VectorSearchDbContextFactory _contextFactory;
@@ -26,7 +27,8 @@ namespace VectorSearch.WPF
         {
             LoadConfigurations();
             _contextFactory = new VectorSearchDbContextFactory(new DbContextOptionsBuilder<VectorSearchDbContext>().UseSqlServer(Options.ConnectionString).Options);
-            _service = new WordService(_contextFactory);
+            _mathService = new MathService();
+            _service = new WordService(_contextFactory, _mathService);
             _store = new VectorSearchStore(_service);
         }
 

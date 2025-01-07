@@ -11,9 +11,11 @@ namespace VectorSearch.EF.Commands
     public class WordService : BaseService<Word>, IWordService
     {
         private readonly VectorSearchDbContextFactory _contextFactory;
-        public WordService(VectorSearchDbContextFactory contextFactory) : base(contextFactory)
+        private readonly IMathService _mathService;
+        public WordService(VectorSearchDbContextFactory contextFactory, IMathService mathService) : base(contextFactory)
         {
             _contextFactory = contextFactory;
+            _mathService = mathService;
         }
 
         public async Task<IEnumerable<WordDto>> GetAllAsync(SearchOptions searchOptions)
@@ -45,9 +47,9 @@ namespace VectorSearch.EF.Commands
                 var words = await context.Words.Select(w => new WordDto { Id = w.Id, Text = w.Text, Vector = w.Vector }).ToListAsync();
 
                 return words
-                    .Select(word => 
+                    .Select(word =>
                     {
-                        word.Similarity = VectorMath.ComputeCosineSimilarity(targetVector, word.Vector.ParseVector());
+                        word.Similarity = _mathService.ComputeCosineSimilarity(targetVector, word.Vector.ParseVector());
                         return word;
                     })
                     .OrderByDescending(x => x.Similarity)
