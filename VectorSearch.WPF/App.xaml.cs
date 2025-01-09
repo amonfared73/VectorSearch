@@ -28,7 +28,7 @@ namespace VectorSearch.WPF
             LoadConfigurations();
             _contextFactory = new VectorSearchDbContextFactory(new DbContextOptionsBuilder<VectorSearchDbContext>().UseSqlServer(Options.ConnectionString).Options);
             _mathService = new MathService();
-            _wordService = new WordService(_contextFactory, _mathService);
+            _wordService = new WordService(_contextFactory, _mathService, Options);
             _store = new VectorSearchStore(_wordService);
         }
 

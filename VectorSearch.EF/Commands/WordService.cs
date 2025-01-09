@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using VectorSearch.ApplicationService.Commands;
+using VectorSearch.Domain.Configurations;
 using VectorSearch.Domain.DTOs;
 using VectorSearch.Domain.Models;
 using VectorSearch.Domain.ViewModels;
@@ -11,12 +11,14 @@ namespace VectorSearch.EF.Commands
 {
     public class WordService : BaseService<Word>, IWordService
     {
-        private readonly VectorSearchDbContextFactory _contextFactory;
         private readonly IMathService _mathService;
-        public WordService(VectorSearchDbContextFactory contextFactory, IMathService mathService) : base(contextFactory)
+        private readonly VectorSearchOptions _options;
+        private readonly VectorSearchDbContextFactory _contextFactory;
+        public WordService(VectorSearchDbContextFactory contextFactory, IMathService mathService, VectorSearchOptions options) : base(contextFactory)
         {
-            _contextFactory = contextFactory;
+            _options = options;
             _mathService = mathService;
+            _contextFactory = contextFactory;
         }
 
         public async Task<PagedResult<WordDto>> GetAllAsync(SearchOptions searchOptions)
@@ -106,7 +108,7 @@ namespace VectorSearch.EF.Commands
                     })
                     .OrderByDescending(word => word.Similarity);
 
-                var filteredWords = similarWords.Where(word => word.Similarity > 0.7);
+                var filteredWords = similarWords.Where(word => word.Similarity > Convert.ToDouble(_options.SimilarityThreshold));
 
                 var totalRecords = filteredWords.Count();
 
