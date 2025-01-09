@@ -39,7 +39,7 @@ namespace VectorSearch.EF.Commands
                     {
                         Id = w.Id,
                         Text = w.Text,
-                        Vector = w.Vector,
+                        Vector = w.Vector
                     })
                     .ToListAsync();
 
@@ -89,7 +89,7 @@ namespace VectorSearch.EF.Commands
                 var targetVector = searchWord.Vector.ParseVector();
 
                 var words = await context.Words
-                    .Where(w => !string.IsNullOrEmpty(w.Vector)) // Ensuring the vector exists
+                    .Where(w => !string.IsNullOrEmpty(w.Vector))
                     .Select(w => new { w.Id, w.Text, w.Vector })
                     .ToListAsync();
 

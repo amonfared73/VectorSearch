@@ -6,5 +6,6 @@
         public string Text { get; set; } = string.Empty;
         public double Similarity { get; set; }
         public string Vector { get; set; } = string.Empty;
+        public int DictionaryTypeId { get; set; }
     }
 }
