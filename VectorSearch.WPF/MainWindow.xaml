@@ -72,7 +72,7 @@
 
             <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Margin="5" Content="Previous" Width="75" Height="30" Command="{Binding PreviousPageCommand}" />
-                <TextBox Margin="5" Width="75" Height="30" Text="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBox Margin="5" Width="75" Height="30" Text="{Binding CurrentPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                      Background="LightGray" BorderBrush="Gray" BorderThickness="1" FontSize="14" 
                      IsReadOnly="True" />
