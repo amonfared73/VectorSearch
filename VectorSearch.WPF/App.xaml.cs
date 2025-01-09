@@ -6,7 +6,7 @@ using VectorSearch.ApplicationService.Commands;
 using VectorSearch.EF.Commands;
 using VectorSearch.EF.Contexts;
 using VectorSearch.EF.Tools;
-using VectorSearch.WPF.Configurations;
+using VectorSearch.Domain.Configurations;
 using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
 
