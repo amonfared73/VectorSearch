@@ -55,41 +55,69 @@ namespace VectorSearch.EF.Commands
 
         public async Task<PagedResult<WordDto>> GetAllSimilarWords(SearchOptions searchOptions)
         {
+            if (string.IsNullOrEmpty(searchOptions.Text))
+            {
+                return new PagedResult<WordDto>
+                {
+                    Data = new List<WordDto>(),
+                    CurrentPage = searchOptions.PageNumber,
+                    TotalPages = 0,
+                    TotalRecords = 0
+                };
+            }
+
             using (var context = _contextFactory.Create())
             {
-                var searchWord = await context.Words.FirstOrDefaultAsync(w => w.Text == searchOptions.Text);
+                var searchWord = await context.Words
+                    .Where(w => w.Text == searchOptions.Text)
+                    .Select(w => new { w.Text, w.Vector })
+                    .FirstOrDefaultAsync();
 
-                if (searchOptions.Text == null || string.IsNullOrEmpty(searchWord.Vector))
-                    return new PagedResult<WordDto>()
+                if (searchWord == null || string.IsNullOrEmpty(searchWord.Vector))
+                {
+                    return new PagedResult<WordDto>
                     {
                         Data = new List<WordDto>(),
                         CurrentPage = searchOptions.PageNumber,
                         TotalPages = 0,
                         TotalRecords = 0
                     };
+                }
 
                 var targetVector = searchWord.Vector.ParseVector();
 
-                var words = await context.Words.Select(w => new WordDto { Id = w.Id, Text = w.Text, Vector = w.Vector }).ToListAsync();
+                var words = await context.Words
+                    .Where(w => !string.IsNullOrEmpty(w.Vector)) // Ensuring the vector exists
+                    .Select(w => new { w.Id, w.Text, w.Vector })
+                    .ToListAsync();
 
                 var similarWords = words
                     .Select(word =>
                     {
-                        word.Similarity = word.Similarity = _mathService.ComputeCosineSimilarity(targetVector, word.Vector.ParseVector());
-                        return word;
+                        var wordVector = word.Vector.ParseVector();
+                        var similarity = _mathService.ComputeCosineSimilarity(targetVector, wordVector);
+                        return new WordDto
+                        {
+                            Id = word.Id,
+                            Text = word.Text,
+                            Vector = word.Vector,
+                            Similarity = similarity
+                        };
                     })
                     .OrderByDescending(word => word.Similarity);
 
-                var totalRecords = similarWords.Count();
+                var filteredWords = similarWords.Where(word => word.Similarity > 0.7);
 
-                var pagedData = similarWords
+                var totalRecords = filteredWords.Count();
+
+                var pagedData = filteredWords
                     .Skip((searchOptions.PageNumber - 1) * searchOptions.PageSize)
                     .Take(searchOptions.PageSize)
                     .ToList();
 
                 var totalPages = (int)Math.Ceiling((double)totalRecords / searchOptions.PageSize);
 
-                return new PagedResult<WordDto>()
+                return new PagedResult<WordDto>
                 {
                     Data = pagedData,
                     CurrentPage = searchOptions.PageNumber,
@@ -98,5 +126,6 @@ namespace VectorSearch.EF.Commands
                 };
             }
         }
+
     }
 }
