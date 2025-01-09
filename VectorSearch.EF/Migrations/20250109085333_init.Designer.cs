@@ -12,7 +12,7 @@ using VectorSearch.EF.Contexts;
 namespace VectorSearch.EF.Migrations
 {
     [DbContext(typeof(VectorSearchDbContext))]
-    [Migration("20250102100156_init")]
+    [Migration("20250109085333_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -25,6 +25,26 @@ namespace VectorSearch.EF.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("VectorSearch.Domain.Models.DictionaryType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DictionaryTypes");
+                });
+
             modelBuilder.Entity("VectorSearch.Domain.Models.Word", b =>
                 {
                     b.Property<int>("Id")
@@ -36,17 +56,38 @@ namespace VectorSearch.EF.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DictionaryTypeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.PrimitiveCollection<string>("Vector")
+                    b.Property<string>("Vector")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DictionaryTypeId");
+
                     b.ToTable("Words");
+                });
+
+            modelBuilder.Entity("VectorSearch.Domain.Models.Word", b =>
+                {
+                    b.HasOne("VectorSearch.Domain.Models.DictionaryType", "DictionaryType")
+                        .WithMany("Words")
+                        .HasForeignKey("DictionaryTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DictionaryType");
+                });
+
+            modelBuilder.Entity("VectorSearch.Domain.Models.DictionaryType", b =>
+                {
+                    b.Navigation("Words");
                 });
 #pragma warning restore 612, 618
         }

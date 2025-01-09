@@ -39,7 +39,7 @@ namespace VectorSearch.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DictionaryType");
+                    b.ToTable("DictionaryTypes");
                 });
 
             modelBuilder.Entity("VectorSearch.Domain.Models.Word", b =>
@@ -53,7 +53,7 @@ namespace VectorSearch.EF.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DictionaryTypeId")
+                    b.Property<int>("DictionaryTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
@@ -75,7 +75,9 @@ namespace VectorSearch.EF.Migrations
                 {
                     b.HasOne("VectorSearch.Domain.Models.DictionaryType", "DictionaryType")
                         .WithMany("Words")
-                        .HasForeignKey("DictionaryTypeId");
+                        .HasForeignKey("DictionaryTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("DictionaryType");
                 });

@@ -10,5 +10,6 @@ namespace VectorSearch.EF.Contexts
             
         }
         public DbSet<Word> Words { get; set; }
+        public DbSet<DictionaryType> DictionaryTypes { get; set; }
     }
 }
