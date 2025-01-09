@@ -84,9 +84,9 @@ namespace VectorSearch.WPF.ViewModels
             {
                 AddWord(word);
             }
-            _currentPage = _store.PagedWords.CurrentPage;
-            _totalPages = _store.PagedWords.TotalPages;
-            _totalRecords = _store.PagedWords.TotalRecords;
+            CurrentPage = _store.PagedWords.CurrentPage;
+            TotalPages = _store.PagedWords.TotalPages;
+            TotalRecords = _store.PagedWords.TotalRecords;
         }
 
         private void AddWord(WordDto word)
