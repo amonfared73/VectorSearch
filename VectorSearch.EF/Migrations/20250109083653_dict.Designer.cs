@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VectorSearch.EF.Contexts;
 
@@ -11,9 +12,11 @@ using VectorSearch.EF.Contexts;
 namespace VectorSearch.EF.Migrations
 {
     [DbContext(typeof(VectorSearchDbContext))]
-    partial class VectorSearchDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250109083653_dict")]
+    partial class dict
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

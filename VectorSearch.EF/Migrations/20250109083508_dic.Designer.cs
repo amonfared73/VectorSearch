@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VectorSearch.EF.Contexts;
 
@@ -11,9 +12,11 @@ using VectorSearch.EF.Contexts;
 namespace VectorSearch.EF.Migrations
 {
     [DbContext(typeof(VectorSearchDbContext))]
-    partial class VectorSearchDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250109083508_dic")]
+    partial class dic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,7 +56,7 @@ namespace VectorSearch.EF.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DictionaryTypeId")
+                    b.Property<int>("DictionaryTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
@@ -75,7 +78,9 @@ namespace VectorSearch.EF.Migrations
                 {
                     b.HasOne("VectorSearch.Domain.Models.DictionaryType", "DictionaryType")
                         .WithMany("Words")
-                        .HasForeignKey("DictionaryTypeId");
+                        .HasForeignKey("DictionaryTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("DictionaryType");
                 });
