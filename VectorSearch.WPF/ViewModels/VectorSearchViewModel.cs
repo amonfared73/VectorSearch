@@ -17,22 +17,23 @@ namespace VectorSearch.WPF.ViewModels
         private int _currentPage;
         private int _totalPages;
         private int? _totalRecords;
+        private string? _paginationInfo;
 
         public int CurrentPage
         {
             get { return _currentPage; }
-            set { if (_currentPage != value) { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); OnPropertyChanged(nameof(Words)); } }
+            set { if (_currentPage != value) { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); OnPropertyChanged(nameof(Words)); OnPropertyChanged(nameof(PaginationInfo)); } }
         }
 
         public int TotalPages
         {
             get { return _totalPages; }
-            set { _totalPages = value; OnPropertyChanged(nameof(TotalPages)); }
+            set { _totalPages = value; OnPropertyChanged(nameof(TotalPages)); OnPropertyChanged(nameof(PaginationInfo)); }
         }
         public int? TotalRecords
         {
             get { return _totalRecords; }
-            set { _totalRecords = value; OnPropertyChanged(nameof(TotalRecords)); }
+            set { _totalRecords = value; OnPropertyChanged(nameof(TotalRecords)); OnPropertyChanged(nameof(PaginationInfo)); }
         }
         public bool IsLoading
         {
@@ -65,6 +66,7 @@ namespace VectorSearch.WPF.ViewModels
         public ICommand SearchCommand { get; set; }
         public ICommand PreviousPageCommand { get; set; }
         public ICommand NextPageCommand { get; set; }
+        public string? PaginationInfo => $"PageNumber: {CurrentPage}, TotalPages: {TotalPages}, TotalRecords: {TotalRecords}";
 
         public VectorSearchViewModel(VectorSearchStore store)
         {
