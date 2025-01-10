@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using VectorSearch.Domain.DTOs;
+using VectorSearch.Domain.Enums;
 using VectorSearch.WPF.Commands;
 using VectorSearch.WPF.Stores;
 
@@ -18,7 +19,13 @@ namespace VectorSearch.WPF.ViewModels
         private int _totalPages;
         private int? _totalRecords;
         private string? _paginationInfo;
+        private GloveType _gloveType;
 
+        public GloveType GloveType
+        {
+            get { return _gloveType; }
+            set { if (_gloveType != value) { _gloveType = value; OnPropertyChanged(nameof(GloveType)); } }
+        }
         public int CurrentPage
         {
             get { return _currentPage; }
@@ -71,7 +78,8 @@ namespace VectorSearch.WPF.ViewModels
         public VectorSearchViewModel(VectorSearchStore store)
         {
             _store = store;
-            _currentPage = 1;
+            CurrentPage = 1;
+            GloveType = GloveType.glove_6B_50d;
             Words = new ObservableCollection<WordDto>();
             SearchCommand = new LoadWordsCommand(this, _store);
             PreviousPageCommand = new PreviousPageCommand(this, _store);

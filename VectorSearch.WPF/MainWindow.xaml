@@ -4,9 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VectorSearch.WPF"
+        xmlns:enums="clr-namespace:VectorSearch.Domain.Enums;assembly=VectorSearch.Domain"
         xmlns:tools="clr-namespace:VectorSearch.WPF.Tools"
         xmlns:ui="http://schemas.modernwpf.com/2019"
         xmlns:loadingspinnercontrol="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         ui:WindowHelper.UseModernWindowStyle="True"
         mc:Ignorable="d" WindowState="Maximized"
         Title="Vector Search" Height="450" Width="800">
@@ -53,6 +55,11 @@
                   Content="Vector Search" 
                   IsChecked="{Binding IsVectorSearchEnabled}" />
 
+            <ComboBox Width="200" Grid.Row="1" Grid.Column="0" Margin="0,10,10,10" 
+                  ItemsSource="{Binding Source={tools:EnumBindingSource {x:Type enums:GloveType}}}"
+                  SelectedItem="{Binding GloveType, Mode=TwoWay}"
+                  HorizontalAlignment="Center" VerticalAlignment="Center">
+            </ComboBox>
 
             <Button Grid.Row="1" Grid.Column="1" Margin="0,10,10,10" 
                 Content="Search" 
