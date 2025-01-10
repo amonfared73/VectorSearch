@@ -16,8 +16,7 @@ namespace VectorSearch.WPF.Commands
         }
         public override bool CanExecute(object? parameter)
         {
-            return !IsExecuting && _vectorSearchViewModel.CurrentPage < _vectorSearchViewModel.TotalPages && base.CanExecute(parameter);
-            //return true;
+            return !IsExecuting && base.CanExecute(parameter);
         }
         public async override Task ExecuteAsync(object? parameter)
         {
