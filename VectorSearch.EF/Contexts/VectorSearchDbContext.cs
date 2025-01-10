@@ -14,7 +14,6 @@ namespace VectorSearch.EF.Contexts
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(VectorSearchDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
-        public DbSet<Word> Words { get; set; }
         public DbSet<DictionaryType> DictionaryTypes { get; set; }
         public DbSet<Glove50D> Glove50Ds { get; set; }
         public DbSet<Glove100D> Glove100Ds { get; set; }

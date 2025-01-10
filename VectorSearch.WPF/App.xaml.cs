@@ -34,10 +34,6 @@ namespace VectorSearch.WPF
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            //using (var context = _contextFactory.Create())
-            //{
-            //    context.Database.Migrate();
-            //}
 
             var mainWindow = new MainWindow()
             {
