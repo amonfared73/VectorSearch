@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VectorSearch.Domain.DTOs;
+﻿using VectorSearch.Domain.DTOs;
 using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
 
@@ -21,8 +16,8 @@ namespace VectorSearch.WPF.Commands
         }
         public override bool CanExecute(object? parameter)
         {
-            //return !IsExecuting && _vectorSearchViewModel.CurrentPage > 1 && base.CanExecute(parameter);
-            return true;
+            return !IsExecuting && _vectorSearchViewModel.CurrentPage > 1 && base.CanExecute(parameter);
+            //return true;
         }
         public async override Task ExecuteAsync(object? parameter)
         {
