@@ -2,6 +2,7 @@
 using VectorSearch.ApplicationService.Commands;
 using VectorSearch.Domain.Configurations;
 using VectorSearch.Domain.DTOs;
+using VectorSearch.Domain.Enums;
 using VectorSearch.Domain.Models;
 using VectorSearch.Domain.ViewModels;
 using VectorSearch.EF.Contexts;
@@ -25,14 +26,30 @@ namespace VectorSearch.EF.Commands
         {
             using (var context = _contextFactory.Create())
             {
-                var query = context
-                    .Words
-                    .Where(x => string.IsNullOrEmpty(searchOptions.Text) || x.Text.Contains(searchOptions.Text));
+                IQueryable<IWord> queryable;
+                switch (searchOptions.GloveType)
+                {
+                    case GloveType.glove_6B_50d:
+                        queryable = context.Glove50Ds;
+                        break;
+                    case GloveType.glove_6B_100d:
+                        queryable = context.Glove100Ds;
+                        break;
+                    case GloveType.glove_6B_200d:
+                        queryable = context.Glove200Ds;
+                        break;
+                    case GloveType.glove_6B_300d:
+                        queryable = context.Glove300Ds;
+                        break;
+                    default:
+                        throw new ArgumentException("GloveType not assigned");
+                }
+
+                var query = queryable.AsNoTracking().Where(x => string.IsNullOrEmpty(searchOptions.Text) || x.Text.Contains(searchOptions.Text));
 
                 var totalRecords = await query.CountAsync();
 
                 var data = await query
-                    .OrderBy(x => x.Id)
                     .Skip((searchOptions.PageNumber - 1) * searchOptions.PageSize)
                     .Take(searchOptions.PageSize)
                     .Select(w => new WordDto()

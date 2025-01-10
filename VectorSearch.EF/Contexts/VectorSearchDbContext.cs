@@ -9,6 +9,11 @@ namespace VectorSearch.EF.Contexts
         {
 
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(VectorSearchDbContext).Assembly);
+            base.OnModelCreating(modelBuilder);
+        }
         public DbSet<Word> Words { get; set; }
         public DbSet<DictionaryType> DictionaryTypes { get; set; }
         public DbSet<Glove50D> Glove50Ds { get; set; }

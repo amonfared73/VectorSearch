@@ -1,9 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace VectorSearch.Domain.Models
+﻿namespace VectorSearch.Domain.Models
 {
-    [NotMapped]
-    public class Glove100D : IWord
+    public interface IWord
     {
         public int Id { get; set; }
         public string Text { get; set; }

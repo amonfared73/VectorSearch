@@ -1,6 +1,6 @@
 ﻿namespace VectorSearch.Domain.Enums
 {
-    public enum DictionaryType
+    public enum GloveType
     {
         glove_6B_50d = 1,
         glove_6B_100d = 2,

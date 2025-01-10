@@ -1,4 +1,6 @@
-﻿namespace VectorSearch.Domain.DTOs
+﻿using VectorSearch.Domain.Enums;
+
+namespace VectorSearch.Domain.DTOs
 {
     public class SearchOptions
     {
@@ -6,6 +8,6 @@
         public bool IsVectorSearchEnabled { get; set; } = false;
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 15;
-        public int DictionaryTypeId { get; set; } = 1;
+        public GloveType GloveType { get; set; } = GloveType.glove_6B_50d;
     }
 }
