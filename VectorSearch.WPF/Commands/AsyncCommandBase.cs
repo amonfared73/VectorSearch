@@ -15,10 +15,6 @@
                 OnCanExecutedChanged();
             }
         }
-        //public override bool CanExecute(object? parameter)
-        //{
-        //    return !IsExecuting && base.CanExecute(parameter);
-        //}
         public override async void Execute(object? parameter)
         {
             IsExecuting = true;
