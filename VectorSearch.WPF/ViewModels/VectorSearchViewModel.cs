@@ -62,7 +62,7 @@ namespace VectorSearch.WPF.ViewModels
         public bool IsVectorSearchEnabled
         {
             get { return _isVectorSearchEnabled; }
-            set { _isVectorSearchEnabled = value; OnPropertyChanged(nameof(IsVectorSearchEnabled)); }
+            set { _isVectorSearchEnabled = value; OnPropertyChanged(nameof(IsVectorSearchEnabled)); OnPropertyChanged(nameof(IsGloveTypeEnabled)); }
         }
         public ObservableCollection<WordDto> Words
         {
@@ -74,6 +74,7 @@ namespace VectorSearch.WPF.ViewModels
         public ICommand PreviousPageCommand { get; set; }
         public ICommand NextPageCommand { get; set; }
         public string? PaginationInfo => $"PageNumber: {CurrentPage}, TotalPages: {TotalPages}, TotalRecords: {TotalRecords}";
+        public bool IsGloveTypeEnabled => IsVectorSearchEnabled;
 
         public VectorSearchViewModel(VectorSearchStore store)
         {
