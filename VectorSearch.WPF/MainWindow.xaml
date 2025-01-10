@@ -44,17 +44,15 @@
             </Grid.ColumnDefinitions>
 
             
-            <TextBox Grid.Row="0" Grid.Column="0" Margin="0,0,10,10" 
-                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox Grid.Row="0" Grid.Column="0" Margin="0,0,10,10" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}" />
                 </TextBox.InputBindings>
             </TextBox>
 
-            <ComboBox Width="200" Grid.Row="0" Grid.Column="1" Margin="0,10,10,10" 
-      ItemsSource="{Binding Source={tools:EnumBindingSource {x:Type enums:GloveType}}}"
-      SelectedItem="{Binding GloveType, Mode=TwoWay}"
-      HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ComboBox Width="200" Grid.Row="0" Grid.Column="1" Margin="0,10,10,10"  
+                      ItemsSource="{Binding Source={tools:EnumBindingSource {x:Type enums:GloveType}}}" 
+                      SelectedItem="{Binding GloveType, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center">
             </ComboBox>
 
             <CheckBox Grid.Row="0" Grid.Column="2" Margin="0,0,10,10" 
