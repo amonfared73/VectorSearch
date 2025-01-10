@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Concurrent;
 using VectorSearch.ApplicationService.Commands;
 using VectorSearch.Domain.Configurations;
 using VectorSearch.Domain.DTOs;
@@ -91,30 +92,37 @@ namespace VectorSearch.EF.Commands
                 var targetVector = _mathService.ParseVector(searchWord.Vector);
 
                 var words = await queryable
+                    .AsNoTracking()
                     .Where(w => !string.IsNullOrEmpty(w.Vector))
                     .Select(w => new { w.Id, w.Text, w.Vector })
                     .ToListAsync();
 
-                var similarWords = words
-                    .Select(word =>
+
+                var similarWords = new ConcurrentBag<WordDto>();
+                Parallel.ForEach(words, word =>
+                {
+                    var wordVector = _mathService.ParseVector(word.Vector);
+                    var similarity = _mathService.ComputeCosineSimilarity(targetVector, wordVector);
+
+                    if (similarity > Convert.ToDouble(_options.SimilarityThreshold))
                     {
-                        var wordVector = _mathService.ParseVector(word.Vector);
-                        var similarity = _mathService.ComputeCosineSimilarity(targetVector, wordVector);
-                        return new WordDto
+                        similarWords.Add(new WordDto
                         {
                             Id = word.Id,
                             Text = word.Text,
                             Vector = word.Vector,
                             Similarity = similarity
-                        };
-                    })
-                    .OrderByDescending(word => word.Similarity);
+                        });
+                    }
 
-                var filteredWords = similarWords.Where(word => word.Similarity > Convert.ToDouble(_options.SimilarityThreshold));
+                });
 
-                var totalRecords = filteredWords.Count();
 
-                var pagedData = filteredWords
+                var orderedWords = similarWords.OrderByDescending(word => word.Similarity).ToList();
+
+                var totalRecords = orderedWords.Count();
+
+                var pagedData = orderedWords
                     .Skip((searchOptions.PageNumber - 1) * searchOptions.PageSize)
                     .Take(searchOptions.PageSize)
                     .ToList();
