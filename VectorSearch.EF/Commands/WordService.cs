@@ -87,7 +87,26 @@ namespace VectorSearch.EF.Commands
 
             using (var context = _contextFactory.Create())
             {
-                var searchWord = await context.Words
+                IQueryable<IWord> queryable;
+                switch (searchOptions.GloveType)
+                {
+                    case GloveType.glove_6B_50d:
+                        queryable = context.Glove50Ds;
+                        break;
+                    case GloveType.glove_6B_100d:
+                        queryable = context.Glove100Ds;
+                        break;
+                    case GloveType.glove_6B_200d:
+                        queryable = context.Glove200Ds;
+                        break;
+                    case GloveType.glove_6B_300d:
+                        queryable = context.Glove300Ds;
+                        break;
+                    default:
+                        throw new ArgumentException("GloveType not assigned");
+                }
+
+                var searchWord = await queryable
                     .Where(w => w.Text == searchOptions.Text)
                     .Select(w => new { w.Text, w.Vector })
                     .FirstOrDefaultAsync();
@@ -105,7 +124,7 @@ namespace VectorSearch.EF.Commands
 
                 var targetVector = searchWord.Vector.ParseVector();
 
-                var words = await context.Words
+                var words = await queryable
                     .Where(w => !string.IsNullOrEmpty(w.Vector))
                     .Select(w => new { w.Id, w.Text, w.Vector })
                     .ToListAsync();
