@@ -13,18 +13,16 @@
         mc:Ignorable="d" WindowState="Maximized"
         Title="Vector Search" Height="450" Width="800">
 
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
     <Grid>
-        <StackPanel VerticalAlignment="Center">
-            <StackPanel.Style>
-                <Style TargetType="StackPanel">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsLoading}" Value="True">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </StackPanel.Style>
+        <StackPanel VerticalAlignment="Center" Style="{StaticResource StackPanelLoadingStyle}">
             <loadingspinnercontrol:LoadingSpinner Diameter="100" Thickness="2" IsLoading="True"/>
             <TextBlock Text="Loading words ..." VerticalAlignment="Center" TextAlignment="Center" Margin="0 5 0 0"/>
         </StackPanel>
@@ -79,10 +77,7 @@
 
             <StackPanel Grid.Row="2" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Margin="5" Content="Previous" Width="75" Height="30" Command="{Binding PreviousPageCommand}" />
-                <TextBox Margin="5" Width="350" Height="30" Text="{Binding PaginationInfo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                     Background="LightGray" BorderBrush="Gray" BorderThickness="1" FontSize="14" 
-                     IsReadOnly="True" />
+                <TextBox Margin="5" Width="350" Height="30" Text="{Binding PaginationInfo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PaginationTextBoxStyle}" />
                 <Button Margin="5" Content="Next" Width="75" Height="30" Command="{Binding NextPageCommand}" />
             </StackPanel>
         </Grid>
