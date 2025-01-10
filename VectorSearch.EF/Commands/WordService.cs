@@ -26,24 +26,7 @@ namespace VectorSearch.EF.Commands
         {
             using (var context = _contextFactory.Create())
             {
-                IQueryable<IWord> queryable;
-                switch (searchOptions.GloveType)
-                {
-                    case GloveType.glove_6B_50d:
-                        queryable = context.Glove50Ds;
-                        break;
-                    case GloveType.glove_6B_100d:
-                        queryable = context.Glove100Ds;
-                        break;
-                    case GloveType.glove_6B_200d:
-                        queryable = context.Glove200Ds;
-                        break;
-                    case GloveType.glove_6B_300d:
-                        queryable = context.Glove300Ds;
-                        break;
-                    default:
-                        throw new ArgumentException("GloveType not assigned");
-                }
+                IQueryable<IWord> queryable = GetProperDbSet(searchOptions, context);
 
                 var query = queryable.AsNoTracking().Where(x => string.IsNullOrEmpty(searchOptions.Text) || x.Text.Contains(searchOptions.Text));
 
@@ -72,6 +55,7 @@ namespace VectorSearch.EF.Commands
             }
         }
 
+
         public async Task<PagedResult<WordDto>> GetAllSimilarWords(SearchOptions searchOptions)
         {
             if (string.IsNullOrEmpty(searchOptions.Text))
@@ -87,24 +71,7 @@ namespace VectorSearch.EF.Commands
 
             using (var context = _contextFactory.Create())
             {
-                IQueryable<IWord> queryable;
-                switch (searchOptions.GloveType)
-                {
-                    case GloveType.glove_6B_50d:
-                        queryable = context.Glove50Ds;
-                        break;
-                    case GloveType.glove_6B_100d:
-                        queryable = context.Glove100Ds;
-                        break;
-                    case GloveType.glove_6B_200d:
-                        queryable = context.Glove200Ds;
-                        break;
-                    case GloveType.glove_6B_300d:
-                        queryable = context.Glove300Ds;
-                        break;
-                    default:
-                        throw new ArgumentException("GloveType not assigned");
-                }
+                IQueryable<IWord> queryable = GetProperDbSet(searchOptions, context);
 
                 var searchWord = await queryable
                     .Where(w => w.Text == searchOptions.Text)
@@ -163,6 +130,29 @@ namespace VectorSearch.EF.Commands
                     TotalRecords = totalRecords
                 };
             }
+        }
+        private static IQueryable<IWord> GetProperDbSet(SearchOptions searchOptions, VectorSearchDbContext context)
+        {
+            IQueryable<IWord> queryable;
+            switch (searchOptions.GloveType)
+            {
+                case GloveType.glove_6B_50d:
+                    queryable = context.Glove50Ds;
+                    break;
+                case GloveType.glove_6B_100d:
+                    queryable = context.Glove100Ds;
+                    break;
+                case GloveType.glove_6B_200d:
+                    queryable = context.Glove200Ds;
+                    break;
+                case GloveType.glove_6B_300d:
+                    queryable = context.Glove300Ds;
+                    break;
+                default:
+                    throw new ArgumentException("GloveType not assigned");
+            }
+
+            return queryable;
         }
 
     }
