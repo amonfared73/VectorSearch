@@ -6,7 +6,6 @@ using VectorSearch.Domain.Enums;
 using VectorSearch.Domain.Models;
 using VectorSearch.Domain.ViewModels;
 using VectorSearch.EF.Contexts;
-using VectorSearch.EF.Tools;
 
 namespace VectorSearch.EF.Commands
 {
@@ -89,7 +88,7 @@ namespace VectorSearch.EF.Commands
                     };
                 }
 
-                var targetVector = searchWord.Vector.ParseVector();
+                var targetVector = _mathService.ParseVector(searchWord.Vector);
 
                 var words = await queryable
                     .Where(w => !string.IsNullOrEmpty(w.Vector))
@@ -99,7 +98,7 @@ namespace VectorSearch.EF.Commands
                 var similarWords = words
                     .Select(word =>
                     {
-                        var wordVector = word.Vector.ParseVector();
+                        var wordVector = _mathService.ParseVector(word.Vector);
                         var similarity = _mathService.ComputeCosineSimilarity(targetVector, wordVector);
                         return new WordDto
                         {

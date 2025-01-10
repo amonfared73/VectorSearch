@@ -12,5 +12,15 @@ namespace VectorSearch.EF.Tools
 
             return dotProduct / (magnitudeA * magnitudeB);
         }
+
+        public double[] ParseVector(string vectorString)
+        {
+            return vectorString.Split(' ').Select(double.Parse).ToArray();
+        }
+
+        public string SerializeVector(double[] vector)
+        {
+            return string.Join(" ", vector);
+        }
     }
 }
