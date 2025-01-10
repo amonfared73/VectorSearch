@@ -55,7 +55,7 @@ namespace VectorSearch.EF.Commands
         }
 
 
-        public async Task<PagedResult<WordDto>> GetAllSimilarWords(SearchOptions searchOptions)
+        public async Task<PagedResult<WordDto>> GetAllSimilarWordsEF(SearchOptions searchOptions)
         {
             if (string.IsNullOrEmpty(searchOptions.Text))
             {
