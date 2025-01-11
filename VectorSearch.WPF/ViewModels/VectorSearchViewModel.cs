@@ -9,17 +9,17 @@ namespace VectorSearch.WPF.ViewModels
 {
     public class VectorSearchViewModel : ViewModelBase
     {
-        private string _errorMessage;
-        private bool _isLoading;
-        private string _searchText;
-        private bool _isVectorSearchEnabled;
-        private ObservableCollection<WordDto> _words;
-        private readonly VectorSearchStore _store;
-        private int _currentPage;
         private int _totalPages;
+        private bool _isLoading;
+        private int _currentPage;
         private int? _totalRecords;
-        private string? _paginationInfo;
+        private string _searchText;
+        private string _errorMessage;
         private GloveType _gloveType;
+        private string? _paginationInfo;
+        private bool _isVectorSearchEnabled;
+        private readonly VectorSearchStore _store;
+        private ObservableCollection<WordDto> _words;
 
         public GloveType GloveType
         {
