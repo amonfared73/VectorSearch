@@ -11,14 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorSearch.EF", "VectorSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorSearch.WPF", "VectorSearch.WPF\VectorSearch.WPF.csproj", "{0CBD430C-50F2-4B01-9821-ADF662241226}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VectorSearch.ScreenShots", "VectorSearch.ScreenShots", "{444E91CD-0837-4E3F-BD67-BD2272DF6687}"
-	ProjectSection(SolutionItems) = preProject
-		C:\Users\Asus\Desktop\post\1.png = C:\Users\Asus\Desktop\post\1.png
-		C:\Users\Asus\Desktop\post\2.png = C:\Users\Asus\Desktop\post\2.png
-		C:\Users\Asus\Desktop\post\3.png = C:\Users\Asus\Desktop\post\3.png
-		C:\Users\Asus\Desktop\post\4.png = C:\Users\Asus\Desktop\post\4.png
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
