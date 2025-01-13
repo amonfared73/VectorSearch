@@ -3,13 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorSearch.Domain", "VectorSearch.Domain\VectorSearch.Domain.csproj", "{0C130902-5434-4B85-A2EE-A0ADEFE58D58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorSearch.Domain", "VectorSearch.Domain\VectorSearch.Domain.csproj", "{0C130902-5434-4B85-A2EE-A0ADEFE58D58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorSearch.ApplicationService", "VectorSearch.ApplicationService\VectorSearch.ApplicationService.csproj", "{C5864D04-8A17-4A10-986C-021CE41E0996}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorSearch.ApplicationService", "VectorSearch.ApplicationService\VectorSearch.ApplicationService.csproj", "{C5864D04-8A17-4A10-986C-021CE41E0996}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorSearch.EF", "VectorSearch.EF\VectorSearch.EF.csproj", "{7520377C-55E0-48E9-A0E4-12547DA440BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorSearch.EF", "VectorSearch.EF\VectorSearch.EF.csproj", "{7520377C-55E0-48E9-A0E4-12547DA440BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorSearch.WPF", "VectorSearch.WPF\VectorSearch.WPF.csproj", "{0CBD430C-50F2-4B01-9821-ADF662241226}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorSearch.WPF", "VectorSearch.WPF\VectorSearch.WPF.csproj", "{0CBD430C-50F2-4B01-9821-ADF662241226}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VectorSearch.ScreenShots", "VectorSearch.ScreenShots", "{444E91CD-0837-4E3F-BD67-BD2272DF6687}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\Asus\Desktop\post\1.png = C:\Users\Asus\Desktop\post\1.png
+		C:\Users\Asus\Desktop\post\2.png = C:\Users\Asus\Desktop\post\2.png
+		C:\Users\Asus\Desktop\post\3.png = C:\Users\Asus\Desktop\post\3.png
+		C:\Users\Asus\Desktop\post\4.png = C:\Users\Asus\Desktop\post\4.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
