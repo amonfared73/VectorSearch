@@ -76,7 +76,7 @@ The application is built with a clean architecture design, consisting of four la
 4. View results displayed in the application.
 
 ## Screenshots
-![ScreenShots](VectorSearch.WPF.ScreenShots/1.png)
+![ScreenShots](VectorSearch.WPF/ScreenShots/1.png)
 
 ## Folder Structure
 
