@@ -2,6 +2,7 @@
 using VectorSearch.Domain.Enums;
 using VectorSearch.WPF.Services;
 using VectorSearch.WPF.Stores;
+using VectorSearch.WPF.Tools;
 using VectorSearch.WPF.ViewModels;
 
 namespace VectorSearch.WPF.Commands
@@ -35,7 +36,7 @@ namespace VectorSearch.WPF.Commands
                 {
                     Text = _vectorSearchViewModel.SearchText,
                     IsVectorSearchEnabled = _vectorSearchViewModel.IsVectorSearchEnabled,
-                    PageNumber = getPageNumber(_paginationType),
+                    PageNumber = _vectorSearchViewModel.GetPageNumber(_paginationType),
                     GloveType = _vectorSearchViewModel.GloveType
                 });
             }
@@ -52,26 +53,6 @@ namespace VectorSearch.WPF.Commands
             {
                 _vectorSearchViewModel.IsLoading = false;
             }
-        }
-
-        private int getPageNumber(PaginationType paginationType)
-        {
-            int pageNumber;
-            switch (paginationType)
-            {
-                case PaginationType.CurrentPage:
-                    pageNumber = _vectorSearchViewModel.CurrentPage;
-                    break;
-                case PaginationType.NextPage:
-                    pageNumber = _vectorSearchViewModel.NextPage;
-                    break;
-                case PaginationType.PreviousPage:
-                    pageNumber = _vectorSearchViewModel.PreviousPage;
-                    break;
-                default:
-                    throw new ArgumentException("PaginationType not assigned");
-            }
-            return pageNumber;
         }
     }
 }
