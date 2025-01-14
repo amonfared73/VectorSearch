@@ -10,6 +10,9 @@
     <Window.DataContext>
         <vms:DialogBoxViewModel/>
     </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CloseCommand}" Key="Escape" />
+    </Window.InputBindings>
     <Border BorderBrush="Black" BorderThickness="2">
         <Grid>
             <TextBlock Text="{Binding Title}"  FontSize="16" FontWeight="Bold" VerticalAlignment="Top" Margin="10"/>

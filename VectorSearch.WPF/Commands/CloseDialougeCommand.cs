@@ -1,4 +1,5 @@
-﻿using VectorSearch.WPF.ViewModels;
+﻿using System.Windows;
+using VectorSearch.WPF.ViewModels;
 
 namespace VectorSearch.WPF.Commands
 {
@@ -12,7 +13,7 @@ namespace VectorSearch.WPF.Commands
 
         public override void Execute(object? parameter)
         {
-            _dialogBoxViewModel.IsVisible = false;
+            Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == _dialogBoxViewModel)?.Close();
         }
     }
 }
