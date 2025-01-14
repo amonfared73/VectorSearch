@@ -37,7 +37,7 @@ namespace VectorSearch.WPF
 
             var mainWindow = new MainWindow()
             {
-                DataContext = new VectorSearchViewModel(_store)
+                DataContext = new MainViewModel(_store)
             };
             mainWindow.Show();
             base.OnStartup(e);
