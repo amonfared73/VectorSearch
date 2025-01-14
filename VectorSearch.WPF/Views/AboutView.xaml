@@ -4,10 +4,108 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VectorSearch.WPF.Views"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="{Binding Text}"/>
-        <Button Content="Navigate Home" Command="{Binding NavigateHomeCommand}"/>
-    </Grid>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+        <StackPanel Margin="10">
+            <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="Bold" Margin="0,0,0,10" />
+
+            <TextBlock Text="This repository contains a C# WPF application designed for searching over four pre-trained GloVe dictionaries. The application provides two search approaches: Simple Search and Vector Search, enabling efficient and intelligent exploration of word embeddings." TextWrapping="Wrap" Margin="0,0,0,10" />
+
+            <TextBlock Text="Features" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" />
+
+            <TextBlock Text="GloVe Dictionaries" FontWeight="Bold" Margin="0,5,0,5" />
+            <TextBlock Text="The application supports the following GloVe pre-trained models:" Margin="0,0,0,5" />
+            <TextBlock Text="- glove_6B_50d: 50 dimensions" Margin="10,0,0,0" />
+            <TextBlock Text="- glove_6B_100d: 100 dimensions" Margin="10,0,0,0" />
+            <TextBlock Text="- glove_6B_200d: 200 dimensions" Margin="10,0,0,0" />
+            <TextBlock Text="- glove_6B_300d: 300 dimensions" Margin="10,0,0,0" />
+
+            <TextBlock Text="Search Approaches" FontWeight="Bold" Margin="0,10,0,5" />
+            <TextBlock Text="1. Simple Search: Uses a LIKE query to match words similar to the given input." Margin="10,0,0,5" />
+            <TextBlock Text="2. Vector Search: Finds words with similar meanings based on cosine similarity of word vectors." Margin="10,0,0,5" />
+
+            <TextBlock Text="Architecture" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" />
+            <TextBlock Text="The application is built with a clean architecture design, consisting of four layers:" Margin="0,0,0,5" />
+
+            <TextBlock Text="Domain Layer:" FontWeight="Bold" Margin="0,5,0,5" />
+            <TextBlock Text="- Contains the core business logic." Margin="10,0,0,0" />
+            <TextBlock Text="- Defines the Word entity with properties:" Margin="10,0,0,0" />
+            <TextBlock Text="  - Text: The word string." Margin="20,0,0,0" />
+            <TextBlock Text="  - Vector: A double array representing the word embedding." Margin="20,0,0,0" />
+            <TextBlock Text="  - DictionaryTypeId: Refers to the specific GloVe dictionary." Margin="20,0,0,0" />
+
+            <TextBlock Text="Application Service Layer:" FontWeight="Bold" Margin="0,5,0,5" />
+            <TextBlock Text="- Contains services for executing search operations." Margin="10,0,0,0" />
+            <TextBlock Text="- Implements logic for simple and vector search queries." Margin="10,0,0,0" />
+
+            <TextBlock Text="Entity Framework Layer:" FontWeight="Bold" Margin="0,5,0,5" />
+            <TextBlock Text="- Acts as the data access layer." Margin="10,0,0,0" />
+            <TextBlock Text="- Interacts with the SQL Server database using Entity Framework." Margin="10,0,0,0" />
+            <TextBlock Text="- Stores GloVe word embeddings in the dbo.Words table with columns:" Margin="10,0,0,0" />
+            <TextBlock Text="  - Id: Unique identifier." Margin="20,0,0,0" />
+            <TextBlock Text="  - Text: Word string." Margin="20,0,0,0" />
+            <TextBlock Text="  - Vector: Word vector serialized as nvarchar(max)." Margin="20,0,0,0" />
+            <TextBlock Text="  - DictionaryTypeId: GloVe dictionary identifier." Margin="20,0,0,0" />
+
+            <TextBlock Text="WPF (UI) Layer:" FontWeight="Bold" Margin="0,5,0,5" />
+            <TextBlock Text="- Provides a user-friendly interface." Margin="10,0,0,0" />
+            <TextBlock Text="- Allows users to select a GloVe dictionary and choose between simple or vector search." Margin="10,0,0,0" />
+            <TextBlock Text="- Displays search results in a list." Margin="10,0,0,0" />
+
+            <TextBlock Text="Prerequisites" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" />
+            <TextBlock Text="- .NET Framework/SDK (compatible with WPF)" Margin="10,0,0,0" />
+            <TextBlock Text="- SQL Server database" Margin="10,0,0,0" />
+            <TextBlock Text="- GloVe pre-trained model files" Margin="10,0,0,0" />
+
+            <TextBlock Text="Installation and Setup" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" />
+            <TextBlock Text="1. Clone the Repository:" FontWeight="Bold" Margin="0,5,0,0" />
+            <TextBlock Text="git clone https://github.com/amonfared73/VectorSearch" Margin="20,0,0,5" FontFamily="Consolas" />
+            <TextBlock Text="2. Configure the Database:" FontWeight="Bold" Margin="0,5,0,0" />
+            <TextBlock Text="- Ensure the SQL Server database is running." Margin="10,0,0,0" />
+            <TextBlock Text="- Create a dbo.Words table with the appropriate schema." Margin="10,0,0,0" />
+            <TextBlock Text="- Import GloVe data into the database. The application supports models such as glove.6B.50d.txt." Margin="10,0,0,0" />
+            <TextBlock Text="3. Build and Run:" FontWeight="Bold" Margin="0,5,0,0" />
+            <TextBlock Text="- Open the solution in Visual Studio." Margin="10,0,0,0" />
+            <TextBlock Text="- Build the project to restore dependencies." Margin="10,0,0,0" />
+            <TextBlock Text="- Run the application." Margin="10,0,0,0" />
+
+            <TextBlock Text="Usage" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" />
+            <TextBlock Text="1. Launch the application." Margin="10,0,0,0" />
+            <TextBlock Text="2. Select one of the four GloVe dictionaries." Margin="10,0,0,0" />
+            <TextBlock Text="3. Choose a search approach:" Margin="10,0,0,0" />
+            <TextBlock Text="- Simple Search: Enter a word or partial text to find similar matches." Margin="20,0,0,0" />
+            <TextBlock Text="- Vector Search: Enter a word to retrieve words with similar meanings based on cosine similarity." Margin="20,0,0,0" />
+            <TextBlock Text="4. View results displayed in the application." Margin="10,0,0,0" />
+
+            <TextBlock Text="Folder Structure" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" />
+            <TextBlock Text="." Margin="10,0,0,0" FontFamily="Consolas" />
+            <TextBlock Text="├── Domain                  # Core business logic and entities" Margin="20,0,0,0" FontFamily="Consolas" />
+            <TextBlock Text="├── ApplicationService      # Services for handling search operations" Margin="20,0,0,0" FontFamily="Consolas" />
+            <TextBlock Text="├── EntityFramework         # Data access and database interaction" Margin="20,0,0,0" FontFamily="Consolas" />
+            <TextBlock Text="├── WPF                     # User interface layer" Margin="20,0,0,0" FontFamily="Consolas" />
+            <TextBlock Text="└── README.md               # Project documentation" Margin="20,0,0,0" FontFamily="Consolas" />
+
+            <TextBlock Text="Future Enhancements" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" />
+            <TextBlock Text="- Add support for additional pre-trained word embeddings." Margin="10,0,0,0" />
+            <TextBlock Text="- Optimize vector search performance with advanced indexing techniques." Margin="10,0,0,0" />
+            <TextBlock Text="- Improve the UI/UX for better usability." Margin="10,0,0,0" />
+
+            <TextBlock Text="Contributing" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" />
+            <TextBlock Text="Contributions are welcome! Please create a pull request or open an issue to discuss improvements or bugs." TextWrapping="Wrap" Margin="0,0,0,10" />
+
+            <TextBlock Text="Contact" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" />
+            <TextBlock Text="For inquiries or support, contact amonfared73@gmail.com" TextWrapping="Wrap" Margin="0,0,0,10" />
+            <Button Content="Navigate Home" Command="{Binding NavigateHomeCommand}" Margin="10"/>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
