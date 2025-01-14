@@ -36,7 +36,7 @@ namespace VectorSearch.WPF
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = new AboutViewModel(_navigationStore, _vectorSearchStore);
+            _navigationStore.CurrentViewModel = new VectorSearchViewModel(_navigationStore, _vectorSearchStore);
             var mainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_vectorSearchStore, _navigationStore)

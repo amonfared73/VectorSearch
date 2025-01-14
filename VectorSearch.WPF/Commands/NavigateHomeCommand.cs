@@ -15,7 +15,7 @@ namespace VectorSearch.WPF.Commands
 
         public override void Execute(object? parameter)
         {
-            _navigationStore.CurrentViewModel = new VectorSearchViewModel(_vectorSearchStore);
+            _navigationStore.CurrentViewModel = new VectorSearchViewModel(_navigationStore, _vectorSearchStore);
         }
     }
 }

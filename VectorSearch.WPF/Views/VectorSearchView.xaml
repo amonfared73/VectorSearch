@@ -20,6 +20,12 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
         <StackPanel VerticalAlignment="Center" Style="{StaticResource StackPanelLoadingStyle}">
             <loadingspinnercontrol:LoadingSpinner Diameter="100" Thickness="2" IsLoading="True"/>
             <TextBlock Text="Loading words ..." VerticalAlignment="Center" TextAlignment="Center" Margin="0 5 0 0"/>
@@ -79,5 +85,7 @@
                 <Button Margin="5" Content="Next" Width="75" Height="30" Command="{Binding NextPageCommand}" />
             </StackPanel>
         </Grid>
+    </Grid>
+        <Button Content="About" Grid.Row="1" Command="{Binding NavigateAboutCommand}" Margin="10"/>
     </Grid>
 </UserControl>

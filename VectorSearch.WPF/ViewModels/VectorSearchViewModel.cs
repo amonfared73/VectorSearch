@@ -18,7 +18,7 @@ namespace VectorSearch.WPF.ViewModels
         private GloveType _gloveType;
         private string? _paginationInfo;
         private bool _isVectorSearchEnabled;
-        private readonly VectorSearchStore _store;
+        private readonly VectorSearchStore _vectorSearchStore;
         private ObservableCollection<WordDto> _words;
 
         public GloveType GloveType
@@ -70,34 +70,36 @@ namespace VectorSearch.WPF.ViewModels
             set { _words = value; OnPropertyChanged(nameof(Words)); }
         }
 
+        public ICommand NavigateAboutCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand PreviousPageCommand { get; set; }
         public ICommand NextPageCommand { get; set; }
         public string? PaginationInfo => $"PageNumber: {CurrentPage}, TotalPages: {TotalPages}, TotalRecords: {TotalRecords}";
         public bool IsGloveTypeEnabled => IsVectorSearchEnabled;
 
-        public VectorSearchViewModel(VectorSearchStore store)
+        public VectorSearchViewModel(NavigationStore navigationStore, VectorSearchStore vectorSearchStore)
         {
-            _store = store;
+            _vectorSearchStore = vectorSearchStore;
             CurrentPage = 1;
             GloveType = GloveType.glove_6B_50d;
             Words = new ObservableCollection<WordDto>();
-            SearchCommand = new LoadWordsCommand(this, _store);
-            PreviousPageCommand = new PreviousPageCommand(this, _store);
-            NextPageCommand = new NextPageCommand(this, _store);
-            _store.WordsLoaded += OnWordsLoaded;
+            SearchCommand = new LoadWordsCommand(this, _vectorSearchStore);
+            PreviousPageCommand = new PreviousPageCommand(this, _vectorSearchStore);
+            NextPageCommand = new NextPageCommand(this, _vectorSearchStore);
+            NavigateAboutCommand = new NavigateAboutCommand(navigationStore, _vectorSearchStore);
+            _vectorSearchStore.WordsLoaded += OnWordsLoaded;
         }
 
         private void OnWordsLoaded()
         {
             _words.Clear();
-            foreach (var word in _store.PagedWords.Data)
+            foreach (var word in _vectorSearchStore.PagedWords.Data)
             {
                 AddWord(word);
             }
-            CurrentPage = _store.PagedWords.CurrentPage;
-            TotalPages = _store.PagedWords.TotalPages;
-            TotalRecords = _store.PagedWords.TotalRecords;
+            CurrentPage = _vectorSearchStore.PagedWords.CurrentPage;
+            TotalPages = _vectorSearchStore.PagedWords.TotalPages;
+            TotalRecords = _vectorSearchStore.PagedWords.TotalRecords;
         }
 
         private void AddWord(WordDto word)
