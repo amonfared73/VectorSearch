@@ -1,4 +1,5 @@
-﻿using VectorSearch.Domain.DTOs;
+﻿using System.Windows;
+using VectorSearch.Domain.DTOs;
 using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
 
@@ -34,6 +35,7 @@ namespace VectorSearch.WPF.Commands
             catch (Exception ex)
             {
                 _vectorSearchViewModel.ErrorMessage = ex.Message ?? "Some error occured";
+                MessageBox.Show(ex.Message);
             }
             finally
             {
