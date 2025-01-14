@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using VectorSearch.Domain.DTOs;
+using VectorSearch.WPF.Services;
 using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
 
@@ -9,11 +10,13 @@ namespace VectorSearch.WPF.Commands
     {
         private readonly VectorSearchViewModel _vectorSearchViewModel;
         private readonly VectorSearchStore _vectorSearchStore;
+        private readonly IDialougeService _dialougeService;
 
-        public NextPageCommand(VectorSearchViewModel vectorSearchViewModel, VectorSearchStore vectorSearchStore)
+        public NextPageCommand(VectorSearchViewModel vectorSearchViewModel, VectorSearchStore vectorSearchStore, IDialougeService dialougeService)
         {
             _vectorSearchViewModel = vectorSearchViewModel;
             _vectorSearchStore = vectorSearchStore;
+            _dialougeService = dialougeService;
         }
         public override bool CanExecute(object? parameter)
         {
@@ -35,7 +38,7 @@ namespace VectorSearch.WPF.Commands
             catch (Exception ex)
             {
                 _vectorSearchViewModel.ErrorMessage = ex.Message ?? "Some error occured";
-                MessageBox.Show(ex.Message);
+                _dialougeService.ShowDialouge();
             }
             finally
             {

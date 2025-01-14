@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using VectorSearch.WPF.Commands;
+using VectorSearch.WPF.Services;
 using VectorSearch.WPF.Stores;
 
 namespace VectorSearch.WPF.ViewModels
@@ -9,10 +10,10 @@ namespace VectorSearch.WPF.ViewModels
         private readonly VectorSearchStore _vectorSearchStore;
         public string Title => "GloVe Word Search Application";
         public ICommand NavigateHomeCommand { get; set; }
-        public AboutViewModel(NavigationStore navigationStore, VectorSearchStore vectorSearchStore)
+        public AboutViewModel(NavigationStore navigationStore, VectorSearchStore vectorSearchStore, IDialougeService dialougeService)
         {
             _vectorSearchStore = vectorSearchStore;
-            NavigateHomeCommand = new NavigateCommand<VectorSearchViewModel>(navigationStore, _vectorSearchStore, () => new VectorSearchViewModel(navigationStore, _vectorSearchStore));
+            NavigateHomeCommand = new NavigateCommand<VectorSearchViewModel>(navigationStore, _vectorSearchStore, () => new VectorSearchViewModel(navigationStore, _vectorSearchStore, dialougeService));
         }
     }
 }

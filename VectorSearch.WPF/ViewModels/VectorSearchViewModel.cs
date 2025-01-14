@@ -3,6 +3,7 @@ using System.Windows.Input;
 using VectorSearch.Domain.DTOs;
 using VectorSearch.Domain.Enums;
 using VectorSearch.WPF.Commands;
+using VectorSearch.WPF.Services;
 using VectorSearch.WPF.Stores;
 
 namespace VectorSearch.WPF.ViewModels
@@ -77,16 +78,16 @@ namespace VectorSearch.WPF.ViewModels
         public string? PaginationInfo => $"PageNumber: {CurrentPage}, TotalPages: {TotalPages}, TotalRecords: {TotalRecords}";
         public bool IsGloveTypeEnabled => IsVectorSearchEnabled;
 
-        public VectorSearchViewModel(NavigationStore navigationStore, VectorSearchStore vectorSearchStore)
+        public VectorSearchViewModel(NavigationStore navigationStore, VectorSearchStore vectorSearchStore, IDialougeService dialougeService)
         {
             _vectorSearchStore = vectorSearchStore;
             CurrentPage = 1;
             GloveType = GloveType.glove_6B_50d;
             Words = new ObservableCollection<WordDto>();
-            SearchCommand = new LoadWordsCommand(this, _vectorSearchStore);
-            PreviousPageCommand = new PreviousPageCommand(this, _vectorSearchStore);
-            NextPageCommand = new NextPageCommand(this, _vectorSearchStore);
-            NavigateAboutCommand = new NavigateCommand<AboutViewModel>(navigationStore, _vectorSearchStore, () => new AboutViewModel(navigationStore, _vectorSearchStore));
+            SearchCommand = new LoadWordsCommand(this, _vectorSearchStore, dialougeService);
+            PreviousPageCommand = new PreviousPageCommand(this, _vectorSearchStore, dialougeService);
+            NextPageCommand = new NextPageCommand(this, _vectorSearchStore, dialougeService);
+            NavigateAboutCommand = new NavigateCommand<AboutViewModel>(navigationStore, _vectorSearchStore, () => new AboutViewModel(navigationStore, _vectorSearchStore, dialougeService));
             _vectorSearchStore.WordsLoaded += OnWordsLoaded;
         }
 

@@ -9,6 +9,7 @@ using VectorSearch.EF.Tools;
 using VectorSearch.Domain.Configurations;
 using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
+using VectorSearch.WPF.Services;
 
 namespace VectorSearch.WPF
 {
@@ -19,6 +20,7 @@ namespace VectorSearch.WPF
     {
         private readonly IMathService _mathService;
         private readonly IWordService _wordService;
+        private readonly IDialougeService _dialougeService;
         private readonly VectorSearchStore _vectorSearchStore;
         private readonly NavigationStore _navigationStore;
         private readonly VectorSearchDbContextFactory _contextFactory;
@@ -29,6 +31,7 @@ namespace VectorSearch.WPF
             LoadConfigurations();
             _contextFactory = new VectorSearchDbContextFactory(new DbContextOptionsBuilder<VectorSearchDbContext>().UseSqlServer(Options.ConnectionString).Options);
             _mathService = new MathService();
+            _dialougeService = new DialougeService();
             _wordService = new WordService(_contextFactory, _mathService, Options);
             _vectorSearchStore = new VectorSearchStore(_wordService);
             _navigationStore = new NavigationStore();
@@ -36,7 +39,7 @@ namespace VectorSearch.WPF
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = new VectorSearchViewModel(_navigationStore, _vectorSearchStore);
+            _navigationStore.CurrentViewModel = new VectorSearchViewModel(_navigationStore, _vectorSearchStore, _dialougeService);
             var mainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_vectorSearchStore, _navigationStore)
