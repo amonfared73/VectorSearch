@@ -6,25 +6,26 @@ using VectorSearch.WPF.ViewModels;
 
 namespace VectorSearch.WPF.Commands
 {
-    public class NextPageCommand : AsyncCommandBase
+    public class LoadCommand : AsyncCommandBase
     {
         private readonly PaginationType _paginationType;
         private readonly IDialougeService _dialougeService;
         private readonly VectorSearchStore _vectorSearchStore;
         private readonly VectorSearchViewModel _vectorSearchViewModel;
 
-        public NextPageCommand(VectorSearchViewModel vectorSearchViewModel, VectorSearchStore vectorSearchStore, IDialougeService dialougeService, PaginationType paginationType)
+        public LoadCommand(VectorSearchViewModel vectorSearchViewModel, VectorSearchStore vectorSearchStore, IDialougeService dialougeService, PaginationType paginationType)
         {
+            _paginationType = paginationType;
             _dialougeService = dialougeService;
             _vectorSearchStore = vectorSearchStore;
             _vectorSearchViewModel = vectorSearchViewModel;
-            _paginationType = paginationType;
         }
+
         public override bool CanExecute(object? parameter)
         {
             return !IsExecuting && base.CanExecute(parameter);
         }
-        public async override Task ExecuteAsync(object? parameter)
+        public override async Task ExecuteAsync(object? parameter)
         {
             _vectorSearchViewModel.ErrorMessage = null;
             _vectorSearchViewModel.IsLoading = true;
@@ -52,6 +53,7 @@ namespace VectorSearch.WPF.Commands
                 _vectorSearchViewModel.IsLoading = false;
             }
         }
+
         private int getPageNumber(PaginationType paginationType)
         {
             int pageNumber;

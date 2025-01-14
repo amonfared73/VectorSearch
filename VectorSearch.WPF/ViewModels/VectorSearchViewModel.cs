@@ -33,6 +33,9 @@ namespace VectorSearch.WPF.ViewModels
             set { if (_currentPage != value) { _currentPage = value; OnPropertyChanged(nameof(CurrentPage)); OnPropertyChanged(nameof(Words)); OnPropertyChanged(nameof(PaginationInfo)); } }
         }
 
+        public int NextPage => CurrentPage < TotalPages ? CurrentPage + 1 : TotalPages;
+        public int PreviousPage => CurrentPage > 1 ? CurrentPage - 1 : 1;
+
         public int TotalPages
         {
             get { return _totalPages; }
@@ -84,9 +87,9 @@ namespace VectorSearch.WPF.ViewModels
             CurrentPage = 1;
             GloveType = GloveType.glove_6B_50d;
             Words = new ObservableCollection<WordDto>();
-            SearchCommand = new LoadWordsCommand(this, _vectorSearchStore, dialougeService);
-            PreviousPageCommand = new PreviousPageCommand(this, _vectorSearchStore, dialougeService);
-            NextPageCommand = new NextPageCommand(this, _vectorSearchStore, dialougeService);
+            SearchCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.CurrentPage);
+            PreviousPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.PreviousPage);
+            NextPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.NextPage);
             NavigateAboutCommand = new NavigateCommand<AboutViewModel>(navigationStore, _vectorSearchStore, () => new AboutViewModel(navigationStore, _vectorSearchStore, dialougeService));
             _vectorSearchStore.WordsLoaded += OnWordsLoaded;
         }

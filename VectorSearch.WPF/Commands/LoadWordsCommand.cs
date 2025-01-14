@@ -1,4 +1,5 @@
 ﻿using VectorSearch.Domain.DTOs;
+using VectorSearch.Domain.Enums;
 using VectorSearch.WPF.Services;
 using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
@@ -7,12 +8,14 @@ namespace VectorSearch.WPF.Commands
 {
     public class LoadWordsCommand : AsyncCommandBase
     {
+        private readonly PaginationType _paginationType;
         private readonly IDialougeService _dialougeService;
         private readonly VectorSearchStore _vectorSearchStore;
         private readonly VectorSearchViewModel _vectorSearchViewModel;
 
-        public LoadWordsCommand(VectorSearchViewModel vectorSearchViewModel, VectorSearchStore vectorSearchStore, IDialougeService dialougeService)
+        public LoadWordsCommand(VectorSearchViewModel vectorSearchViewModel, VectorSearchStore vectorSearchStore, IDialougeService dialougeService, PaginationType paginationType)
         {
+            _paginationType = paginationType;
             _dialougeService = dialougeService;
             _vectorSearchStore = vectorSearchStore;
             _vectorSearchViewModel = vectorSearchViewModel;
@@ -31,7 +34,7 @@ namespace VectorSearch.WPF.Commands
                 {
                     Text = _vectorSearchViewModel.SearchText,
                     IsVectorSearchEnabled = _vectorSearchViewModel.IsVectorSearchEnabled,
-                    PageNumber = _vectorSearchViewModel.CurrentPage,
+                    PageNumber = getPageNumber(_paginationType),
                     GloveType = _vectorSearchViewModel.GloveType
                 });
             }
@@ -48,6 +51,26 @@ namespace VectorSearch.WPF.Commands
             {
                 _vectorSearchViewModel.IsLoading = false;
             }
+        }
+
+        private int getPageNumber(PaginationType paginationType)
+        {
+            int pageNumber;
+            switch(paginationType)
+            {
+                case PaginationType.CurrentPage:
+                    pageNumber = _vectorSearchViewModel.CurrentPage;
+                    break;
+                case PaginationType.NextPage:
+                    pageNumber = _vectorSearchViewModel.NextPage;
+                    break;
+                case PaginationType.PreviousPage:
+                    pageNumber = _vectorSearchViewModel.PreviousPage;
+                    break;
+                default:
+                    throw new ArgumentException("PaginationType not assigned");
+            }
+            return pageNumber;
         }
     }
 }
