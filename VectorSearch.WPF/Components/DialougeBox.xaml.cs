@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using VectorSearch.Domain.Configurations;
 using VectorSearch.WPF.ViewModels;
 
 namespace VectorSearch.WPF.Components
@@ -8,14 +9,14 @@ namespace VectorSearch.WPF.Components
     /// </summary>
     public partial class DialougeBox : Window
     {
-        public DialougeBox(string title = "Error", string message = "Some error occured", string closeText = "OK")
+        public DialougeBox(DialougeBoxOptions options)
         {
             InitializeComponent();
             DataContext = new DialogBoxViewModel()
             {
-                Title = title,
-                Message = message,
-                CloseText = closeText
+                Title = options.Title,
+                Message = options.Message,
+                CloseText = options.CloseText
             };
         }
     }
