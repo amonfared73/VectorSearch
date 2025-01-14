@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using VectorSearch.Domain.DTOs;
+﻿using VectorSearch.Domain.DTOs;
 using VectorSearch.WPF.Services;
 using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
@@ -8,15 +7,15 @@ namespace VectorSearch.WPF.Commands
 {
     public class NextPageCommand : AsyncCommandBase
     {
-        private readonly VectorSearchViewModel _vectorSearchViewModel;
-        private readonly VectorSearchStore _vectorSearchStore;
         private readonly IDialougeService _dialougeService;
+        private readonly VectorSearchStore _vectorSearchStore;
+        private readonly VectorSearchViewModel _vectorSearchViewModel;
 
         public NextPageCommand(VectorSearchViewModel vectorSearchViewModel, VectorSearchStore vectorSearchStore, IDialougeService dialougeService)
         {
-            _vectorSearchViewModel = vectorSearchViewModel;
-            _vectorSearchStore = vectorSearchStore;
             _dialougeService = dialougeService;
+            _vectorSearchStore = vectorSearchStore;
+            _vectorSearchViewModel = vectorSearchViewModel;
         }
         public override bool CanExecute(object? parameter)
         {
