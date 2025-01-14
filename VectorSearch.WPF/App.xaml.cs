@@ -19,7 +19,8 @@ namespace VectorSearch.WPF
     {
         private readonly IMathService _mathService;
         private readonly IWordService _wordService;
-        private readonly VectorSearchStore _store;
+        private readonly VectorSearchStore _vectorSearchStore;
+        private readonly NavigationStore _navigationStore;
         private readonly VectorSearchDbContextFactory _contextFactory;
 
         public VectorSearchOptions Options { get; set; }
@@ -29,15 +30,16 @@ namespace VectorSearch.WPF
             _contextFactory = new VectorSearchDbContextFactory(new DbContextOptionsBuilder<VectorSearchDbContext>().UseSqlServer(Options.ConnectionString).Options);
             _mathService = new MathService();
             _wordService = new WordService(_contextFactory, _mathService, Options);
-            _store = new VectorSearchStore(_wordService);
+            _vectorSearchStore = new VectorSearchStore(_wordService);
+            _navigationStore = new NavigationStore();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-
+            _navigationStore.CurrentViewModel = new AboutViewModel(_navigationStore, _vectorSearchStore);
             var mainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_store)
+                DataContext = new MainViewModel(_vectorSearchStore, _navigationStore)
             };
             mainWindow.Show();
             base.OnStartup(e);
