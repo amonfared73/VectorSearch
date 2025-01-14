@@ -1,9 +1,12 @@
-﻿namespace VectorSearch.Domain.Configurations
+﻿using System.Windows.Input;
+
+namespace VectorSearch.Domain.Configurations
 {
     public class DialougeBoxOptions
     {
         public string Title { get; set; } = "Error";
         public string Message { get; set; } = "Some error occured";
         public string CloseText { get; set; } = "Ok";
+        public ICommand CloseCommand { get; set; }
     }
 }

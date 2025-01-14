@@ -8,5 +8,9 @@ namespace VectorSearch.WPF.ViewModels
         public string Message { get; set; }
         public ICommand CloseCommand { get; set; }
         public string CloseText { get; set; }
+        public DialogBoxViewModel()
+        {
+            CloseCommand = null;
+        }
     }
 }
