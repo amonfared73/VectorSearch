@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using VectorSearch.WPF.ViewModels;
 
 namespace VectorSearch.WPF.Components
 {
@@ -19,9 +8,15 @@ namespace VectorSearch.WPF.Components
     /// </summary>
     public partial class DialougeBox : Window
     {
-        public DialougeBox()
+        public DialougeBox(string title = "Error", string message = "Some error occured", string closeText = "OK")
         {
             InitializeComponent();
+            DataContext = new DialogBoxViewModel()
+            {
+                Title = title,
+                Message = message,
+                CloseText = closeText
+            };
         }
     }
 }

@@ -4,9 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VectorSearch.WPF.Components"
-        mc:Ignorable="d"
-        Title="DialougeBox" Height="450" Width="800">
-    <Grid>
-        <TextBlock Text="This is a dialougeBox" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="72"/>
-    </Grid>
+        xmlns:vms="clr-namespace:VectorSearch.WPF.ViewModels"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        WindowStyle="None" mc:Ignorable="d" Height="200" Width="400">
+    <Window.DataContext>
+        <vms:DialogBoxViewModel/>
+    </Window.DataContext>
+    <Border BorderBrush="Black" BorderThickness="2">
+        <Grid>
+            <TextBlock Text="{Binding Title}"  FontSize="16" FontWeight="Bold" VerticalAlignment="Top" Margin="10"/>
+            <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Margin="10,40,10,60"/>
+            <Button Content="{Binding CloseText}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Width="75" Command="{Binding CloseCommand}" />
+        </Grid>
+    </Border>
 </Window>
