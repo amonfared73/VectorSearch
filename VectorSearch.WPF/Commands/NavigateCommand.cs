@@ -3,19 +3,22 @@ using VectorSearch.WPF.ViewModels;
 
 namespace VectorSearch.WPF.Commands
 {
-    public class NavigateHomeCommand : CommandBase
+    public class NavigateCommand<TViewModel> : CommandBase where TViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
         private readonly VectorSearchStore _vectorSearchStore;
-        public NavigateHomeCommand(NavigationStore navigationStore, VectorSearchStore vectorSearchStore)
+        private readonly Func<TViewModel> _createViewmodel;
+
+        public NavigateCommand(NavigationStore navigationStore, VectorSearchStore vectorSearchStore, Func<TViewModel> createViewmodel)
         {
             _navigationStore = navigationStore;
             _vectorSearchStore = vectorSearchStore;
+            _createViewmodel = createViewmodel;
         }
 
         public override void Execute(object? parameter)
         {
-            _navigationStore.CurrentViewModel = new VectorSearchViewModel(_navigationStore, _vectorSearchStore);
+            _navigationStore.CurrentViewModel = _createViewmodel();
         }
     }
 }

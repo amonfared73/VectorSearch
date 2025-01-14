@@ -12,7 +12,7 @@ namespace VectorSearch.WPF.ViewModels
         public AboutViewModel(NavigationStore navigationStore, VectorSearchStore vectorSearchStore)
         {
             _vectorSearchStore = vectorSearchStore;
-            NavigateHomeCommand = new NavigateHomeCommand(navigationStore, _vectorSearchStore);
+            NavigateHomeCommand = new NavigateCommand<VectorSearchViewModel>(navigationStore, _vectorSearchStore, () => new VectorSearchViewModel(navigationStore, _vectorSearchStore));
         }
     }
 }

@@ -86,7 +86,7 @@ namespace VectorSearch.WPF.ViewModels
             SearchCommand = new LoadWordsCommand(this, _vectorSearchStore);
             PreviousPageCommand = new PreviousPageCommand(this, _vectorSearchStore);
             NextPageCommand = new NextPageCommand(this, _vectorSearchStore);
-            NavigateAboutCommand = new NavigateAboutCommand(navigationStore, _vectorSearchStore);
+            NavigateAboutCommand = new NavigateCommand<AboutViewModel>(navigationStore, _vectorSearchStore, () => new AboutViewModel(navigationStore, _vectorSearchStore));
             _vectorSearchStore.WordsLoaded += OnWordsLoaded;
         }
 
