@@ -17,7 +17,6 @@ namespace VectorSearch.WPF.Components
                 Title = options.Title,
                 Message = options.Message,
                 CloseText = options.CloseText,
-                CloseCommand = options.CloseCommand,
             };
         }
     }
