@@ -37,8 +37,12 @@ namespace VectorSearch.WPF.Commands
             }
             catch (Exception ex)
             {
-                _vectorSearchViewModel.ErrorMessage = ex.Message ?? "Some error occured";
-                _dialougeService.ShowDialouge();
+                _dialougeService.ShowDialouge(options =>
+                {
+                    options.Title = "Error";
+                    options.Message = ex.Message;
+                    options.CloseText = "Close";
+                });
             }
             finally
             {

@@ -29,7 +29,6 @@ namespace VectorSearch.WPF.Commands
             _vectorSearchViewModel.IsLoading = true;
             try
             {
-                throw new Exception();
                 await _vectorSearchStore.Load(new SearchOptions()
                 {
                     Text = _vectorSearchViewModel.SearchText,
@@ -40,12 +39,11 @@ namespace VectorSearch.WPF.Commands
             }
             catch (Exception ex)
             {
-                _vectorSearchViewModel.ErrorMessage = ex.Message ?? "Some error occured";
                 _dialougeService.ShowDialouge(options =>
                 {
-                    options.Title = "Fake throw error";
-                    options.Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua";
-                    options.CloseText = "Close dialougeBox";
+                    options.Title = "Error";
+                    options.Message = ex.Message;
+                    options.CloseText = "Close";
                 });
             }
             finally
