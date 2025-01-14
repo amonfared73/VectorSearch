@@ -15,7 +15,13 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" >
         <StackPanel Margin="10">
             <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="Bold" Margin="0,0,0,10" />
 
@@ -105,7 +111,9 @@
 
             <TextBlock Text="Contact" FontSize="16" FontWeight="Bold" Margin="0,10,0,5" />
             <TextBlock Text="For inquiries or support, contact amonfared73@gmail.com" TextWrapping="Wrap" Margin="0,0,0,10" />
-            <Button Content="Navigate Home" Command="{Binding NavigateHomeCommand}" Margin="10"/>
+            
         </StackPanel>
     </ScrollViewer>
+        <Button Content="Home" Grid.Row="1" Command="{Binding NavigateHomeCommand}" Margin="10"/>
+    </Grid>
 </UserControl>
