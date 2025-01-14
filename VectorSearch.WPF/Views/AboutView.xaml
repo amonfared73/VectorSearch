@@ -114,6 +114,6 @@
             
         </StackPanel>
     </ScrollViewer>
-        <Button Content="Home" Grid.Row="1" Command="{Binding NavigateAboutCommand}" Margin="10"/>
+        <Button Content="Home" Grid.Row="1" Command="{Binding NavigateHomeCommand}" Margin="10"/>
     </Grid>
 </UserControl>
