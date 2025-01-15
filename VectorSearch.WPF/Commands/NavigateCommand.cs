@@ -1,24 +1,20 @@
-﻿using VectorSearch.WPF.Stores;
+﻿using VectorSearch.WPF.Services;
+using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
 
 namespace VectorSearch.WPF.Commands
 {
     public class NavigateCommand<TViewModel> : CommandBase where TViewModel : ViewModelBase
     {
-        private readonly NavigationStore _navigationStore;
-        private readonly VectorSearchStore _vectorSearchStore;
-        private readonly Func<TViewModel> _createViewmodel;
-
-        public NavigateCommand(NavigationStore navigationStore, VectorSearchStore vectorSearchStore, Func<TViewModel> createViewmodel)
+        private readonly NavigationService<TViewModel> _navigationService;
+        public NavigateCommand(NavigationService<TViewModel> navigationService)
         {
-            _navigationStore = navigationStore;
-            _vectorSearchStore = vectorSearchStore;
-            _createViewmodel = createViewmodel;
+            _navigationService = navigationService;
         }
 
         public override void Execute(object? parameter)
         {
-            _navigationStore.CurrentViewModel = _createViewmodel();
+            _navigationService.Navigate();
         }
     }
 }
