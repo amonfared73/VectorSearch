@@ -87,7 +87,7 @@
             </StackPanel>
         </Grid>
     </Grid>
-        <c:NavigationBar Grid.Row="1" DataContext="{Binding NavigationBarViewModel}"/>
+        <!--<c:NavigationBar Grid.Row="1" DataContext="{Binding NavigationBarViewModel}"/>-->
         <!--<Button Content="About" Grid.Row="1" Command="{Binding NavigateAboutCommand}" Margin="10"/>-->
     </Grid>
 </UserControl>

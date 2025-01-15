@@ -115,7 +115,7 @@
             
         </StackPanel>
     </ScrollViewer>
-        <c:NavigationBar Grid.Row="1" DataContext="{Binding NavigationBarViewModel}"/>
+        <!--<c:NavigationBar Grid.Row="1" DataContext="{Binding NavigationBarViewModel}"/>-->
         <!--<Button Content="Home" Grid.Row="1" Command="{Binding NavigateHomeCommand}" Margin="10"/>-->
     </Grid>
 </UserControl>

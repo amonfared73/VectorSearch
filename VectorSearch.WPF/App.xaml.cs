@@ -45,7 +45,7 @@ namespace VectorSearch.WPF
             homeNavigationService.Navigate();
             var mainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_vectorSearchStore, _navigationStore)
+                DataContext = new MainViewModel(_vectorSearchStore, _navigationStore, _navigationBarViewModel)
             };
             mainWindow.Show();
             base.OnStartup(e);
@@ -60,12 +60,12 @@ namespace VectorSearch.WPF
 
         private NavigationService<VectorSearchViewModel> CreateHomeNavigationService()
         {
-            return new NavigationService<VectorSearchViewModel>(_navigationStore, _vectorSearchStore, () => new VectorSearchViewModel(_vectorSearchStore, _dialougeService, _navigationBarViewModel, CreateAboutNavigationService()));
+            return new NavigationService<VectorSearchViewModel>(_navigationStore, _vectorSearchStore, () => new VectorSearchViewModel(_vectorSearchStore, _dialougeService, CreateAboutNavigationService()));
         }
 
         private NavigationService<AboutViewModel> CreateAboutNavigationService()
         {
-            return new NavigationService<AboutViewModel>(_navigationStore, _vectorSearchStore, () => new AboutViewModel(_vectorSearchStore, _dialougeService, _navigationBarViewModel, CreateHomeNavigationService()));
+            return new NavigationService<AboutViewModel>(_navigationStore, _vectorSearchStore, () => new AboutViewModel(_vectorSearchStore, _dialougeService, CreateHomeNavigationService()));
         }
     }
 

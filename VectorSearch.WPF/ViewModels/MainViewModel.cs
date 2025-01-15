@@ -6,12 +6,14 @@ namespace VectorSearch.WPF.ViewModels
     {
         private readonly NavigationStore _navigationStore;
         private readonly VectorSearchStore _vectorSearchStore;
+        public NavigationBarViewModel NavigationBarViewModel { get; }
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
-        public MainViewModel(VectorSearchStore vectorSearchStore, NavigationStore navigationStore)
+        public MainViewModel(VectorSearchStore vectorSearchStore, NavigationStore navigationStore, NavigationBarViewModel navigationBarViewModel)
         {
             _vectorSearchStore = vectorSearchStore;
             _navigationStore = navigationStore;
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+            NavigationBarViewModel = navigationBarViewModel;
         }
 
         private void OnCurrentViewModelChanged()

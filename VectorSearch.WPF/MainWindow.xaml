@@ -11,17 +11,30 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:vms="clr-namespace:VectorSearch.WPF.ViewModels" 
         xmlns:views="clr-namespace:VectorSearch.WPF.Views"
+        xmlns:c="clr-namespace:VectorSearch.WPF.Components"
         ui:WindowHelper.UseModernWindowStyle="True"
         mc:Ignorable="d" WindowState="Maximized"
         Title="Vector Search" Height="450" Width="800">
-    <ContentControl Content="{Binding CurrentViewModel}">
-        <ContentControl.Resources>
-            <DataTemplate DataType="{x:Type vms:VectorSearchViewModel}">
-                <views:VectorSearchView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:AboutViewModel}">
-                <views:AboutView/>
-            </DataTemplate>
-        </ContentControl.Resources>
-    </ContentControl>
+    
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0">
+            <ContentControl Content="{Binding CurrentViewModel}">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type vms:VectorSearchViewModel}">
+                        <views:VectorSearchView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vms:AboutViewModel}">
+                        <views:AboutView/>
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+        </Grid>
+        <c:NavigationBar Grid.Row="1" DataContext="{Binding NavigationBarViewModel}"/>
+    </Grid>
 </Window>
