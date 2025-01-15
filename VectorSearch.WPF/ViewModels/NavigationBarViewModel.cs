@@ -18,5 +18,9 @@ namespace VectorSearch.WPF.ViewModels
             NavigateAboutCommand = new NavigateCommand<AboutViewModel>(aboutNavigationService);
             _navigationStore = navigationStore;
         }
+        public override void Dispose()
+        {
+            base.Dispose();
+        }
     }
 }

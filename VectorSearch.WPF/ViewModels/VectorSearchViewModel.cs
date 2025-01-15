@@ -94,6 +94,15 @@ namespace VectorSearch.WPF.ViewModels
             _vectorSearchStore.WordsLoaded += OnWordsLoaded;
         }
 
+        public override void Dispose()
+        {
+            _vectorSearchStore.WordsLoaded -= OnWordsLoaded;
+            base.Dispose();
+        }
+        ~VectorSearchViewModel()
+        {
+
+        }
         private void OnWordsLoaded()
         {
             _words.Clear();
