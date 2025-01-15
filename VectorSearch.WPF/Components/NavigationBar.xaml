@@ -39,7 +39,7 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="0" Content="Home" Command="{Binding NavigateHomeCommand}"/>
-        <Button Grid.Column="1" Content="About" Command="{Binding NavigateAboutCommand}"/>
+        <Button Grid.Column="0" Content="Home" Command="{Binding NavigateHomeCommand}" IsEnabled="{Binding IsHomeEnabled}"/>
+        <Button Grid.Column="1" Content="About" Command="{Binding NavigateAboutCommand}" IsEnabled="{Binding IsAboutEnabled}"/>
     </Grid>
 </UserControl>

@@ -36,7 +36,7 @@ namespace VectorSearch.WPF
             _wordService = new WordService(_contextFactory, _mathService, Options);
             _vectorSearchStore = new VectorSearchStore(_wordService);
             _navigationStore = new NavigationStore();
-            _navigationBarViewModel = new NavigationBarViewModel(CreateHomeNavigationService(), CreateAboutNavigationService());
+            _navigationBarViewModel = new NavigationBarViewModel(CreateHomeNavigationService(), CreateAboutNavigationService(), _navigationStore);
         }
 
         protected override void OnStartup(StartupEventArgs e)
