@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:VectorSearch.WPF.Views"
              xmlns:enums="clr-namespace:VectorSearch.Domain.Enums;assembly=VectorSearch.Domain"
              xmlns:tools="clr-namespace:VectorSearch.WPF.Tools"
+             xmlns:c="clr-namespace:VectorSearch.WPF.Components"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:loadingspinnercontrol="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -86,6 +87,7 @@
             </StackPanel>
         </Grid>
     </Grid>
-        <Button Content="About" Grid.Row="1" Command="{Binding NavigateAboutCommand}" Margin="10"/>
+        <c:NavigationBar Grid.Row="1" DataContext="{Binding NavigationBarViewModel}"/>
+        <!--<Button Content="About" Grid.Row="1" Command="{Binding NavigateAboutCommand}" Margin="10"/>-->
     </Grid>
 </UserControl>

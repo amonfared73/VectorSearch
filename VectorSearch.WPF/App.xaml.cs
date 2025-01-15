@@ -60,12 +60,12 @@ namespace VectorSearch.WPF
 
         private NavigationService<VectorSearchViewModel> CreateHomeNavigationService()
         {
-            return new NavigationService<VectorSearchViewModel>(_navigationStore, _vectorSearchStore, () => new VectorSearchViewModel(_navigationStore, _vectorSearchStore, _dialougeService, _navigationBarViewModel));
+            return new NavigationService<VectorSearchViewModel>(_navigationStore, _vectorSearchStore, () => new VectorSearchViewModel(_vectorSearchStore, _dialougeService, _navigationBarViewModel, CreateAboutNavigationService()));
         }
 
         private NavigationService<AboutViewModel> CreateAboutNavigationService()
         {
-            return new NavigationService<AboutViewModel>(_navigationStore, _vectorSearchStore, () => new AboutViewModel(_navigationStore, _vectorSearchStore, _dialougeService, _navigationBarViewModel));
+            return new NavigationService<AboutViewModel>(_navigationStore, _vectorSearchStore, () => new AboutViewModel(_vectorSearchStore, _dialougeService, _navigationBarViewModel, CreateHomeNavigationService()));
         }
     }
 

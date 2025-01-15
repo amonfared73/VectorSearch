@@ -11,10 +11,10 @@ namespace VectorSearch.WPF.ViewModels
         public string Title => "GloVe Word Search Application";
         public NavigationBarViewModel NavigationBarViewModel { get; }
         public ICommand NavigateHomeCommand { get; set; }
-        public AboutViewModel(NavigationStore navigationStore, VectorSearchStore vectorSearchStore, IDialougeService dialougeService, NavigationBarViewModel navigationBarViewModel)
+        public AboutViewModel(VectorSearchStore vectorSearchStore, IDialougeService dialougeService, NavigationBarViewModel navigationBarViewModel, NavigationService<VectorSearchViewModel> homeNavigationSerice)
         {
             _vectorSearchStore = vectorSearchStore;
-            NavigateHomeCommand = new NavigateCommand<VectorSearchViewModel>(new NavigationService<VectorSearchViewModel>(navigationStore, _vectorSearchStore, () => new VectorSearchViewModel(navigationStore, _vectorSearchStore, dialougeService, navigationBarViewModel)));
+            NavigateHomeCommand = new NavigateCommand<VectorSearchViewModel>(homeNavigationSerice);
             NavigationBarViewModel = navigationBarViewModel;
         }
     }
