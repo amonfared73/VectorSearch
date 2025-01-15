@@ -22,6 +22,7 @@ namespace VectorSearch.WPF.ViewModels
         private readonly VectorSearchStore _vectorSearchStore;
         private ObservableCollection<WordDto> _words;
 
+        public NavigationBarViewModel NavigationBarViewModel { get; }
         public GloveType GloveType
         {
             get { return _gloveType; }
@@ -81,7 +82,7 @@ namespace VectorSearch.WPF.ViewModels
         public string? PaginationInfo => $"PageNumber: {CurrentPage}, TotalPages: {TotalPages}, TotalRecords: {TotalRecords}";
         public bool IsGloveTypeEnabled => IsVectorSearchEnabled;
 
-        public VectorSearchViewModel(NavigationStore navigationStore, VectorSearchStore vectorSearchStore, IDialougeService dialougeService)
+        public VectorSearchViewModel(NavigationStore navigationStore, VectorSearchStore vectorSearchStore, IDialougeService dialougeService, NavigationBarViewModel navigationBarViewModel)
         {
             _vectorSearchStore = vectorSearchStore;
             CurrentPage = 1;
@@ -90,8 +91,9 @@ namespace VectorSearch.WPF.ViewModels
             SearchCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.CurrentPage);
             PreviousPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.PreviousPage);
             NextPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.NextPage);
-            NavigateAboutCommand = new NavigateCommand<AboutViewModel>(new NavigationService<AboutViewModel>(navigationStore, _vectorSearchStore, () => new AboutViewModel(navigationStore, _vectorSearchStore, dialougeService)));
+            NavigateAboutCommand = new NavigateCommand<AboutViewModel>(new NavigationService<AboutViewModel>(navigationStore, _vectorSearchStore, () => new AboutViewModel(navigationStore, _vectorSearchStore, dialougeService, navigationBarViewModel)));
             _vectorSearchStore.WordsLoaded += OnWordsLoaded;
+            NavigationBarViewModel = navigationBarViewModel;
         }
 
         private void OnWordsLoaded()
