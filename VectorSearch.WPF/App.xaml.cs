@@ -24,7 +24,6 @@ namespace VectorSearch.WPF
         private readonly VectorSearchStore _vectorSearchStore;
         private readonly NavigationStore _navigationStore;
         private readonly VectorSearchDbContextFactory _contextFactory;
-        private readonly NavigationBarViewModel _navigationBarViewModel;
 
         public VectorSearchOptions Options { get; set; }
         public App()
@@ -36,16 +35,15 @@ namespace VectorSearch.WPF
             _wordService = new WordService(_contextFactory, _mathService, Options);
             _vectorSearchStore = new VectorSearchStore(_wordService);
             _navigationStore = new NavigationStore();
-            _navigationBarViewModel = new NavigationBarViewModel(CreateHomeNavigationService(), CreateAboutNavigationService(), _navigationStore);
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            NavigationService<VectorSearchViewModel> homeNavigationService = CreateHomeNavigationService();
+            INavigationService<VectorSearchViewModel> homeNavigationService = CreateHomeNavigationService();
             homeNavigationService.Navigate();
             var mainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_vectorSearchStore, _navigationStore, _navigationBarViewModel)
+                DataContext = new MainViewModel(_vectorSearchStore, _navigationStore)
             };
             mainWindow.Show();
             base.OnStartup(e);
@@ -58,14 +56,19 @@ namespace VectorSearch.WPF
             Options = JsonSerializer.Deserialize<VectorSearchOptions>(json);
         }
 
-        private NavigationService<VectorSearchViewModel> CreateHomeNavigationService()
+        private INavigationService<VectorSearchViewModel> CreateHomeNavigationService()
         {
-            return new NavigationService<VectorSearchViewModel>(_navigationStore, _vectorSearchStore, () => new VectorSearchViewModel(_vectorSearchStore, _dialougeService, CreateAboutNavigationService()));
+            return new LayoutNavigationService<VectorSearchViewModel>(_navigationStore, CreateNavigationbarViewModel, () => new VectorSearchViewModel(_vectorSearchStore, _dialougeService, CreateAboutNavigationService()));
         }
 
-        private NavigationService<AboutViewModel> CreateAboutNavigationService()
+        private INavigationService<AboutViewModel> CreateAboutNavigationService()
         {
-            return new NavigationService<AboutViewModel>(_navigationStore, _vectorSearchStore, () => new AboutViewModel(_vectorSearchStore, _dialougeService, CreateHomeNavigationService()));
+            return new LayoutNavigationService<AboutViewModel>(_navigationStore, CreateNavigationbarViewModel, () => new AboutViewModel(_vectorSearchStore, _dialougeService, CreateHomeNavigationService()));
+        }
+
+        private NavigationBarViewModel CreateNavigationbarViewModel()
+        {
+            return new NavigationBarViewModel(CreateHomeNavigationService(), CreateAboutNavigationService(), _navigationStore);
         }
     }
 

@@ -81,7 +81,7 @@ namespace VectorSearch.WPF.ViewModels
         public string? PaginationInfo => $"PageNumber: {CurrentPage}, TotalPages: {TotalPages}, TotalRecords: {TotalRecords}";
         public bool IsGloveTypeEnabled => IsVectorSearchEnabled;
 
-        public VectorSearchViewModel(VectorSearchStore vectorSearchStore, IDialougeService dialougeService, NavigationService<AboutViewModel> aboutNavigationService)
+        public VectorSearchViewModel(VectorSearchStore vectorSearchStore, IDialougeService dialougeService, INavigationService<AboutViewModel> aboutNavigationService)
         {
             _vectorSearchStore = vectorSearchStore;
             CurrentPage = 1;

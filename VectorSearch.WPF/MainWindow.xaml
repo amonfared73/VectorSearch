@@ -32,9 +32,12 @@
                     <DataTemplate DataType="{x:Type vms:AboutViewModel}">
                         <views:AboutView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type vms:LayoutViewModel}">
+                        <c:Layout/>
+                    </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
         </Grid>
-        <c:NavigationBar Grid.Row="1" DataContext="{Binding NavigationBarViewModel}"/>
+        <!--<c:NavigationBar Grid.Row="1" DataContext="{Binding NavigationBarViewModel}"/>-->
     </Grid>
 </Window>
