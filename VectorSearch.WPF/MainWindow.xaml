@@ -38,6 +38,5 @@
                 </ContentControl.Resources>
             </ContentControl>
         </Grid>
-        <!--<c:NavigationBar Grid.Row="1" DataContext="{Binding NavigationBarViewModel}"/>-->
     </Grid>
 </Window>
