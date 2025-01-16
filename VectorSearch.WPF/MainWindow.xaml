@@ -29,6 +29,9 @@
                     <DataTemplate DataType="{x:Type vms:VectorSearchViewModel}">
                         <views:VectorSearchView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type vms:WordCompareViewModel}">
+                        <views:WordCompareView/>
+                    </DataTemplate>
                     <DataTemplate DataType="{x:Type vms:AboutViewModel}">
                         <views:AboutView/>
                     </DataTemplate>
