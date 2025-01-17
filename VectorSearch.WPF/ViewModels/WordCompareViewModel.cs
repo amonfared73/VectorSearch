@@ -9,6 +9,7 @@ namespace VectorSearch.WPF.ViewModels
 {
     public class WordCompareViewModel : ViewModelBase
     {
+        private bool _isLoading;
         private string _firstWord;
         private string _secondWord;
         private string _thirdWord;
@@ -27,6 +28,18 @@ namespace VectorSearch.WPF.ViewModels
             _dialougeService = dialougeService;
         }
         public ICommand CompareCommand { get; set; }
+        public bool IsLoading
+        {
+            get 
+            { 
+                return _isLoading; 
+            }
+            set 
+            { 
+                _isLoading = value; 
+                OnPropertyChanged(nameof(IsLoading)); 
+            }
+        }
         public string FirstWord
         {
             get
