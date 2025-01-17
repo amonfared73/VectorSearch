@@ -6,18 +6,70 @@
              xmlns:local="clr-namespace:VectorSearch.WPF.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
+        <!-- Centered container -->
+        <Border Grid.Column="0" Background="SkyBlue"  CornerRadius="10" Padding="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-        <TextBox Grid.Row="0" Grid.Column="0"/>
-        <TextBox Grid.Row="0" Grid.Column="1"/>
+                <!-- First Word -->
+                <TextBox Grid.Row="0" x:Name="FirstWordTextBox" FontSize="25" Margin="10" Height="50" Width="300" HorizontalAlignment="Center" />
+
+                <!-- First ComboBox -->
+                <ComboBox Grid.Row="1" x:Name="Operation1ComboBox" Margin="10" Height="50" Width="300" HorizontalAlignment="Center">
+                    <ComboBoxItem Content="Add" />
+                    <ComboBoxItem Content="Subtract" />
+                </ComboBox>
+
+                <!-- Second Word -->
+                <TextBox Grid.Row="2" x:Name="SecondWordTextBox" Margin="10" FontSize="25" Height="50" Width="300" HorizontalAlignment="Center" />
+
+                <!-- Second ComboBox -->
+                <ComboBox Grid.Row="3" x:Name="Operation2ComboBox" Margin="10" Height="50" Width="300" HorizontalAlignment="Center">
+                    <ComboBoxItem Content="Add" />
+                    <ComboBoxItem Content="Subtract" />
+                </ComboBox>
+
+                <!-- Third Word -->
+                <TextBox Grid.Row="4" x:Name="ThirdWordTextBox" Margin="10" FontSize="25" Height="50" Width="300" HorizontalAlignment="Center" />
+
+                <!-- Calculate Button -->
+                <Button Grid.Row="5" x:Name="CalculateButton" Content="Calculate" Margin="10" Height="50" Width="300" HorizontalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" FontSize="72" Text="Selected Word"/>
+            <StackPanel Margin="0 5" Grid.Row="1" Orientation="Horizontal">
+                <TextBlock FontWeight="Bold" FontSize="36" Margin="5" Text="Similarity: "/>
+                <TextBlock Margin="5" FontSize="36" Text="59.12 %"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Margin="0 5">
+                
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
