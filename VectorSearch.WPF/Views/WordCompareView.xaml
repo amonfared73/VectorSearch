@@ -74,20 +74,20 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" FontSize="72" Text="Selected Word" Margin="0 10"/>
+                <TextBlock Grid.Row="0" FontSize="72" Text="{Binding NearestWord}" Margin="0 10"/>
             <StackPanel Margin="0 10" Grid.Row="1" Orientation="Horizontal">
                 <TextBlock FontWeight="Bold" FontSize="36" Margin="5" Text="Similarity: "/>
-                <TextBlock Margin="5" FontSize="36" Text="59.12 %"/>
+                    <TextBlock Margin="5" FontSize="36" Text="{Binding NearestSimilarity}"/>
             </StackPanel>
 
             <TextBlock Grid.Row="2" Margin="0 10" FontWeight="Bold" Padding="5" Text="Here are the top five most relevant words:"/>
 
-            <DataGrid  Grid.Row="3" AutoGenerateColumns="False" Margin="10">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Word" Binding="{Binding Word}" Width="2*"/>
-                    <DataGridTextColumn Header="Similarity" Binding="{Binding Similarity}" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                <DataGrid Grid.Row="3" AutoGenerateColumns="False" Margin="10" ItemsSource="{Binding Words}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Word" Binding="{Binding Text}" Width="*"/>
+                        <DataGridTextColumn Header="Similarity" Binding="{Binding Similarity}" Width="2*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </Grid>
     </Grid>

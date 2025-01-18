@@ -42,6 +42,7 @@ namespace VectorSearch.WPF.Commands
             }
             catch (Exception ex)
             {
+                _wordCompareViewModel.IsLoading = false;
                 _dialougeService.ShowDialouge(options =>
                 {
                     options.Title = "Error";

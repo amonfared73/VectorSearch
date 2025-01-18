@@ -18,7 +18,7 @@ namespace VectorSearch.WPF.ViewModels
         private WordCompareOperationType _firstOperation;
         private WordCompareOperationType _secondOperation;
         private string _nearestWord;
-        private string _nearestSimilarity;
+        private double _nearestSimilarity;
         private ObservableCollection<WordDto> _words;
 
         private readonly CompareWordsStore _compareWordsStore;
@@ -28,9 +28,24 @@ namespace VectorSearch.WPF.ViewModels
         {
             _compareWordsStore = compareWordsStore;
             _dialougeService = dialougeService;
+            Words = new ObservableCollection<WordDto>();
             ShowResults = false;
             CompareCommand = new CompareWordsCommand(dialougeService, compareWordsStore, this);
+            _compareWordsStore.WordsLoaded += OnWordsLoaded;
         }
+
+        private void OnWordsLoaded()
+        {
+            _words.Clear();
+            foreach(var word in _compareWordsStore.Words)
+            {
+                var item = new WordDto() { Id = word.Id, Text = word.Text, Vector = word.Vector, Similarity = Math.Round(word.Similarity * 100, 2) };
+                _words.Add(item);
+            }
+            NearestWord = Words.FirstOrDefault().Text;
+            NearestSimilarity = Words.FirstOrDefault().Similarity;
+        }
+
         public ICommand CompareCommand { get; set; }
 
         public bool ShowResults
@@ -130,7 +145,7 @@ namespace VectorSearch.WPF.ViewModels
                 OnPropertyChanged(nameof(NearestWord));
             }
         }
-        public string NearestSimilarity
+        public double NearestSimilarity
         {
             get
             {

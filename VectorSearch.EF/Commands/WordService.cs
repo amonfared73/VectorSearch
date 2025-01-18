@@ -208,7 +208,7 @@ namespace VectorSearch.EF.Commands
 
                 var firstVector = new Vector(_mathService.ParseVector(firstSearchedWord.Vector));
                 var secondVector = new Vector(_mathService.ParseVector(secondSearchedWord.Vector));
-                var thirdVector = new Vector(_mathService.ParseVector(thirdSearchedWord.Vector));
+                var thirdVector = thirdSearchedWord == null ? new Vector() : new Vector(_mathService.ParseVector(thirdSearchedWord.Vector));
 
                 var finalVector = _expressionService.CalculateVector(new CalculateVectorRequest()
                 {
@@ -219,9 +219,16 @@ namespace VectorSearch.EF.Commands
                     ThirdVector = thirdVector,
                 });
 
+                var excludedWords = new List<string>()
+                {
+                    request.FirstWord,
+                    request.SecondWord,
+                    request.ThirdWord ?? string.Empty,
+                };
+
                 var words = await context.Glove50Ds
                     .AsNoTracking()
-                    .Where(w => !string.IsNullOrEmpty(w.Vector))
+                    .Where(w => !string.IsNullOrEmpty(w.Vector) && !excludedWords.Contains(w.Text))
                     .Select(w => new { w.Id, w.Text, w.Vector })
                     .ToListAsync();
 
