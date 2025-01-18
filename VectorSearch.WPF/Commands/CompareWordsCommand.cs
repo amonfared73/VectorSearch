@@ -1,19 +1,20 @@
 ﻿using VectorSearch.WPF.Services;
 using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
+using VectorSearch.Domain.DTOs;
 
 namespace VectorSearch.WPF.Commands
 {
     public class CompareWordsCommand : AsyncCommandBase
     {
         private readonly IDialougeService _dialougeService;
-        private readonly VectorSearchStore _vectorSearchStore;
+        private readonly CompareWordsStore _compareWordsStore;
         private readonly WordCompareViewModel _wordCompareViewModel;
 
-        public CompareWordsCommand(IDialougeService dialougeService, VectorSearchStore vectorSearchStore, WordCompareViewModel wordCompareViewModel)
+        public CompareWordsCommand(IDialougeService dialougeService, CompareWordsStore compareWordsStore, WordCompareViewModel wordCompareViewModel)
         {
             _dialougeService = dialougeService;
-            _vectorSearchStore = vectorSearchStore;
+            _compareWordsStore = compareWordsStore;
             _wordCompareViewModel = wordCompareViewModel;
         }
 
@@ -27,11 +28,23 @@ namespace VectorSearch.WPF.Commands
             _wordCompareViewModel.IsLoading = true;
             try
             {
-                
+                await _compareWordsStore.Load(new CompareWordsRequestViewModel()
+                {
+                    FirstWord = _wordCompareViewModel.FirstWord,
+                    FirstOperation = _wordCompareViewModel.FirstOperation,
+                    SecondWord = _wordCompareViewModel.SecondWord,
+                    SecondOperation = _wordCompareViewModel.SecondOperation,
+                    ThirdWord = _wordCompareViewModel.ThirdWord,    
+                });
             }
             catch (Exception ex)
             {
-
+                _dialougeService.ShowDialouge(options =>
+                {
+                    options.Title = "Error";
+                    options.Message = ex.Message;
+                    options.CloseText = "Close";
+                });
             }
             finally
             {
