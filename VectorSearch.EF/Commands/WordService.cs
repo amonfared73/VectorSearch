@@ -16,12 +16,14 @@ namespace VectorSearch.EF.Commands
     {
         private readonly IMathService _mathService;
         private readonly VectorSearchOptions _options;
+        private readonly IExpressionService _expressionService;
         private readonly VectorSearchDbContextFactory _contextFactory;
-        public WordService(VectorSearchDbContextFactory contextFactory, IMathService mathService, VectorSearchOptions options) : base(contextFactory)
+        public WordService(VectorSearchDbContextFactory contextFactory, IMathService mathService, VectorSearchOptions options, IExpressionService expressionService) : base(contextFactory)
         {
             _options = options;
             _mathService = mathService;
             _contextFactory = contextFactory;
+            _expressionService = expressionService;
         }
 
         public async Task<PagedResult<WordDto>> GetAllAsync(SearchOptions searchOptions)
@@ -174,11 +176,11 @@ namespace VectorSearch.EF.Commands
 
             using (var context = _contextFactory.Create())
             {
-                var firstSearchedWord = 
+                var firstSearchedWord =
                     await context
                     .Glove50Ds
                     .Where(w => w.Text == request.FirstWord)
-                    .Select(w => new WordDto() { Text = w.Text, Vector = w.Vector})
+                    .Select(w => new WordDto() { Text = w.Text, Vector = w.Vector })
                     .FirstOrDefaultAsync();
 
                 if (firstSearchedWord == null)
@@ -204,7 +206,49 @@ namespace VectorSearch.EF.Commands
                 if (!string.IsNullOrEmpty(request.ThirdWord) && thirdSearchedWord == null)
                     throw new WordNotFoundException($"Word {request.ThirdWord} not found in the dictionary");
 
-                
+                var firstVector = new Vector(_mathService.ParseVector(firstSearchedWord.Vector));
+                var secondVector = new Vector(_mathService.ParseVector(secondSearchedWord.Vector));
+                var thirdVector = new Vector(_mathService.ParseVector(thirdSearchedWord.Vector));
+
+                var finalVector = _expressionService.CalculateVector(new CalculateVectorRequest()
+                {
+                    FirstVector = firstVector,
+                    FirstOperation = request.FirstOperation,
+                    SecondVector = secondVector,
+                    SecondOperation = request.SecondOperation,
+                    ThirdVector = thirdVector,
+                });
+
+                var words = await context.Glove50Ds
+                    .AsNoTracking()
+                    .Where(w => !string.IsNullOrEmpty(w.Vector))
+                    .Select(w => new { w.Id, w.Text, w.Vector })
+                    .ToListAsync();
+
+
+                var similarWords = new ConcurrentBag<WordDto>();
+                Parallel.ForEach(words, word =>
+                {
+                    var wordVector = _mathService.ParseVector(word.Vector);
+                    var similarity = _mathService.ComputeCosineSimilarity(finalVector.Elements, wordVector);
+
+                    if (similarity > Convert.ToDouble(_options.SimilarityThreshold))
+                    {
+                        similarWords.Add(new WordDto
+                        {
+                            Id = word.Id,
+                            Text = word.Text,
+                            Vector = word.Vector,
+                            Similarity = similarity
+                        });
+                    }
+
+                });
+
+
+                var orderedWords = similarWords.OrderByDescending(word => word.Similarity).Take(Convert.ToInt16(_options.TakeNearesWords)).ToList();
+
+                return orderedWords;
             }
         }
     }
