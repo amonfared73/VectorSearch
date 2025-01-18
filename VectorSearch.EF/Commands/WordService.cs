@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Concurrent;
+using System.Linq;
 using VectorSearch.ApplicationService.Commands;
 using VectorSearch.Domain.Configurations;
 using VectorSearch.Domain.DTOs;
 using VectorSearch.Domain.Enums;
+using VectorSearch.Domain.Exceptions;
 using VectorSearch.Domain.Models;
 using VectorSearch.Domain.ViewModels;
 using VectorSearch.EF.Contexts;
@@ -162,9 +164,48 @@ namespace VectorSearch.EF.Commands
             return queryable;
         }
 
-        public Task<List<WordDto>> CompareWords(CompareWordsRequestViewModel request)
+        public async Task<List<WordDto>> CompareWords(CompareWordsRequestViewModel request)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(request.FirstWord))
+                throw new WordsNotAssignedException("First word is not assigned");
+
+            if (string.IsNullOrEmpty(request.SecondWord))
+                throw new WordsNotAssignedException("Second word is not assigned");
+
+            using (var context = _contextFactory.Create())
+            {
+                var firstSearchedWord = 
+                    await context
+                    .Glove50Ds
+                    .Where(w => w.Text == request.FirstWord)
+                    .Select(w => new WordDto() { Text = w.Text, Vector = w.Vector})
+                    .FirstOrDefaultAsync();
+
+                if (firstSearchedWord == null)
+                    throw new WordNotFoundException($"Word {request.FirstWord} not found in the dictionary");
+
+                var secondSearchedWord =
+                    await context
+                    .Glove50Ds
+                    .Where(w => w.Text == request.SecondWord)
+                    .Select(w => new WordDto() { Text = w.Text, Vector = w.Vector })
+                    .FirstOrDefaultAsync();
+
+                if (secondSearchedWord == null)
+                    throw new WordNotFoundException($"Word {request.SecondWord} not found in the dictionary");
+
+                var thirdSearchedWord =
+                    await context
+                    .Glove50Ds
+                    .Where(w => w.Text == request.ThirdWord)
+                    .Select(w => new WordDto() { Text = w.Text, Vector = w.Vector })
+                    .FirstOrDefaultAsync();
+
+                if (!string.IsNullOrEmpty(request.ThirdWord) && thirdSearchedWord == null)
+                    throw new WordNotFoundException($"Word {request.ThirdWord} not found in the dictionary");
+
+                
+            }
         }
     }
 }
