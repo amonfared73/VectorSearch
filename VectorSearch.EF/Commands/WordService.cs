@@ -18,7 +18,7 @@ namespace VectorSearch.EF.Commands
         private readonly VectorSearchOptions _options;
         private readonly IExpressionService _expressionService;
         private readonly VectorSearchDbContextFactory _contextFactory;
-        public WordService(VectorSearchDbContextFactory contextFactory, IMathService mathService, VectorSearchOptions options, IExpressionService expressionService) : base(contextFactory)
+        public WordService(VectorSearchDbContextFactory contextFactory, IMathService mathService, IExpressionService expressionService, VectorSearchOptions options) : base(contextFactory)
         {
             _options = options;
             _mathService = mathService;

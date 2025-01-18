@@ -34,7 +34,7 @@ namespace VectorSearch.WPF
             _mathService = new MathService();
             _dialougeService = new DialougeService();
             _expressionService = new ExpressionService();
-            _wordService = new WordService(_contextFactory, _mathService, Options);
+            _wordService = new WordService(_contextFactory, _mathService, _expressionService, Options);
             _vectorSearchStore = new VectorSearchStore(_wordService);
             _navigationStore = new NavigationStore();
         }
