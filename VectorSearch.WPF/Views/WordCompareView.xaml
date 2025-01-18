@@ -6,8 +6,19 @@
              xmlns:tools="clr-namespace:VectorSearch.WPF.Tools"
              xmlns:local="clr-namespace:VectorSearch.WPF.Views"
              xmlns:enums="clr-namespace:VectorSearch.Domain.Enums;assembly=VectorSearch.Domain"
+             xmlns:loadingspinnercontrol="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
     <Grid>
 
@@ -15,7 +26,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
         <Border Grid.Column="0" Background="SkyBlue"  CornerRadius="10" Padding="20" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid>
                 <Grid.RowDefinitions>
@@ -49,14 +60,21 @@
         </Border>
 
         <Grid Grid.Column="1" Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            
 
-            <TextBlock Grid.Row="0" FontSize="72" Text="Selected Word" Margin="0 10"/>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource StackPanelLoadingStyle}">
+                <loadingspinnercontrol:LoadingSpinner Diameter="100" Thickness="2" IsLoading="True"/>
+                <TextBlock Text="Loading results ..." VerticalAlignment="Center" TextAlignment="Center" Margin="0 5 0 0"/>
+            </StackPanel>
+
+            <Grid Visibility="{Binding ShowResult, Converter={StaticResource BoolToVisConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" FontSize="72" Text="Selected Word" Margin="0 10"/>
             <StackPanel Margin="0 10" Grid.Row="1" Orientation="Horizontal">
                 <TextBlock FontWeight="Bold" FontSize="36" Margin="5" Text="Similarity: "/>
                 <TextBlock Margin="5" FontSize="36" Text="59.12 %"/>
@@ -70,7 +88,7 @@
                     <DataGridTextColumn Header="Similarity" Binding="{Binding Similarity}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
-
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

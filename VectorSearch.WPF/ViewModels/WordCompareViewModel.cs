@@ -22,6 +22,8 @@ namespace VectorSearch.WPF.ViewModels
         private readonly VectorSearchStore _vectorSearchStore;
         private readonly IDialougeService _dialougeService;
 
+        public bool ShowResult => !IsLoading;
+
         public WordCompareViewModel(VectorSearchStore vectorSearchStore, IDialougeService dialougeService)
         {
             _vectorSearchStore = vectorSearchStore;
