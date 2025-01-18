@@ -67,7 +67,7 @@
                 <TextBlock Text="Loading results ..." VerticalAlignment="Center" TextAlignment="Center" Margin="0 5 0 0"/>
             </StackPanel>
 
-            <Grid Visibility="{Binding ShowResult, Converter={StaticResource BoolToVisConverter}}">
+            <Grid Visibility="{Binding ShowResults, Converter={StaticResource BoolToVisConverter}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
