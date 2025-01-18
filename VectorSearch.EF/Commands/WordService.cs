@@ -162,5 +162,9 @@ namespace VectorSearch.EF.Commands
             return queryable;
         }
 
+        public Task<List<WordDto>> CompareWords(CompareWordsRequestViewModel request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
