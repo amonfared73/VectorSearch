@@ -26,6 +26,7 @@ namespace VectorSearch.WPF.Commands
         public override async Task ExecuteAsync(object? parameter)
         {
             _wordCompareViewModel.IsLoading = true;
+            _wordCompareViewModel.ShowResults = false;
             try
             {
                 await _compareWordsStore.Load(new CompareWordsRequestViewModel()
@@ -36,6 +37,8 @@ namespace VectorSearch.WPF.Commands
                     SecondOperation = _wordCompareViewModel.SecondOperation,
                     ThirdWord = _wordCompareViewModel.ThirdWord,    
                 });
+                _wordCompareViewModel.IsLoading = false;
+                _wordCompareViewModel.ShowResults = true;
             }
             catch (Exception ex)
             {

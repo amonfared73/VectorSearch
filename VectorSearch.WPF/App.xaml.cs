@@ -23,6 +23,7 @@ namespace VectorSearch.WPF
         private readonly IDialougeService _dialougeService;
         private readonly IExpressionService _expressionService;
         private readonly VectorSearchStore _vectorSearchStore;
+        private readonly CompareWordsStore _compareWordsStore;
         private readonly NavigationStore _navigationStore;
         private readonly VectorSearchDbContextFactory _contextFactory;
 
@@ -36,6 +37,7 @@ namespace VectorSearch.WPF
             _expressionService = new ExpressionService();
             _wordService = new WordService(_contextFactory, _mathService, _expressionService, Options);
             _vectorSearchStore = new VectorSearchStore(_wordService);
+            _compareWordsStore = new CompareWordsStore(_wordService);
             _navigationStore = new NavigationStore();
         }
 
@@ -65,7 +67,7 @@ namespace VectorSearch.WPF
 
         private INavigationService<WordCompareViewModel> CreateWordCompareNavigationService()
         {
-            return new LayoutNavigationService<WordCompareViewModel>(_navigationStore, CreateNavigationbarViewModel, () => new WordCompareViewModel(_vectorSearchStore, _dialougeService));
+            return new LayoutNavigationService<WordCompareViewModel>(_navigationStore, CreateNavigationbarViewModel, () => new WordCompareViewModel(_compareWordsStore, _dialougeService));
         }
 
         private INavigationService<AboutViewModel> CreateAboutNavigationService()

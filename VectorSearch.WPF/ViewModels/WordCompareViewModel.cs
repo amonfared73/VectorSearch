@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using VectorSearch.Domain.DTOs;
 using VectorSearch.Domain.Enums;
+using VectorSearch.WPF.Commands;
 using VectorSearch.WPF.Services;
 using VectorSearch.WPF.Stores;
 
@@ -20,14 +21,15 @@ namespace VectorSearch.WPF.ViewModels
         private string _nearestSimilarity;
         private ObservableCollection<WordDto> _words;
 
-        private readonly VectorSearchStore _vectorSearchStore;
+        private readonly CompareWordsStore _compareWordsStore;
         private readonly IDialougeService _dialougeService;
 
-        public WordCompareViewModel(VectorSearchStore vectorSearchStore, IDialougeService dialougeService)
+        public WordCompareViewModel(CompareWordsStore compareWordsStore, IDialougeService dialougeService)
         {
-            _vectorSearchStore = vectorSearchStore;
+            _compareWordsStore = compareWordsStore;
             _dialougeService = dialougeService;
             ShowResults = false;
+            CompareCommand = new CompareWordsCommand(dialougeService, compareWordsStore, this);
         }
         public ICommand CompareCommand { get; set; }
 
