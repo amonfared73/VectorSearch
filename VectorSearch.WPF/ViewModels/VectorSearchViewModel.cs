@@ -74,14 +74,13 @@ namespace VectorSearch.WPF.ViewModels
             set { _words = value; OnPropertyChanged(nameof(Words)); }
         }
 
-        public ICommand NavigateAboutCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand PreviousPageCommand { get; set; }
         public ICommand NextPageCommand { get; set; }
         public string? PaginationInfo => $"PageNumber: {CurrentPage}, TotalPages: {TotalPages}, TotalRecords: {TotalRecords}";
         public bool IsGloveTypeEnabled => IsVectorSearchEnabled;
 
-        public VectorSearchViewModel(VectorSearchStore vectorSearchStore, IDialougeService dialougeService, INavigationService<AboutViewModel> aboutNavigationService)
+        public VectorSearchViewModel(VectorSearchStore vectorSearchStore, IDialougeService dialougeService)
         {
             _vectorSearchStore = vectorSearchStore;
             CurrentPage = 1;
@@ -90,7 +89,6 @@ namespace VectorSearch.WPF.ViewModels
             SearchCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.CurrentPage);
             PreviousPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.PreviousPage);
             NextPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.NextPage);
-            NavigateAboutCommand = new NavigateCommand<AboutViewModel>(aboutNavigationService);
             _vectorSearchStore.WordsLoaded += OnWordsLoaded;
         }
 
