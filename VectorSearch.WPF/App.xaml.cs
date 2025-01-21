@@ -21,6 +21,7 @@ namespace VectorSearch.WPF
         private readonly IMathService _mathService;
         private readonly IWordService _wordService;
         private readonly IDialougeService _dialougeService;
+        private readonly IDbSetService _dbSetService;
         private readonly IExpressionService _expressionService;
         private readonly VectorSearchStore _vectorSearchStore;
         private readonly CompareWordsStore _compareWordsStore;
@@ -33,9 +34,10 @@ namespace VectorSearch.WPF
             LoadConfigurations();
             _contextFactory = new VectorSearchDbContextFactory(new DbContextOptionsBuilder<VectorSearchDbContext>().UseSqlServer(Options.ConnectionString).Options);
             _mathService = new MathService();
+            _dbSetService = new DbSetService();
             _dialougeService = new DialougeService();
             _expressionService = new ExpressionService();
-            _wordService = new WordService(_contextFactory, _mathService, _expressionService, Options);
+            _wordService = new WordService(_contextFactory, _mathService, _expressionService, _dbSetService, Options);
             _vectorSearchStore = new VectorSearchStore(_wordService);
             _compareWordsStore = new CompareWordsStore(_wordService);
             _navigationStore = new NavigationStore();

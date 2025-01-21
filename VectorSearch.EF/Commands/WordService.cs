@@ -9,19 +9,22 @@ using VectorSearch.Domain.Exceptions;
 using VectorSearch.Domain.Models;
 using VectorSearch.Domain.ViewModels;
 using VectorSearch.EF.Contexts;
+using VectorSearch.EF.Tools;
 
 namespace VectorSearch.EF.Commands
 {
     public class WordService : BaseService<Word>, IWordService
     {
         private readonly IMathService _mathService;
+        private readonly IDbSetService _dbSetService;
         private readonly VectorSearchOptions _options;
         private readonly IExpressionService _expressionService;
         private readonly VectorSearchDbContextFactory _contextFactory;
-        public WordService(VectorSearchDbContextFactory contextFactory, IMathService mathService, IExpressionService expressionService, VectorSearchOptions options) : base(contextFactory)
+        public WordService(VectorSearchDbContextFactory contextFactory, IMathService mathService, IExpressionService expressionService, IDbSetService dbSetService, VectorSearchOptions options) : base(contextFactory)
         {
             _options = options;
             _mathService = mathService;
+            _dbSetService = dbSetService;
             _contextFactory = contextFactory;
             _expressionService = expressionService;
         }
@@ -30,7 +33,7 @@ namespace VectorSearch.EF.Commands
         {
             using (var context = _contextFactory.Create())
             {
-                IQueryable<IWord> queryable = GetProperDbSet(searchOptions, context);
+                IQueryable<IWord> queryable = _dbSetService.GetProperDbSet(searchOptions, context);
 
                 var query = queryable.AsNoTracking().Where(x => string.IsNullOrEmpty(searchOptions.Text) || x.Text.Contains(searchOptions.Text));
 
@@ -75,7 +78,7 @@ namespace VectorSearch.EF.Commands
 
             using (var context = _contextFactory.Create())
             {
-                IQueryable<IWord> queryable = GetProperDbSet(searchOptions, context);
+                IQueryable<IWord> queryable = _dbSetService.GetProperDbSet(searchOptions, context);
 
                 var searchWord = await queryable
                     .Where(w => w.Text == searchOptions.Text)
@@ -141,29 +144,6 @@ namespace VectorSearch.EF.Commands
                     TotalRecords = totalRecords
                 };
             }
-        }
-        private static IQueryable<IWord> GetProperDbSet(SearchOptions searchOptions, VectorSearchDbContext context)
-        {
-            IQueryable<IWord> queryable;
-            switch (searchOptions.GloveType)
-            {
-                case GloveType.glove_6B_50d:
-                    queryable = context.Glove50Ds;
-                    break;
-                case GloveType.glove_6B_100d:
-                    queryable = context.Glove100Ds;
-                    break;
-                case GloveType.glove_6B_200d:
-                    queryable = context.Glove200Ds;
-                    break;
-                case GloveType.glove_6B_300d:
-                    queryable = context.Glove300Ds;
-                    break;
-                default:
-                    throw new ArgumentException("GloveType not assigned");
-            }
-
-            return queryable;
         }
 
         public async Task<List<WordDto>> CompareWords(CompareWordsRequestViewModel request)
