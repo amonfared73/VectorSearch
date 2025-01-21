@@ -8,6 +8,8 @@
             Elements = elements ?? new double[50];
         }
 
+        public static Vector Empty => new Vector();
+
         public static Vector operator +(Vector left, Vector right)
         {
             var result = new double[50];

@@ -196,12 +196,10 @@ namespace VectorSearch.EF.Commands
                 if (secondSearchedWord == null)
                     throw new WordNotFoundException($"Word {request.SecondWord} not found in the dictionary");
 
-                var thirdSearchedWord =
-                    await context
-                    .Glove50Ds
-                    .Where(w => w.Text == request.ThirdWord)
-                    .Select(w => new WordDto() { Text = w.Text, Vector = w.Vector })
-                    .FirstOrDefaultAsync();
+                WordDto? thirdSearchedWord = string.IsNullOrEmpty(request.ThirdWord) ? new WordDto() { Text = string.Empty, Vector = _mathService.SerializeVector(Vector.Empty.Elements) } : null;
+
+                if (thirdSearchedWord != null)
+                    thirdSearchedWord = await context.Glove50Ds.Where(w => w.Text == request.ThirdWord).Select(w => new WordDto() { Text = w.Text, Vector = w.Vector }).FirstOrDefaultAsync();
 
                 if (!string.IsNullOrEmpty(request.ThirdWord) && thirdSearchedWord == null)
                     throw new WordNotFoundException($"Word {request.ThirdWord} not found in the dictionary");
@@ -239,8 +237,6 @@ namespace VectorSearch.EF.Commands
                     var wordVector = _mathService.ParseVector(word.Vector);
                     var similarity = _mathService.ComputeCosineSimilarity(finalVector.Elements, wordVector);
 
-                    if (similarity > Convert.ToDouble(_options.SimilarityThreshold))
-                    {
                         similarWords.Add(new WordDto
                         {
                             Id = word.Id,
@@ -248,8 +244,6 @@ namespace VectorSearch.EF.Commands
                             Vector = word.Vector,
                             Similarity = similarity
                         });
-                    }
-
                 });
 
 
