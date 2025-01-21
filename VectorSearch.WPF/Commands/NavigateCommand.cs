@@ -4,10 +4,10 @@ using VectorSearch.WPF.ViewModels;
 
 namespace VectorSearch.WPF.Commands
 {
-    public class NavigateCommand<TViewModel> : CommandBase where TViewModel : ViewModelBase
+    public class NavigateCommand : CommandBase
     {
-        private readonly INavigationService<TViewModel> _navigationService;
-        public NavigateCommand(INavigationService<TViewModel> navigationService)
+        private readonly INavigationService _navigationService;
+        public NavigateCommand(INavigationService navigationService)
         {
             _navigationService = navigationService;
         }

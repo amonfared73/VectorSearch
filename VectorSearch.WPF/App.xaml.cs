@@ -26,6 +26,7 @@ namespace VectorSearch.WPF
         private readonly VectorSearchStore _vectorSearchStore;
         private readonly CompareWordsStore _compareWordsStore;
         private readonly NavigationStore _navigationStore;
+        private readonly ModalNavigationStore _modalNavigationStore;
         private readonly VectorSearchDbContextFactory _contextFactory;
 
         public VectorSearchOptions Options { get; set; }
@@ -41,15 +42,16 @@ namespace VectorSearch.WPF
             _vectorSearchStore = new VectorSearchStore(_wordService);
             _compareWordsStore = new CompareWordsStore(_wordService);
             _navigationStore = new NavigationStore();
+            _modalNavigationStore = new ModalNavigationStore();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            INavigationService<VectorSearchViewModel> homeNavigationService = CreateHomeNavigationService();
+            INavigationService homeNavigationService = CreateHomeNavigationService();
             homeNavigationService.Navigate();
             var mainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_vectorSearchStore, _navigationStore)
+                DataContext = new MainViewModel(_vectorSearchStore, _navigationStore, _modalNavigationStore)
             };
             mainWindow.Show();
             base.OnStartup(e);
@@ -62,19 +64,24 @@ namespace VectorSearch.WPF
             Options = JsonSerializer.Deserialize<VectorSearchOptions>(json);
         }
 
-        private INavigationService<VectorSearchViewModel> CreateHomeNavigationService()
+        private INavigationService CreateHomeNavigationService()
         {
             return new LayoutNavigationService<VectorSearchViewModel>(_navigationStore, CreateNavigationbarViewModel, () => new VectorSearchViewModel(_vectorSearchStore, _dialougeService));
         }
 
-        private INavigationService<WordCompareViewModel> CreateWordCompareNavigationService()
+        private INavigationService CreateWordCompareNavigationService()
         {
             return new LayoutNavigationService<WordCompareViewModel>(_navigationStore, CreateNavigationbarViewModel, () => new WordCompareViewModel(_compareWordsStore, _dialougeService));
         }
 
-        private INavigationService<AboutViewModel> CreateAboutNavigationService()
+        private INavigationService CreateAboutNavigationService()
         {
             return new LayoutNavigationService<AboutViewModel>(_navigationStore, CreateNavigationbarViewModel, () => new AboutViewModel(_vectorSearchStore, _dialougeService));
+        }
+
+        private INavigationService CreateWordDetailModalNavigationService()
+        {
+            return new ModalNavigationService<WordDetailViewModel>(_modalNavigationStore, () => new WordDetailViewModel());
         }
 
         private NavigationBarViewModel CreateNavigationbarViewModel()

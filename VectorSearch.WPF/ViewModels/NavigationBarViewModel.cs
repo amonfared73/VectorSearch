@@ -13,11 +13,11 @@ namespace VectorSearch.WPF.ViewModels
         public ICommand NavigateAboutCommand { get; set; }
         public bool IsHomeEnabled => _navigationStore.CurrentViewModel is not VectorSearchViewModel;
         public bool IsAboutEnabled => _navigationStore.CurrentViewModel is not AboutViewModel;
-        public NavigationBarViewModel(INavigationService<VectorSearchViewModel> homeNavigationService, INavigationService<WordCompareViewModel> wordCompareNavigationService, INavigationService<AboutViewModel> aboutNavigationService, NavigationStore navigationStore)
+        public NavigationBarViewModel(INavigationService homeNavigationService, INavigationService wordCompareNavigationService, INavigationService aboutNavigationService, NavigationStore navigationStore)
         {
-            NavigateHomeCommand = new NavigateCommand<VectorSearchViewModel>(homeNavigationService);
-            NavigateWordCompareCommand = new NavigateCommand<WordCompareViewModel>(wordCompareNavigationService);
-            NavigateAboutCommand = new NavigateCommand<AboutViewModel>(aboutNavigationService);
+            NavigateHomeCommand = new NavigateCommand(homeNavigationService);
+            NavigateWordCompareCommand = new NavigateCommand(wordCompareNavigationService);
+            NavigateAboutCommand = new NavigateCommand(aboutNavigationService);
             _navigationStore = navigationStore;
         }
         public override void Dispose()

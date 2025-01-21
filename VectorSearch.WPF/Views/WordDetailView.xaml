@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="VectorSearch.WPF.Views.WordDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VectorSearch.WPF.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="300">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" FontSize="36" FontWeight="Bold" Text="Some Word" Margin="0 10"/>
+        <StackPanel Margin="0 10" Grid.Row="1" Orientation="Horizontal">
+            <TextBlock FontWeight="Bold" FontSize="24" Margin="5" Text="Similarity: "/>
+            <TextBlock Margin="5" FontSize="24" Text="36.5 %"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Margin="0 10" Orientation="Vertical" Width="500">
+            <TextBlock TextWrapping="Wrap" Margin="5" FontSize="18" Text="-0.18997 0.11493 0.85566 -0.039811 0.10742 -0.44042 1.2496 0.49928 0.58689 0.8321 0.027948 -0.85445 -0.39854 -0.18763 -0.050099 0.95036 0.59861 0.25454 0.6548 0.87505 0.82139 -0.0041283 0.9193 -0.033385 0.1914 -3.0393 0.58703 0.23673 0.031058 0.17775 2.4503 -0.35655 -0.68777 -0.43984 0.12271 -0.46345 -0.29642 0.33648 -1.6442 0.23183 -0.019779 0.0057172 0.94701 -1.2708 0.53767 0.80297 -0.70422 1.7059 -0.64729 -0.97299"/>
+        </StackPanel>
+
+        <Button Grid.Row="3" Content="Close"/>
+    </Grid>
+</UserControl>
