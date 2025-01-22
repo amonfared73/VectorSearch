@@ -20,6 +20,8 @@ namespace VectorSearch.WPF.ViewModels
         private string? _paginationInfo;
         private bool _isVectorSearchEnabled;
         private readonly VectorSearchStore _vectorSearchStore;
+        private readonly SelectedWordStore _selectedWordStore;
+        private readonly ModalNavigationStore _modalNavigationStore;
         private ObservableCollection<WordDto> _words;
 
         public WordDto SelectedWord { get; private set; }
@@ -85,22 +87,34 @@ namespace VectorSearch.WPF.ViewModels
         public string? PaginationInfo => $"PageNumber: {CurrentPage}, TotalPages: {TotalPages}, TotalRecords: {TotalRecords}";
         public bool IsGloveTypeEnabled => IsVectorSearchEnabled;
 
-        public VectorSearchViewModel(VectorSearchStore vectorSearchStore, ModalNavigationStore modalNavigationStore, IDialougeService dialougeService)
+        public VectorSearchViewModel(VectorSearchStore vectorSearchStore, ModalNavigationStore modalNavigationStore, SelectedWordStore selectedWordStore, IDialougeService dialougeService)
         {
             _vectorSearchStore = vectorSearchStore;
+            _selectedWordStore = selectedWordStore;
+            _modalNavigationStore = modalNavigationStore;
+            _selectedWordStore.SelectedWordChanged += OnSelectedWordChanged;
             CurrentPage = 1;
             GloveType = GloveType.glove_6B_50d;
             Words = new ObservableCollection<WordDto>();
             SearchCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.CurrentPage);
             PreviousPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.PreviousPage);
             NextPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.NextPage);
-            WordDetailCommand = new OpenWordDetailCommand(this, modalNavigationStore, _vectorSearchStore);
+            WordDetailCommand = new OpenWordDetailCommand(this, _modalNavigationStore, _vectorSearchStore, _selectedWordStore, dialougeService);
             _vectorSearchStore.WordsLoaded += OnWordsLoaded;
+        }
+
+        private void OnSelectedWordChanged()
+        {
+            OnPropertyChanged(nameof(SelectedWord));
+            OnPropertyChanged(nameof(SelectedWordText));
+            OnPropertyChanged(nameof(SelectedWordSimilarity));
+            OnPropertyChanged(nameof(SelectedWordVector));
         }
 
         public override void Dispose()
         {
             _vectorSearchStore.WordsLoaded -= OnWordsLoaded;
+            _selectedWordStore.SelectedWordChanged -= OnSelectedWordChanged;
             base.Dispose();
         }
         ~VectorSearchViewModel()
