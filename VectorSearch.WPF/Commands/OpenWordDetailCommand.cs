@@ -7,18 +7,18 @@ namespace VectorSearch.WPF.Commands
 {
     public class OpenWordDetailCommand : CommandBase
     {
+        private readonly IDialougeService _dialougeService;
+        private readonly SelectedWordStore _selectedWordStore;
         private readonly VectorSearchStore _vectorSearchStore;
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly VectorSearchViewModel _vectorSearchViewModel;
-        private readonly SelectedWordStore _selectedWordStore;
-        private readonly IDialougeService _dialougeService;
         public OpenWordDetailCommand(VectorSearchViewModel vectorSearchViewModel, ModalNavigationStore modalNavigationStore, VectorSearchStore vectorSearchStore, SelectedWordStore selectedWordStore, IDialougeService dialougeService)
         {
+            _dialougeService = dialougeService;
+            _selectedWordStore = selectedWordStore;
             _vectorSearchStore = vectorSearchStore;
             _modalNavigationStore = modalNavigationStore;
             _vectorSearchViewModel = vectorSearchViewModel;
-            _selectedWordStore = selectedWordStore;
-            _dialougeService = dialougeService;
         }
         public override void Execute(object? parameter)
         {
