@@ -23,12 +23,7 @@ namespace VectorSearch.WPF.Commands
         public override void Execute(object? parameter)
         {
             WordDto selectedWord = _vectorSearchViewModel.SelectedWord;
-            WordDetailViewModel wordDetailViewModel = new WordDetailViewModel(_modalNavigationStore, _selectedWordStore, () => new VectorSearchViewModel(_vectorSearchStore, _modalNavigationStore, _selectedWordStore, _dialougeService))
-            {
-                Word = selectedWord.Text,
-                Similarity = selectedWord.Similarity,
-                Vector = selectedWord.Vector,
-            };
+            WordDetailViewModel wordDetailViewModel = new WordDetailViewModel(_selectedWordStore);
             _modalNavigationStore.CurrentViewModel = wordDetailViewModel;
         }
     }

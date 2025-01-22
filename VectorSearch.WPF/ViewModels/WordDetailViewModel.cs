@@ -1,62 +1,28 @@
-﻿using VectorSearch.WPF.Stores;
+﻿using VectorSearch.Domain.DTOs;
+using VectorSearch.WPF.Stores;
 
 namespace VectorSearch.WPF.ViewModels
 {
     public class WordDetailViewModel : ViewModelBase
     {
-        private readonly ModalNavigationStore _modalNavigationStore;
         private readonly SelectedWordStore _selectedWordStore;
-        private readonly Func<VectorSearchViewModel> _createVectorSearchViewmodel;
-        public WordDetailViewModel(ModalNavigationStore modalNavigationStore, SelectedWordStore selectedWordStore, Func<VectorSearchViewModel> createVectorSearchViewmodel)
+        public WordDto SelectedWord => _selectedWordStore.SelectedWord;
+        public WordDetailViewModel(SelectedWordStore selectedWordStore)
         {
-            _modalNavigationStore = modalNavigationStore;
             _selectedWordStore = selectedWordStore;
-            _createVectorSearchViewmodel = createVectorSearchViewmodel;
+            _selectedWordStore.SelectedWordChanged += OnSelectedWordChanged;
         }
 
-        private string _word;
-        public string Word
+        private void OnSelectedWordChanged()
         {
-            get
-            {
-                return _word;
-            }
-            set
-            {
-                _word = value;
-                _selectedWordStore.SelectedWord = _createVectorSearchViewmodel()?.SelectedWord;
-                OnPropertyChanged(nameof(Word));    
-            }
+            OnPropertyChanged(nameof(Word));
+            OnPropertyChanged(nameof(Similarity));
+            OnPropertyChanged(nameof(Vector));
         }
 
-        private double _similarity;
-        public double Similarity
-        {
-            get
-            {
-                return _similarity;
-            }
-            set
-            {
-                _similarity = value;
-                OnPropertyChanged(nameof(Similarity));
-            }
-        }
-
-
-
-        private string _vector;
-        public string Vector
-        {
-            get
-            {
-                return _vector;
-            }
-            set
-            {
-                _vector = value;
-                OnPropertyChanged(nameof(Vector));
-            }
-        }
+        public string Word => SelectedWord?.Text != null ? SelectedWord.Text : "Unassigned";
+        public double Similarity => SelectedWord?.Similarity != null ? SelectedWord.Similarity : 0.00;
+        public string Vector => SelectedWord?.Vector != null ? SelectedWord.Vector : "No Vector found!";
+        
     }
 }

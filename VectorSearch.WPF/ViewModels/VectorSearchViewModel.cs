@@ -24,10 +24,21 @@ namespace VectorSearch.WPF.ViewModels
         private readonly ModalNavigationStore _modalNavigationStore;
         private ObservableCollection<WordDto> _words;
 
-        public WordDto SelectedWord { get; private set; }
-        public string SelectedWordText => SelectedWord.Text;
-        public double SelectedWordSimilarity => SelectedWord.Similarity;
-        public string SelectedWordVector => SelectedWord.Vector;
+        private WordDto _selectedWord;
+        public WordDto SelectedWord
+        {
+            get
+            {
+                return _selectedWord;
+            }
+            set
+            {
+                _selectedWord = value;
+                _selectedWordStore.SelectedWord = _selectedWord;
+                OnPropertyChanged(nameof(SelectedWord));
+            }
+        }
+
         public GloveType GloveType
         {
             get { return _gloveType; }
@@ -92,7 +103,6 @@ namespace VectorSearch.WPF.ViewModels
             _vectorSearchStore = vectorSearchStore;
             _selectedWordStore = selectedWordStore;
             _modalNavigationStore = modalNavigationStore;
-            _selectedWordStore.SelectedWordChanged += OnSelectedWordChanged;
             CurrentPage = 1;
             GloveType = GloveType.glove_6B_50d;
             Words = new ObservableCollection<WordDto>();
@@ -103,18 +113,9 @@ namespace VectorSearch.WPF.ViewModels
             _vectorSearchStore.WordsLoaded += OnWordsLoaded;
         }
 
-        private void OnSelectedWordChanged()
-        {
-            OnPropertyChanged(nameof(SelectedWord));
-            OnPropertyChanged(nameof(SelectedWordText));
-            OnPropertyChanged(nameof(SelectedWordSimilarity));
-            OnPropertyChanged(nameof(SelectedWordVector));
-        }
-
         public override void Dispose()
         {
             _vectorSearchStore.WordsLoaded -= OnWordsLoaded;
-            _selectedWordStore.SelectedWordChanged -= OnSelectedWordChanged;
             base.Dispose();
         }
         ~VectorSearchViewModel()
