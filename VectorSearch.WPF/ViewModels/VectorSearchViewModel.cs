@@ -22,6 +22,10 @@ namespace VectorSearch.WPF.ViewModels
         private readonly VectorSearchStore _vectorSearchStore;
         private ObservableCollection<WordDto> _words;
 
+        public WordDto SelectedWord { get; private set; }
+        public string SelectedWordText => SelectedWord.Text;
+        public double SelectedWordSimilarity => SelectedWord.Similarity; 
+        public string SelectedWordVector => SelectedWord.Vector;
         public GloveType GloveType
         {
             get { return _gloveType; }
@@ -77,6 +81,7 @@ namespace VectorSearch.WPF.ViewModels
         public ICommand SearchCommand { get; set; }
         public ICommand PreviousPageCommand { get; set; }
         public ICommand NextPageCommand { get; set; }
+        public ICommand WordDetailCommand { get; set; }
         public string? PaginationInfo => $"PageNumber: {CurrentPage}, TotalPages: {TotalPages}, TotalRecords: {TotalRecords}";
         public bool IsGloveTypeEnabled => IsVectorSearchEnabled;
 
