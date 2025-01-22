@@ -72,7 +72,11 @@
 
             <DataGrid Grid.Row="1" Grid.ColumnSpan="4" ItemsSource="{Binding Words}" 
               AutoGenerateColumns="False" IsReadOnly="True">
-                <DataGrid.Columns>
+                    <DataGrid.InputBindings>
+                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding WordDetailCommand}" 
+                      CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem}" />
+                    </DataGrid.InputBindings>
+                    <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="100" />
                     <DataGridTextColumn Header="Text" Binding="{Binding Text}" Width="120" />
                     <DataGridTextColumn Header="Similarity" Binding="{Binding Similarity}" Width="100" />

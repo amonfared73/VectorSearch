@@ -24,7 +24,7 @@ namespace VectorSearch.WPF.ViewModels
 
         public WordDto SelectedWord { get; private set; }
         public string SelectedWordText => SelectedWord.Text;
-        public double SelectedWordSimilarity => SelectedWord.Similarity; 
+        public double SelectedWordSimilarity => SelectedWord.Similarity;
         public string SelectedWordVector => SelectedWord.Vector;
         public GloveType GloveType
         {
@@ -85,7 +85,7 @@ namespace VectorSearch.WPF.ViewModels
         public string? PaginationInfo => $"PageNumber: {CurrentPage}, TotalPages: {TotalPages}, TotalRecords: {TotalRecords}";
         public bool IsGloveTypeEnabled => IsVectorSearchEnabled;
 
-        public VectorSearchViewModel(VectorSearchStore vectorSearchStore, IDialougeService dialougeService)
+        public VectorSearchViewModel(VectorSearchStore vectorSearchStore, ModalNavigationStore modalNavigationStore, IDialougeService dialougeService)
         {
             _vectorSearchStore = vectorSearchStore;
             CurrentPage = 1;
@@ -94,6 +94,7 @@ namespace VectorSearch.WPF.ViewModels
             SearchCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.CurrentPage);
             PreviousPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.PreviousPage);
             NextPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.NextPage);
+            WordDetailCommand = new OpenWordDetailCommand(this, modalNavigationStore, _vectorSearchStore);
             _vectorSearchStore.WordsLoaded += OnWordsLoaded;
         }
 

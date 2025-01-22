@@ -6,14 +6,14 @@ namespace VectorSearch.WPF.Commands
 {
     public class OpenWordDetailCommand : CommandBase
     {
+        private readonly VectorSearchStore _vectorSearchStore;
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly VectorSearchViewModel _vectorSearchViewModel;
-        private readonly VectorSearchStore _vectorSearchStore;
-        public OpenWordDetailCommand(ModalNavigationStore modalNavigationStore, VectorSearchViewModel vectorSearchViewModel, VectorSearchStore vectorSearchStore)
+        public OpenWordDetailCommand(VectorSearchViewModel vectorSearchViewModel, ModalNavigationStore modalNavigationStore, VectorSearchStore vectorSearchStore)
         {
+            _vectorSearchStore = vectorSearchStore;
             _modalNavigationStore = modalNavigationStore;
             _vectorSearchViewModel = vectorSearchViewModel;
-            _vectorSearchStore = vectorSearchStore;
         }
         public override void Execute(object? parameter)
         {

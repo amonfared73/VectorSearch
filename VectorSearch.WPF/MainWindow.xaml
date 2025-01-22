@@ -33,6 +33,9 @@
             <DataTemplate DataType="{x:Type vms:LayoutViewModel}">
                 <c:Layout/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:WordDetailViewModel}">
+                <views:WordDetailView/>
+            </DataTemplate>
         </Grid.Resources>
 
 
