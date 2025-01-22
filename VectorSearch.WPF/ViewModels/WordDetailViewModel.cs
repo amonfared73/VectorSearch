@@ -16,8 +16,8 @@
             }
         }
 
-        private string _similarity;
-        public string Similarity
+        private double _similarity;
+        public double Similarity
         {
             get
             {

@@ -27,6 +27,7 @@ namespace VectorSearch.WPF
         private readonly CompareWordsStore _compareWordsStore;
         private readonly NavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;
+        private readonly SelectedWordStore _selectedWordStore;
         private readonly VectorSearchDbContextFactory _contextFactory;
 
         public VectorSearchOptions Options { get; set; }
@@ -43,6 +44,7 @@ namespace VectorSearch.WPF
             _compareWordsStore = new CompareWordsStore(_wordService);
             _navigationStore = new NavigationStore();
             _modalNavigationStore = new ModalNavigationStore();
+            _selectedWordStore = new SelectedWordStore(_vectorSearchStore);
         }
 
         protected override void OnStartup(StartupEventArgs e)
