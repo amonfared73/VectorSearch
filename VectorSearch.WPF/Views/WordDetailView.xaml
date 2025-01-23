@@ -53,7 +53,7 @@
                         <ItemsControl ItemsSource="{Binding DictionaryResultItems}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" MaxWidth="400" MaxHeight="500">
+                                    <StackPanel Orientation="Horizontal" MaxWidth="600" MaxHeight="500">
                                         <TextBlock Text="•" FontSize="16" Margin="0,0,5,0" VerticalAlignment="Top"/>
                                         <TextBlock TextWrapping="Wrap">
                                             <Run Text="{Binding PartOfSpeech}" FontWeight="Bold"/>

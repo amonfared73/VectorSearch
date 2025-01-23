@@ -239,14 +239,7 @@ namespace VectorSearch.EF.Commands
                     .AppendPathSegment(word)
                     .GetJsonAsync<List<DictionaryResultViewModelItem>>();
 
-            string? phonetic = response
-                .SelectMany(result => result.Meanings, (result, meaning) => new
-                {
-                    result.Phonetic
-                })
-                .Where(x => !string.IsNullOrEmpty(x.Phonetic))
-                .FirstOrDefault().Phonetic;
-
+            string? phonetic = (from r in response select r.Phonetic).FirstOrDefault();
 
             var simplifiedResult = response
                 .SelectMany(result => result.Meanings, (result, meaning) => new
