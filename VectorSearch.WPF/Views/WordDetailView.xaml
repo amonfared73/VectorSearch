@@ -14,7 +14,7 @@
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -34,14 +34,14 @@
             </Grid>
 
             <Grid Grid.Column="1" Margin="5">
-                <ScrollViewer>
+                <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
                     <StackPanel>
                         <ItemsControl ItemsSource="{Binding DictionaryResultItems}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" MaxWidth="400">
                                         <TextBlock Text="•" FontSize="16" Margin="0,0,5,0" VerticalAlignment="Top"/>
-                                        <TextBlock>
+                                        <TextBlock TextWrapping="Wrap">
                                             <Run Text="{Binding PartOfSpeech}" FontWeight="Bold"/>
                                             <Run Text=": " />
                                             <Run Text="{Binding Definition}" />
