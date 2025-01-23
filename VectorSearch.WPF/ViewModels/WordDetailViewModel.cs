@@ -1,4 +1,6 @@
-﻿using VectorSearch.Domain.DTOs;
+﻿using System.Windows.Input;
+using VectorSearch.Domain.DTOs;
+using VectorSearch.WPF.Commands;
 using VectorSearch.WPF.Stores;
 
 namespace VectorSearch.WPF.ViewModels
@@ -7,10 +9,11 @@ namespace VectorSearch.WPF.ViewModels
     {
         private readonly SelectedWordStore _selectedWordStore;
         public WordDto SelectedWord => _selectedWordStore.SelectedWord;
-        public WordDetailViewModel(SelectedWordStore selectedWordStore)
+        public WordDetailViewModel(SelectedWordStore selectedWordStore, ModalNavigationStore modalNavigationStore)
         {
             _selectedWordStore = selectedWordStore;
             _selectedWordStore.SelectedWordChanged += OnSelectedWordChanged;
+            CloseCommand = new CloseModalCommand(modalNavigationStore);
         }
 
         private void OnSelectedWordChanged()
@@ -26,6 +29,7 @@ namespace VectorSearch.WPF.ViewModels
             base.Dispose();
         }
 
+        public ICommand CloseCommand { get; set; }
         public string Word => SelectedWord?.Text != null ? SelectedWord.Text : "Unassigned";
         public double Similarity => SelectedWord?.Similarity != null ? SelectedWord.Similarity : 0.00;
         public string Vector => SelectedWord?.Vector != null ? SelectedWord.Vector : "No Vector found!";

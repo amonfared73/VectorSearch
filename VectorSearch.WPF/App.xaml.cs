@@ -83,7 +83,7 @@ namespace VectorSearch.WPF
 
         private INavigationService CreateWordDetailModalNavigationService()
         {
-            return new ModalNavigationService<WordDetailViewModel>(_modalNavigationStore, () => new WordDetailViewModel(_selectedWordStore));
+            return new ModalNavigationService<WordDetailViewModel>(_modalNavigationStore, () => new WordDetailViewModel(_selectedWordStore, _modalNavigationStore));
         }
 
         private NavigationBarViewModel CreateNavigationbarViewModel()

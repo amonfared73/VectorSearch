@@ -24,6 +24,6 @@
             <TextBlock TextWrapping="Wrap" Margin="5" FontSize="18" Text="{Binding Vector}"/>
         </StackPanel>
 
-        <Button Grid.Row="3" Content="Close"/>
+        <Button Grid.Row="3" Content="Close" Command="{Binding CloseCommand}"/>
     </Grid>
 </UserControl>
