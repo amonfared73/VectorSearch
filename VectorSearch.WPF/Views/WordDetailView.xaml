@@ -36,7 +36,7 @@
             <Grid Grid.Column="1" Margin="5">
                 <ScrollViewer>
                     <StackPanel>
-                        <ItemsControl ItemsSource="{Binding DictionaryItems}">
+                        <ItemsControl ItemsSource="{Binding DictionaryResultItems}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">

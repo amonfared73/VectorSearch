@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Flurl;
+using Flurl.Http;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Concurrent;
 using System.Linq;
 using VectorSearch.ApplicationService.Commands;
@@ -217,13 +219,13 @@ namespace VectorSearch.EF.Commands
                     var wordVector = _mathService.ParseVector(word.Vector);
                     var similarity = _mathService.ComputeCosineSimilarity(finalVector.Elements, wordVector);
 
-                        similarWords.Add(new WordDto
-                        {
-                            Id = word.Id,
-                            Text = word.Text,
-                            Vector = word.Vector,
-                            Similarity = similarity
-                        });
+                    similarWords.Add(new WordDto
+                    {
+                        Id = word.Id,
+                        Text = word.Text,
+                        Vector = word.Vector,
+                        Similarity = similarity
+                    });
                 });
 
 
@@ -231,6 +233,32 @@ namespace VectorSearch.EF.Commands
 
                 return orderedWords;
             }
+        }
+
+        public async Task<(string, List<SimplifiedDictionaryResultItem>)> GetWordMeaningFromDictionary(string word)
+        {
+            var response = await _options.DictioanryUri
+                    .AppendPathSegment(word)
+                    .GetJsonAsync<List<DictionaryResultViewModelItem>>();
+
+            var phonetic = (from r in response select r.Phonetic).FirstOrDefault();
+
+
+            var simplifiedResult = response
+                .SelectMany(result => result.Meanings, (result, meaning) => new
+                {
+                    result.Phonetic,
+                    meaning.PartOfSpeech,
+                    Definitions = meaning.Definitions.Select(d => d.Definition)
+                })
+                .SelectMany(item => item.Definitions.Select(definition => new SimplifiedDictionaryResultItem()
+                {
+                    PartOfSpeech = item.PartOfSpeech,
+                    Definition = definition
+                }))
+                .ToList();
+
+            return (phonetic, simplifiedResult);
         }
     }
 }

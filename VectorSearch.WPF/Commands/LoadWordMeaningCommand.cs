@@ -1,8 +1,8 @@
-﻿using Flurl;
-using Flurl.Http;
+﻿
 using VectorSearch.Domain.Configurations;
 using VectorSearch.Domain.ViewModels;
 using VectorSearch.WPF.Services;
+using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
 
 namespace VectorSearch.WPF.Commands
@@ -12,11 +12,18 @@ namespace VectorSearch.WPF.Commands
         private readonly VectorSearchOptions _options;
         private readonly WordDetailViewModel _wordDetailViewModel;
         private readonly IDialougeService _dialougeService;
-        public LoadWordMeaningCommand(WordDetailViewModel wordDetailViewModel, VectorSearchOptions options, IDialougeService dialougeService)
+        private readonly DictionaryStore _dictionaryStore;
+        public LoadWordMeaningCommand(WordDetailViewModel wordDetailViewModel, VectorSearchOptions options, IDialougeService dialougeService, DictionaryStore dictionaryStore)
         {
             _options = options;
             _wordDetailViewModel = wordDetailViewModel;
             _dialougeService = dialougeService;
+            _dictionaryStore = dictionaryStore;
+        }
+
+        public override bool CanExecute(object? parameter)
+        {
+            return !IsExecuting && base.CanExecute(parameter);
         }
 
         public override async Task ExecuteAsync(object? parameter)
@@ -24,26 +31,7 @@ namespace VectorSearch.WPF.Commands
             try
             {
                 _wordDetailViewModel.IsLoading = true;
-                var response = await _options.DictioanryUri
-                    .AppendPathSegment(_wordDetailViewModel.Word)
-                    .GetJsonAsync<List<DictionaryResultViewModelItem>>();
-
-                var phonetic = (from r in response select r.Phonetic).FirstOrDefault();
-
-
-                var simplifiedResult = response
-                    .SelectMany(result => result.Meanings, (result, meaning) => new
-                    {
-                        result.Phonetic,
-                        meaning.PartOfSpeech,
-                        Definitions = meaning.Definitions.Select(d => d.Definition)
-                    })
-                    .SelectMany(item => item.Definitions.Select(definition => new SimplifiedDictionaryResultItem()
-                    {
-                        PartOfSpeech = item.PartOfSpeech,
-                        Definition = definition
-                    }))
-                    .ToList();
+                await _dictionaryStore.Load(_wordDetailViewModel.Word);
                 _wordDetailViewModel.IsLoading = false;
             }
             catch (Exception ex)

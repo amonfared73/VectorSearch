@@ -9,12 +9,13 @@ namespace VectorSearch.WPF.Commands
     public class OpenWordDetailCommand : CommandBase
     {
         private readonly IDialougeService _dialougeService;
+        private readonly DictionaryStore _dictionaryStore;
         private readonly SelectedWordStore _selectedWordStore;
         private readonly VectorSearchStore _vectorSearchStore;
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly VectorSearchViewModel _vectorSearchViewModel;
         private readonly VectorSearchOptions _vectorSearchOptions;
-        public OpenWordDetailCommand(VectorSearchViewModel vectorSearchViewModel, ModalNavigationStore modalNavigationStore, VectorSearchStore vectorSearchStore, SelectedWordStore selectedWordStore, IDialougeService dialougeService, VectorSearchOptions vectorSearchOptions)
+        public OpenWordDetailCommand(VectorSearchViewModel vectorSearchViewModel, ModalNavigationStore modalNavigationStore, VectorSearchStore vectorSearchStore, SelectedWordStore selectedWordStore, IDialougeService dialougeService, VectorSearchOptions vectorSearchOptions, DictionaryStore dictionaryStore)
         {
             _dialougeService = dialougeService;
             _selectedWordStore = selectedWordStore;
@@ -22,11 +23,12 @@ namespace VectorSearch.WPF.Commands
             _modalNavigationStore = modalNavigationStore;
             _vectorSearchViewModel = vectorSearchViewModel;
             _vectorSearchOptions = vectorSearchOptions;
+            _dictionaryStore = dictionaryStore;
         }
         public override void Execute(object? parameter)
         {
             WordDto selectedWord = _vectorSearchViewModel.SelectedWord;
-            WordDetailViewModel wordDetailViewModel = new WordDetailViewModel(_selectedWordStore, _modalNavigationStore, _vectorSearchOptions, _dialougeService);
+            WordDetailViewModel wordDetailViewModel = new WordDetailViewModel(_selectedWordStore, _modalNavigationStore, _vectorSearchOptions, _dialougeService, _dictionaryStore);
             _modalNavigationStore.CurrentViewModel = wordDetailViewModel;
         }
     }

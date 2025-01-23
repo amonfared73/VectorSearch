@@ -28,6 +28,7 @@ namespace VectorSearch.WPF
         private readonly NavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly SelectedWordStore _selectedWordStore;
+        private readonly DictionaryStore _dictionaryStore;
         private readonly VectorSearchDbContextFactory _contextFactory;
 
         public VectorSearchOptions Options { get; set; }
@@ -42,6 +43,7 @@ namespace VectorSearch.WPF
             _wordService = new WordService(_contextFactory, _mathService, _expressionService, _dbSetService, Options);
             _vectorSearchStore = new VectorSearchStore(_wordService);
             _compareWordsStore = new CompareWordsStore(_wordService);
+            _dictionaryStore = new DictionaryStore(_wordService);
             _navigationStore = new NavigationStore();
             _modalNavigationStore = new ModalNavigationStore();
             _selectedWordStore = new SelectedWordStore(_vectorSearchStore);
@@ -68,7 +70,7 @@ namespace VectorSearch.WPF
 
         private INavigationService CreateHomeNavigationService()
         {
-            return new LayoutNavigationService<VectorSearchViewModel>(_navigationStore, CreateNavigationbarViewModel, () => new VectorSearchViewModel(_vectorSearchStore, _modalNavigationStore, _selectedWordStore, _dialougeService, Options));
+            return new LayoutNavigationService<VectorSearchViewModel>(_navigationStore, CreateNavigationbarViewModel, () => new VectorSearchViewModel(_vectorSearchStore, _modalNavigationStore, _selectedWordStore, _dialougeService, Options, _dictionaryStore));
         }
 
         private INavigationService CreateWordCompareNavigationService()
@@ -83,7 +85,7 @@ namespace VectorSearch.WPF
 
         private INavigationService CreateWordDetailModalNavigationService()
         {
-            return new ModalNavigationService<WordDetailViewModel>(_modalNavigationStore, () => new WordDetailViewModel(_selectedWordStore, _modalNavigationStore, Options, _dialougeService));
+            return new ModalNavigationService<WordDetailViewModel>(_modalNavigationStore, () => new WordDetailViewModel(_selectedWordStore, _modalNavigationStore, Options, _dialougeService, _dictionaryStore));
         }
 
         private NavigationBarViewModel CreateNavigationbarViewModel()
