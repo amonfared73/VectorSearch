@@ -90,6 +90,11 @@ The application follows a layered architecture:
 
 ---
 
+## Screenshots
+![ScreenShots](VectorSearch.WPF/ScreenShots/1.png)
+![ScreenShots](VectorSearch.WPF/ScreenShots/2.png)
+![ScreenShots](VectorSearch.WPF/ScreenShots/3.png)
+
 ## Contributing
 
 Contributions are welcome! Feel free to fork the repository and submit pull requests.
