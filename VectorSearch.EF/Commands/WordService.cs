@@ -176,12 +176,13 @@ namespace VectorSearch.EF.Commands
                 if (secondSearchedWord == null)
                     throw new WordNotFoundException($"Word {request.SecondWord} not found in the dictionary");
 
-                WordDto? thirdSearchedWord = string.IsNullOrEmpty(request.ThirdWord) ? new WordDto() { Text = string.Empty, Vector = _mathService.SerializeVector(Vector.Empty.Elements) } : null;
+                var thirdSearchedWord = WordDto.Empty;
 
-                if (thirdSearchedWord != null)
+                if(!string.IsNullOrEmpty(request.ThirdWord))
                     thirdSearchedWord = await context.Glove50Ds.Where(w => w.Text == request.ThirdWord).Select(w => new WordDto() { Text = w.Text, Vector = w.Vector }).FirstOrDefaultAsync();
 
-                if (!string.IsNullOrEmpty(request.ThirdWord) && thirdSearchedWord == null)
+
+                if (!string.IsNullOrEmpty(request.ThirdWord) && string.IsNullOrEmpty(thirdSearchedWord?.Text))
                     throw new WordNotFoundException($"Word {request.ThirdWord} not found in the dictionary");
 
                 var firstVector = new Vector(_mathService.ParseVector(firstSearchedWord.Vector));

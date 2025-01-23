@@ -7,5 +7,7 @@
         public double Similarity { get; set; }
         public string Vector { get; set; } = string.Empty;
         public int DictionaryTypeId { get; set; }
+        public static WordDto Empty => new WordDto() { Text = string.Empty };
+
     }
 }
