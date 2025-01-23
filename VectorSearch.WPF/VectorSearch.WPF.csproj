@@ -19,6 +19,7 @@
     <PackageReference Include="LoadingSpinner.WPF" Version="1.0.0" />
     <PackageReference Include="MaterialDesignThemes" Version="5.2.0" />
     <PackageReference Include="ModernWpfUI" Version="0.9.6" />
+    <PackageReference Include="SimpleModal.WPF" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
