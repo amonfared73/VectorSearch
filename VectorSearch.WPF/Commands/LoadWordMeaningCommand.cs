@@ -31,8 +31,10 @@ namespace VectorSearch.WPF.Commands
             try
             {
                 _wordDetailViewModel.IsLoading = true;
+                _wordDetailViewModel.ShowResults = false;
                 await _dictionaryStore.Load(_wordDetailViewModel.Word);
                 _wordDetailViewModel.IsLoading = false;
+                _wordDetailViewModel.ShowResults = true;
             }
             catch (Exception ex)
             {

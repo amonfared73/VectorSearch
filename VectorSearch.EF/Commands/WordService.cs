@@ -256,6 +256,7 @@ namespace VectorSearch.EF.Commands
                     PartOfSpeech = item.PartOfSpeech,
                     Definition = definition
                 }))
+                .OrderBy(x => x.PartOfSpeech)
                 .ToList();
 
             return (phonetic, simplifiedResult);

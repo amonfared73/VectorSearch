@@ -82,6 +82,20 @@ namespace VectorSearch.WPF.ViewModels
                 OnPropertyChanged(nameof(DictionaryResultItems));
             }
         }
+
+        private bool _showResults;
+        public bool ShowResults
+        {
+            get
+            {
+                return _showResults;
+            }
+            set
+            {
+                _showResults = value;
+                OnPropertyChanged(nameof(ShowResults));
+            }
+        }
         public ICommand LoadWordMeaningCommand {  get; set; }
         public ICommand CloseCommand { get; set; }
         public string Word => SelectedWord?.Text != null ? SelectedWord.Text : "Unassigned";

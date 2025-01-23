@@ -4,8 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VectorSearch.WPF.Views"
+             xmlns:loadingspinnercontrol="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -34,12 +45,18 @@
             </Grid>
 
             <Grid Grid.Column="1" Margin="5">
-                <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+                
+                <StackPanel VerticalAlignment="Center" Style="{StaticResource StackPanelLoadingStyle}">
+                    <loadingspinnercontrol:LoadingSpinner Diameter="100" Thickness="2" IsLoading="True"/>
+                    <TextBlock Text="Loading words ..." VerticalAlignment="Center" TextAlignment="Center" Margin="0 5 0 0"/>
+                </StackPanel>
+
+                <ScrollViewer Visibility="{Binding ShowResults, Converter={StaticResource BoolToVisConverter}}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
                     <StackPanel>
                         <ItemsControl ItemsSource="{Binding DictionaryResultItems}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" MaxWidth="400">
+                                    <StackPanel Orientation="Horizontal" MaxWidth="400" MaxHeight="500">
                                         <TextBlock Text="•" FontSize="16" Margin="0,0,5,0" VerticalAlignment="Top"/>
                                         <TextBlock TextWrapping="Wrap">
                                             <Run Text="{Binding PartOfSpeech}" FontWeight="Bold"/>
