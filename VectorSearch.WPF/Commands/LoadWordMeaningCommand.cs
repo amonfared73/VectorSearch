@@ -28,6 +28,7 @@ namespace VectorSearch.WPF.Commands
 
         public override async Task ExecuteAsync(object? parameter)
         {
+            _wordDetailViewModel.ErrorMessage = null;
             try
             {
                 _wordDetailViewModel.IsLoading = true;
@@ -39,12 +40,8 @@ namespace VectorSearch.WPF.Commands
             catch (Exception ex)
             {
                 _wordDetailViewModel.IsLoading = false;
-                _dialougeService.ShowDialouge(options =>
-                {
-                    options.Message = ex.Message;
-                    options.CloseText = "Close";
-                    options.Title = "Error fetching meaning from dictionary";
-                });
+                _wordDetailViewModel.ShowResults = false;
+                _wordDetailViewModel.ErrorMessage = "Seems like we couldn't find any definition!";
             }
             finally
             {

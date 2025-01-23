@@ -102,7 +102,21 @@ namespace VectorSearch.WPF.ViewModels
         public double Similarity => SelectedWord?.Similarity != null ? SelectedWord.Similarity : 0.00;
         public string Vector => SelectedWord?.Vector != null ? SelectedWord.Vector : "No Vector found!";
         public string Meaning { get; set; } = "No Definitions Found";
-
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMessage;
+            }
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
+                OnPropertyChanged(nameof(HasErrorMessage));
+            }
+        }
+        public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
         public static WordDetailViewModel LoadViewModel(SelectedWordStore selectedWordStore, ModalNavigationStore modalNavigationStore, VectorSearchOptions options, IDialougeService dialougeService, DictionaryStore dictionaryStore)
         {
             var viewModel = new WordDetailViewModel(selectedWordStore, modalNavigationStore, options, dialougeService, dictionaryStore);
