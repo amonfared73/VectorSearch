@@ -2,11 +2,9 @@
 using Flurl.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Concurrent;
-using System.Linq;
 using VectorSearch.ApplicationService.Commands;
 using VectorSearch.Domain.Configurations;
 using VectorSearch.Domain.DTOs;
-using VectorSearch.Domain.Enums;
 using VectorSearch.Domain.Exceptions;
 using VectorSearch.Domain.Models;
 using VectorSearch.Domain.ViewModels;
