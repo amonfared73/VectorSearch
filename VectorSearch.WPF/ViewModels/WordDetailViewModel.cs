@@ -33,6 +33,7 @@ namespace VectorSearch.WPF.ViewModels
         public string Word => SelectedWord?.Text != null ? SelectedWord.Text : "Unassigned";
         public double Similarity => SelectedWord?.Similarity != null ? SelectedWord.Similarity : 0.00;
         public string Vector => SelectedWord?.Vector != null ? SelectedWord.Vector : "No Vector found!";
-        
+        public string Meaning { get; set; } = "Word meaning from a valid dictionary";
+
     }
 }
