@@ -2,6 +2,7 @@
 using VectorSearch.Domain.Configurations;
 using VectorSearch.Domain.DTOs;
 using VectorSearch.WPF.Commands;
+using VectorSearch.WPF.Services;
 using VectorSearch.WPF.Stores;
 
 namespace VectorSearch.WPF.ViewModels
@@ -10,11 +11,11 @@ namespace VectorSearch.WPF.ViewModels
     {
         private readonly SelectedWordStore _selectedWordStore;
         public WordDto SelectedWord => _selectedWordStore.SelectedWord;
-        public WordDetailViewModel(SelectedWordStore selectedWordStore, ModalNavigationStore modalNavigationStore, VectorSearchOptions options)
+        public WordDetailViewModel(SelectedWordStore selectedWordStore, ModalNavigationStore modalNavigationStore, VectorSearchOptions options, IDialougeService dialougeService)
         {
             _selectedWordStore = selectedWordStore;
             _selectedWordStore.SelectedWordChanged += OnSelectedWordChanged;
-            LoadWordMeaningCommand = new LoadWordMeaningCommand(this, options);
+            LoadWordMeaningCommand = new LoadWordMeaningCommand(this, options, dialougeService);
             CloseCommand = new CloseModalCommand(modalNavigationStore);
         }
 

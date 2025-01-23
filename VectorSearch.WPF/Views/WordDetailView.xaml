@@ -24,6 +24,6 @@
             <TextBlock TextWrapping="Wrap" Margin="5" FontSize="18" Text="{Binding Meaning}"/>
         </StackPanel>
 
-        <Button Grid.Row="3" HorizontalAlignment="Right" Content="Close" Command="{Binding CloseCommand}"/>
+        <Button Grid.Row="3" HorizontalAlignment="Right" Content="Close" Command="{Binding LoadWordMeaningCommand}"/>
     </Grid>
 </UserControl>
