@@ -103,5 +103,11 @@ namespace VectorSearch.WPF.ViewModels
         public string Vector => SelectedWord?.Vector != null ? SelectedWord.Vector : "No Vector found!";
         public string Meaning { get; set; } = "No Definitions Found";
 
+        public static WordDetailViewModel LoadViewModel(SelectedWordStore selectedWordStore, ModalNavigationStore modalNavigationStore, VectorSearchOptions options, IDialougeService dialougeService, DictionaryStore dictionaryStore)
+        {
+            var viewModel = new WordDetailViewModel(selectedWordStore, modalNavigationStore, options, dialougeService, dictionaryStore);
+            viewModel.LoadWordMeaningCommand.Execute(null);
+            return viewModel;
+        }
     }
 }

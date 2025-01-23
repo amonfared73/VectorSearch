@@ -71,8 +71,8 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
-        
 
-        <Button Grid.Row="1" HorizontalAlignment="Right" Content="Close" Command="{Binding LoadWordMeaningCommand}"/>
+
+        <Button Grid.Row="1" HorizontalAlignment="Right" Content="Close" Command="{Binding CloseCommand}"/>
     </Grid>
 </UserControl>
