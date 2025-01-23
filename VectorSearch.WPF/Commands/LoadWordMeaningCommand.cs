@@ -28,12 +28,8 @@ namespace VectorSearch.WPF.Commands
                     .AppendPathSegment(_wordDetailViewModel.Word)
                     .GetJsonAsync<List<DictionaryResultViewModelItem>>();
 
-                var phonetic = response
-                    .SelectMany(result => result.Meanings, (result, meaning) => new
-                    {
-                        result.Phonetic
-                    })
-                    .FirstOrDefault();
+                var phonetic = (from r in response select r.Phonetic).FirstOrDefault();
+
 
                 var simplifiedResult = response
                     .SelectMany(result => result.Meanings, (result, meaning) => new
