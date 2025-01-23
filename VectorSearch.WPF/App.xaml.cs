@@ -68,7 +68,7 @@ namespace VectorSearch.WPF
 
         private INavigationService CreateHomeNavigationService()
         {
-            return new LayoutNavigationService<VectorSearchViewModel>(_navigationStore, CreateNavigationbarViewModel, () => new VectorSearchViewModel(_vectorSearchStore, _modalNavigationStore, _selectedWordStore, _dialougeService));
+            return new LayoutNavigationService<VectorSearchViewModel>(_navigationStore, CreateNavigationbarViewModel, () => new VectorSearchViewModel(_vectorSearchStore, _modalNavigationStore, _selectedWordStore, _dialougeService, Options));
         }
 
         private INavigationService CreateWordCompareNavigationService()
@@ -83,7 +83,7 @@ namespace VectorSearch.WPF
 
         private INavigationService CreateWordDetailModalNavigationService()
         {
-            return new ModalNavigationService<WordDetailViewModel>(_modalNavigationStore, () => new WordDetailViewModel(_selectedWordStore, _modalNavigationStore));
+            return new ModalNavigationService<WordDetailViewModel>(_modalNavigationStore, () => new WordDetailViewModel(_selectedWordStore, _modalNavigationStore, Options));
         }
 
         private NavigationBarViewModel CreateNavigationbarViewModel()

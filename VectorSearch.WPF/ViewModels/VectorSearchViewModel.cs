@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using VectorSearch.Domain.Configurations;
 using VectorSearch.Domain.DTOs;
 using VectorSearch.Domain.Enums;
 using VectorSearch.WPF.Commands;
@@ -98,7 +99,7 @@ namespace VectorSearch.WPF.ViewModels
         public string? PaginationInfo => $"PageNumber: {CurrentPage}, TotalPages: {TotalPages}, TotalRecords: {TotalRecords}";
         public bool IsGloveTypeEnabled => IsVectorSearchEnabled;
 
-        public VectorSearchViewModel(VectorSearchStore vectorSearchStore, ModalNavigationStore modalNavigationStore, SelectedWordStore selectedWordStore, IDialougeService dialougeService)
+        public VectorSearchViewModel(VectorSearchStore vectorSearchStore, ModalNavigationStore modalNavigationStore, SelectedWordStore selectedWordStore, IDialougeService dialougeService, VectorSearchOptions options)
         {
             _vectorSearchStore = vectorSearchStore;
             _selectedWordStore = selectedWordStore;
@@ -109,7 +110,7 @@ namespace VectorSearch.WPF.ViewModels
             SearchCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.CurrentPage);
             PreviousPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.PreviousPage);
             NextPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.NextPage);
-            WordDetailCommand = new OpenWordDetailCommand(this, _modalNavigationStore, _vectorSearchStore, _selectedWordStore, dialougeService);
+            WordDetailCommand = new OpenWordDetailCommand(this, _modalNavigationStore, _vectorSearchStore, _selectedWordStore, dialougeService, options);
             _vectorSearchStore.WordsLoaded += OnWordsLoaded;
         }
 
