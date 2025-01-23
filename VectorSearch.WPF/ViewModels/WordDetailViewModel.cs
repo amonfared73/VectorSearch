@@ -9,13 +9,12 @@ namespace VectorSearch.WPF.ViewModels
     public class WordDetailViewModel : ViewModelBase
     {
         private readonly SelectedWordStore _selectedWordStore;
-        private readonly VectorSearchOptions _options;
         public WordDto SelectedWord => _selectedWordStore.SelectedWord;
         public WordDetailViewModel(SelectedWordStore selectedWordStore, ModalNavigationStore modalNavigationStore, VectorSearchOptions options)
         {
-            _options = options;
             _selectedWordStore = selectedWordStore;
             _selectedWordStore.SelectedWordChanged += OnSelectedWordChanged;
+            LoadWordMeaningCommand = new LoadWordMeaningCommand(this, options);
             CloseCommand = new CloseModalCommand(modalNavigationStore);
         }
 
@@ -31,7 +30,14 @@ namespace VectorSearch.WPF.ViewModels
             _selectedWordStore.SelectedWordChanged -= OnSelectedWordChanged;
             base.Dispose();
         }
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { _isLoading = value; OnPropertyChanged(nameof(IsLoading)); }
+        }
 
+        public ICommand LoadWordMeaningCommand {  get; set; }
         public ICommand CloseCommand { get; set; }
         public string Word => SelectedWord?.Text != null ? SelectedWord.Text : "Unassigned";
         public double Similarity => SelectedWord?.Similarity != null ? SelectedWord.Similarity : 0.00;
