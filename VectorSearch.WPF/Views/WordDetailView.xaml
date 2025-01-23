@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="VectorSearch.WPF.Views.WordDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VectorSearch.WPF.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="300">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" FontSize="36" FontWeight="Bold" Text="{Binding Word}" Margin="0 10"/>
+        <StackPanel Margin="0 10" Grid.Row="1" Orientation="Horizontal">
+            <TextBlock FontWeight="Bold" FontSize="24" Margin="5" Text="Similarity: "/>
+            <TextBlock Margin="5" FontSize="24" Text="{Binding Similarity}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Margin="0 10" Orientation="Vertical" Width="500">
+            <TextBlock TextWrapping="Wrap" Margin="5" FontSize="18" Text="{Binding Vector}"/>
+        </StackPanel>
+
+        <Button Grid.Row="3" Content="Close" Command="{Binding CloseCommand}"/>
+    </Grid>
+</UserControl>

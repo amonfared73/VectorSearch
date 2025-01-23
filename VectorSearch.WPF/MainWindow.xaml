@@ -11,35 +11,38 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:vms="clr-namespace:VectorSearch.WPF.ViewModels" 
         xmlns:views="clr-namespace:VectorSearch.WPF.Views"
-        xmlns:c="clr-namespace:VectorSearch.WPF.Components"
+        xmlns:c="clr-namespace:VectorSearch.WPF.Components" 
+        xmlns:custom="clr-namespace:ModalControl;assembly=ModalControl"
         ui:WindowHelper.UseModernWindowStyle="True"
         mc:Ignorable="d" WindowState="Maximized"
         Title="Vector Search" Height="450" Width="800">
-    
+
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
         
-        <Grid Grid.Row="0">
-            <ContentControl Content="{Binding CurrentViewModel}">
-                <ContentControl.Resources>
-                    <DataTemplate DataType="{x:Type vms:VectorSearchViewModel}">
-                        <views:VectorSearchView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vms:WordCompareViewModel}">
-                        <views:WordCompareView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vms:AboutViewModel}">
-                        <views:AboutView/>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vms:LayoutViewModel}">
-                        <c:Layout/>
-                    </DataTemplate>
-                </ContentControl.Resources>
-            </ContentControl>
-        </Grid>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:VectorSearchViewModel}">
+                <views:VectorSearchView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:WordCompareViewModel}">
+                <views:WordCompareView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AboutViewModel}">
+                <views:AboutView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:LayoutViewModel}">
+                <c:Layout/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:WordDetailViewModel}">
+                <views:WordDetailView/>
+            </DataTemplate>
+        </Grid.Resources>
+
+
+        <custom:Modal Panel.ZIndex="1" IsOpen="{Binding IsModalOpen}">
+            <ContentControl Content="{Binding CurrentModalViewModel}"/>
+        </custom:Modal>
+        <ContentControl Content="{Binding CurrentViewModel}"/>
+        
     </Grid>
 </Window>

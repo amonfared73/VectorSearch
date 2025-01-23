@@ -20,7 +20,24 @@ namespace VectorSearch.WPF.ViewModels
         private string? _paginationInfo;
         private bool _isVectorSearchEnabled;
         private readonly VectorSearchStore _vectorSearchStore;
+        private readonly SelectedWordStore _selectedWordStore;
+        private readonly ModalNavigationStore _modalNavigationStore;
         private ObservableCollection<WordDto> _words;
+
+        private WordDto _selectedWord;
+        public WordDto SelectedWord
+        {
+            get
+            {
+                return _selectedWord;
+            }
+            set
+            {
+                _selectedWord = value;
+                _selectedWordStore.SelectedWord = SelectedWord;
+                OnPropertyChanged(nameof(SelectedWord));
+            }
+        }
 
         public GloveType GloveType
         {
@@ -77,18 +94,22 @@ namespace VectorSearch.WPF.ViewModels
         public ICommand SearchCommand { get; set; }
         public ICommand PreviousPageCommand { get; set; }
         public ICommand NextPageCommand { get; set; }
+        public ICommand WordDetailCommand { get; set; }
         public string? PaginationInfo => $"PageNumber: {CurrentPage}, TotalPages: {TotalPages}, TotalRecords: {TotalRecords}";
         public bool IsGloveTypeEnabled => IsVectorSearchEnabled;
 
-        public VectorSearchViewModel(VectorSearchStore vectorSearchStore, IDialougeService dialougeService)
+        public VectorSearchViewModel(VectorSearchStore vectorSearchStore, ModalNavigationStore modalNavigationStore, SelectedWordStore selectedWordStore, IDialougeService dialougeService)
         {
             _vectorSearchStore = vectorSearchStore;
+            _selectedWordStore = selectedWordStore;
+            _modalNavigationStore = modalNavigationStore;
             CurrentPage = 1;
             GloveType = GloveType.glove_6B_50d;
             Words = new ObservableCollection<WordDto>();
             SearchCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.CurrentPage);
             PreviousPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.PreviousPage);
             NextPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.NextPage);
+            WordDetailCommand = new OpenWordDetailCommand(this, _modalNavigationStore, _vectorSearchStore, _selectedWordStore, dialougeService);
             _vectorSearchStore.WordsLoaded += OnWordsLoaded;
         }
 

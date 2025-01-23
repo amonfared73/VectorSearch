@@ -3,7 +3,7 @@ using VectorSearch.WPF.ViewModels;
 
 namespace VectorSearch.WPF.Services
 {
-    internal class LayoutNavigationService<TViewModel> : INavigationService<TViewModel> where TViewModel : ViewModelBase
+    internal class LayoutNavigationService<TViewModel> : INavigationService where TViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
         private readonly Func<TViewModel> _createViewModel;
