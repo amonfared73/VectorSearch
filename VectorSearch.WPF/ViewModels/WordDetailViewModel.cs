@@ -20,6 +20,12 @@ namespace VectorSearch.WPF.ViewModels
             OnPropertyChanged(nameof(Vector));
         }
 
+        public override void Dispose()
+        {
+            _selectedWordStore.SelectedWordChanged -= OnSelectedWordChanged;
+            base.Dispose();
+        }
+
         public string Word => SelectedWord?.Text != null ? SelectedWord.Text : "Unassigned";
         public double Similarity => SelectedWord?.Similarity != null ? SelectedWord.Similarity : 0.00;
         public string Vector => SelectedWord?.Vector != null ? SelectedWord.Vector : "No Vector found!";

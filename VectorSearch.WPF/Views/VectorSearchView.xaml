@@ -70,11 +70,10 @@
             </Button>
 
 
-            <DataGrid Grid.Row="1" Grid.ColumnSpan="4" ItemsSource="{Binding Words}" 
+                <DataGrid Grid.Row="1" Grid.ColumnSpan="4" ItemsSource="{Binding Words}" SelectedItem="{Binding SelectedWord}" 
               AutoGenerateColumns="False" IsReadOnly="True">
                     <DataGrid.InputBindings>
-                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding WordDetailCommand}" 
-                      CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem}" />
+                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding WordDetailCommand}"  CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem}" />
                     </DataGrid.InputBindings>
                     <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="100" />

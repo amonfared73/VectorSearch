@@ -34,7 +34,7 @@ namespace VectorSearch.WPF.ViewModels
             set
             {
                 _selectedWord = value;
-                _selectedWordStore.SelectedWord = _selectedWord;
+                _selectedWordStore.SelectedWord = SelectedWord;
                 OnPropertyChanged(nameof(SelectedWord));
             }
         }
