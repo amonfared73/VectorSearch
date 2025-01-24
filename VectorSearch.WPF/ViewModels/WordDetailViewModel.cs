@@ -14,7 +14,7 @@ namespace VectorSearch.WPF.ViewModels
         private readonly SelectedWordStore _selectedWordStore;
         private readonly DictionaryStore _dictionaryStore;
         public WordDto SelectedWord => _selectedWordStore.SelectedWord;
-        public WordDetailViewModel(SelectedWordStore selectedWordStore, ModalNavigationStore modalNavigationStore, VectorSearchOptions options, IDialougeService dialougeService, DictionaryStore dictionaryStore)
+        public WordDetailViewModel(SelectedWordStore selectedWordStore, ModalNavigationStore modalNavigationStore, DictionaryStore dictionaryStore, VectorSearchOptions options, IDialougeService dialougeService)
         {
             _selectedWordStore = selectedWordStore;
             _dictionaryStore = dictionaryStore;
@@ -119,7 +119,7 @@ namespace VectorSearch.WPF.ViewModels
         public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
         public static WordDetailViewModel LoadViewModel(SelectedWordStore selectedWordStore, ModalNavigationStore modalNavigationStore, VectorSearchOptions options, IDialougeService dialougeService, DictionaryStore dictionaryStore)
         {
-            var viewModel = new WordDetailViewModel(selectedWordStore, modalNavigationStore, options, dialougeService, dictionaryStore);
+            var viewModel = new WordDetailViewModel(selectedWordStore, modalNavigationStore, dictionaryStore, options, dialougeService);
             viewModel.LoadWordMeaningCommand.Execute(null);
             return viewModel;
         }
