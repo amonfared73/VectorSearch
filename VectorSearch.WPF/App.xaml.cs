@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.IO;
 using System.Windows;
 using VectorSearch.ApplicationService.Commands;
 using VectorSearch.Domain.Configurations;
@@ -22,8 +23,8 @@ namespace VectorSearch.WPF
         public App()
         {
             IServiceCollection services = new ServiceCollection();
-
-            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory).AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).Build();
+            var projectDirectory = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.FullName;
+            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(projectDirectory).AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).Build();
             var vectorSearchOptions = new VectorSearchOptions();
             configuration.GetSection("VectorSearchOptions").Bind(vectorSearchOptions);
             services.AddSingleton(vectorSearchOptions);
