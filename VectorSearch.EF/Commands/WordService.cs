@@ -187,7 +187,7 @@ namespace VectorSearch.EF.Commands
 
                 var firstVector = new Vector(_mathService.ParseVector(firstSearchedWord.Vector));
                 var secondVector = new Vector(_mathService.ParseVector(secondSearchedWord.Vector));
-                var thirdVector = thirdSearchedWord == null ? new Vector() : new Vector(_mathService.ParseVector(thirdSearchedWord.Vector));
+                var thirdVector = string.IsNullOrEmpty(thirdSearchedWord?.Text) ? new Vector() : new Vector(_mathService.ParseVector(thirdSearchedWord.Vector));
 
                 var finalVector = _expressionService.CalculateVector(new CalculateVectorRequest()
                 {
