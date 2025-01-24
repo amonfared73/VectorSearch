@@ -1,23 +1,15 @@
-﻿
-using VectorSearch.Domain.Configurations;
-using VectorSearch.Domain.ViewModels;
-using VectorSearch.WPF.Services;
-using VectorSearch.WPF.Stores;
+﻿using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
 
 namespace VectorSearch.WPF.Commands
 {
     public class LoadWordMeaningCommand : AsyncCommandBase
     {
-        private readonly VectorSearchOptions _options;
         private readonly WordDetailViewModel _wordDetailViewModel;
-        private readonly IDialougeService _dialougeService;
         private readonly DictionaryStore _dictionaryStore;
-        public LoadWordMeaningCommand(WordDetailViewModel wordDetailViewModel, VectorSearchOptions options, IDialougeService dialougeService, DictionaryStore dictionaryStore)
+        public LoadWordMeaningCommand(WordDetailViewModel wordDetailViewModel, DictionaryStore dictionaryStore)
         {
-            _options = options;
             _wordDetailViewModel = wordDetailViewModel;
-            _dialougeService = dialougeService;
             _dictionaryStore = dictionaryStore;
         }
 

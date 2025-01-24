@@ -21,7 +21,7 @@ namespace VectorSearch.WPF.ViewModels
             DictionaryResultItems = new ObservableCollection<SimplifiedDictionaryResultItem>();
             _dictionaryStore.ResultsLoaded += OnResulsLoaded;
             _selectedWordStore.SelectedWordChanged += OnSelectedWordChanged;
-            LoadWordMeaningCommand = new LoadWordMeaningCommand(this, options, dialougeService, _dictionaryStore);
+            LoadWordMeaningCommand = new LoadWordMeaningCommand(this, _dictionaryStore);
             CloseCommand = new CloseModalCommand(modalNavigationStore);
         }
 

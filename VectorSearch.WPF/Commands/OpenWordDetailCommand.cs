@@ -11,15 +11,13 @@ namespace VectorSearch.WPF.Commands
         private readonly IDialougeService _dialougeService;
         private readonly DictionaryStore _dictionaryStore;
         private readonly SelectedWordStore _selectedWordStore;
-        private readonly VectorSearchStore _vectorSearchStore;
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly VectorSearchViewModel _vectorSearchViewModel;
         private readonly VectorSearchOptions _vectorSearchOptions;
-        public OpenWordDetailCommand(VectorSearchViewModel vectorSearchViewModel, ModalNavigationStore modalNavigationStore, VectorSearchStore vectorSearchStore, SelectedWordStore selectedWordStore, IDialougeService dialougeService, VectorSearchOptions vectorSearchOptions, DictionaryStore dictionaryStore)
+        public OpenWordDetailCommand(VectorSearchViewModel vectorSearchViewModel, ModalNavigationStore modalNavigationStore, SelectedWordStore selectedWordStore, IDialougeService dialougeService, VectorSearchOptions vectorSearchOptions, DictionaryStore dictionaryStore)
         {
             _dialougeService = dialougeService;
             _selectedWordStore = selectedWordStore;
-            _vectorSearchStore = vectorSearchStore;
             _modalNavigationStore = modalNavigationStore;
             _vectorSearchViewModel = vectorSearchViewModel;
             _vectorSearchOptions = vectorSearchOptions;

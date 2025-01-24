@@ -22,12 +22,10 @@ namespace VectorSearch.WPF.ViewModels
         private ObservableCollection<WordDto> _words;
 
         private readonly CompareWordsStore _compareWordsStore;
-        private readonly IDialougeService _dialougeService;
 
         public WordCompareViewModel(CompareWordsStore compareWordsStore, IDialougeService dialougeService)
         {
             _compareWordsStore = compareWordsStore;
-            _dialougeService = dialougeService;
             Words = new ObservableCollection<WordDto>();
             ShowResults = false;
             CompareCommand = new CompareWordsCommand(dialougeService, compareWordsStore, this);

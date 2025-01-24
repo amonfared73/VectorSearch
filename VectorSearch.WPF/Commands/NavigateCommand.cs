@@ -1,6 +1,4 @@
 ﻿using VectorSearch.WPF.Services;
-using VectorSearch.WPF.Stores;
-using VectorSearch.WPF.ViewModels;
 
 namespace VectorSearch.WPF.Commands
 {

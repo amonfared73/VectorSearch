@@ -7,13 +7,11 @@ namespace VectorSearch.WPF.Services
     {
         private readonly NavigationStore _navigationStore;
         private readonly Func<TViewModel> _createViewmodel;
-        private readonly VectorSearchStore _vectorSearchStore;
 
         public NavigationService(NavigationStore navigationStore, VectorSearchStore vectorSearchStore, Func<TViewModel> createViewmodel)
         {
             _navigationStore = navigationStore;
             _createViewmodel = createViewmodel;
-            _vectorSearchStore = vectorSearchStore;
         }
 
         public void Navigate()

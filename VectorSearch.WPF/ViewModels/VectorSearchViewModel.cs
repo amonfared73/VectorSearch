@@ -22,7 +22,6 @@ namespace VectorSearch.WPF.ViewModels
         private bool _isVectorSearchEnabled;
         private readonly VectorSearchStore _vectorSearchStore;
         private readonly SelectedWordStore _selectedWordStore;
-        private readonly ModalNavigationStore _modalNavigationStore;
         private ObservableCollection<WordDto> _words;
 
         private WordDto _selectedWord;
@@ -99,18 +98,17 @@ namespace VectorSearch.WPF.ViewModels
         public string? PaginationInfo => $"PageNumber: {CurrentPage}, TotalPages: {TotalPages}, TotalRecords: {TotalRecords}";
         public bool IsGloveTypeEnabled => IsVectorSearchEnabled;
 
-        public VectorSearchViewModel(VectorSearchStore vectorSearchStore, ModalNavigationStore modalNavigationStore, SelectedWordStore selectedWordStore, IDialougeService dialougeService, VectorSearchOptions options, DictionaryStore dictionaryStore)
+        public VectorSearchViewModel(VectorSearchStore vectorSearchStore, ModalNavigationStore modalNavigationStore, SelectedWordStore selectedWordStore, DictionaryStore dictionaryStore, IDialougeService dialougeService, VectorSearchOptions options)
         {
             _vectorSearchStore = vectorSearchStore;
             _selectedWordStore = selectedWordStore;
-            _modalNavigationStore = modalNavigationStore;
             CurrentPage = 1;
             GloveType = GloveType.glove_6B_50d;
             Words = new ObservableCollection<WordDto>();
             SearchCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.CurrentPage);
             PreviousPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.PreviousPage);
             NextPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.NextPage);
-            WordDetailCommand = new OpenWordDetailCommand(this, _modalNavigationStore, _vectorSearchStore, _selectedWordStore, dialougeService, options, dictionaryStore);
+            WordDetailCommand = new OpenWordDetailCommand(this, modalNavigationStore, _selectedWordStore, dialougeService, options, dictionaryStore);
             _vectorSearchStore.WordsLoaded += OnWordsLoaded;
         }
 
