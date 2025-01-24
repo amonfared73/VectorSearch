@@ -22,8 +22,6 @@ namespace VectorSearch.WPF
     public partial class App : Application
     {
         private readonly IServiceProvider _serviceProvider;
-
-        //public VectorSearchOptions Options { get; set; }
         public App()
         {
             IServiceCollection services = new ServiceCollection();
@@ -48,8 +46,6 @@ namespace VectorSearch.WPF
                 DataContext = s.GetRequiredService<MainViewModel>()
             });
 
-
-            //LoadConfigurations();
 
             services.AddDbContextFactory<VectorSearchDbContext>(options =>
             {
@@ -76,13 +72,6 @@ namespace VectorSearch.WPF
             mainWindow.Show();
             base.OnStartup(e);
         }
-
-        //private void LoadConfigurations()
-        //{
-        //    var configFilePath = "./../../../appsettings.json";
-        //    var json = File.ReadAllText(configFilePath);
-        //    Options = JsonSerializer.Deserialize<VectorSearchOptions>(json);
-        //}
 
         private INavigationService CreateHomeNavigationService(IServiceProvider serviceProvider)
         {
