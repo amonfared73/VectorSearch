@@ -1,18 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.IO;
-using System.Text.Json;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using VectorSearch.ApplicationService.Commands;
+using VectorSearch.Domain.Configurations;
 using VectorSearch.EF.Commands;
 using VectorSearch.EF.Contexts;
 using VectorSearch.EF.Tools;
-using VectorSearch.Domain.Configurations;
+using VectorSearch.WPF.Services;
 using VectorSearch.WPF.Stores;
 using VectorSearch.WPF.ViewModels;
-using VectorSearch.WPF.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace VectorSearch.WPF
 {
@@ -50,7 +47,7 @@ namespace VectorSearch.WPF
             services.AddDbContextFactory<VectorSearchDbContext>(options =>
             {
                 options.UseSqlServer(vectorSearchOptions.ConnectionString);
-            });
+            }, ServiceLifetime.Scoped);
 
             services.AddSingleton<IMathService, MathService>();
             services.AddScoped<IDbSetService, DbSetService>();

@@ -2,15 +2,16 @@
 
 namespace VectorSearch.EF.Contexts
 {
-    public class VectorSearchDbContextFactory
+    public class VectorSearchDbContextFactory : IDbContextFactory<VectorSearchDbContext>
     {
-        private readonly DbContextOptions _options;
+        private readonly DbContextOptions<VectorSearchDbContext> _options;
 
-        public VectorSearchDbContextFactory(DbContextOptions options)
+        public VectorSearchDbContextFactory(DbContextOptions<VectorSearchDbContext> options)
         {
             _options = options;
         }
 
-        public VectorSearchDbContext Create() => new VectorSearchDbContext(_options);
+        public VectorSearchDbContext CreateDbContext() => new VectorSearchDbContext(_options);
+
     }
 }

@@ -19,8 +19,8 @@ namespace VectorSearch.EF.Commands
         private readonly IDbSetService _dbSetService;
         private readonly VectorSearchOptions _options;
         private readonly IExpressionService _expressionService;
-        private readonly VectorSearchDbContextFactory _contextFactory;
-        public WordService(VectorSearchDbContextFactory contextFactory, IMathService mathService, IExpressionService expressionService, IDbSetService dbSetService, VectorSearchOptions options) : base(contextFactory)
+        private readonly IDbContextFactory<VectorSearchDbContext> _contextFactory;
+        public WordService(IDbContextFactory<VectorSearchDbContext> contextFactory, IMathService mathService, IExpressionService expressionService, IDbSetService dbSetService, VectorSearchOptions options) : base(contextFactory)
         {
             _options = options;
             _mathService = mathService;
@@ -31,7 +31,7 @@ namespace VectorSearch.EF.Commands
 
         public async Task<PagedResult<WordDto>> GetAllAsync(SearchOptions searchOptions)
         {
-            using (var context = _contextFactory.Create())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 IQueryable<IWord> queryable = _dbSetService.GetProperDbSet(searchOptions, context);
 
@@ -76,7 +76,7 @@ namespace VectorSearch.EF.Commands
                 };
             }
 
-            using (var context = _contextFactory.Create())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 IQueryable<IWord> queryable = _dbSetService.GetProperDbSet(searchOptions, context);
 
@@ -154,7 +154,7 @@ namespace VectorSearch.EF.Commands
             if (string.IsNullOrEmpty(request.SecondWord))
                 throw new WordsNotAssignedException("Second word is not assigned");
 
-            using (var context = _contextFactory.Create())
+            using (var context = _contextFactory.CreateDbContext())
             {
                 var firstSearchedWord =
                     await context
