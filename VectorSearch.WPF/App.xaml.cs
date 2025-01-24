@@ -28,7 +28,7 @@ namespace VectorSearch.WPF
         {
             IServiceCollection services = new ServiceCollection();
 
-            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory).AddJsonFile("./../../../appsettings.json", optional: false, reloadOnChange: true).Build();
+            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory).AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).Build();
             var vectorSearchOptions = new VectorSearchOptions();
             configuration.GetSection("VectorSearchOptions").Bind(vectorSearchOptions);
             services.AddSingleton(vectorSearchOptions);
