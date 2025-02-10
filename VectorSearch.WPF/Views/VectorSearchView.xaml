@@ -54,7 +54,7 @@
             </TextBox>
 
             <ComboBox Width="200" Grid.Row="0" Grid.Column="1"  Margin="5"
-                  ItemsSource="{Binding Source={tools:EnumBindingSource {x:Type enums:GloveType}}}" IsEnabled="{Binding IsGloveTypeEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding Source={tools:EnumBindingSource {x:Type enums:ResourceType}}}" IsEnabled="{Binding IsGloveTypeEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding GloveType, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center">
             </ComboBox>
 

@@ -12,17 +12,20 @@ namespace VectorSearch.EF.Tools
             IQueryable<IWord> queryable;
             switch (searchOptions.GloveType)
             {
-                case GloveType.glove_6B_50d:
+                case ResourceType.glove_6B_50d:
                     queryable = context.Glove50Ds;
                     break;
-                case GloveType.glove_6B_100d:
+                case ResourceType.glove_6B_100d:
                     queryable = context.Glove100Ds;
                     break;
-                case GloveType.glove_6B_200d:
+                case ResourceType.glove_6B_200d:
                     queryable = context.Glove200Ds;
                     break;
-                case GloveType.glove_6B_300d:
+                case ResourceType.glove_6B_300d:
                     queryable = context.Glove300Ds;
+                    break;
+                case ResourceType.FastText_fa:
+                    queryable = context.FastTextFas;
                     break;
                 default:
                     throw new ArgumentException("GloveType not assigned");
