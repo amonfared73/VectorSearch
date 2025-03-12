@@ -24,6 +24,9 @@ namespace VectorSearch.EF.Tools
                 case GloveType.glove_6B_300d:
                     queryable = context.Glove300Ds;
                     break;
+                case GloveType.WikipediaFarsi:
+                    queryable = context.WikipediaFarsis;
+                    break;
                 default:
                     throw new ArgumentException("GloveType not assigned");
             }
