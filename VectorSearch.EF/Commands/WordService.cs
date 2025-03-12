@@ -158,7 +158,7 @@ namespace VectorSearch.EF.Commands
             {
                 var firstSearchedWord =
                     await context
-                    .Glove50Ds
+                    .WikipediaFarsis
                     .Where(w => w.Text == request.FirstWord)
                     .Select(w => new WordDto() { Text = w.Text, Vector = w.Vector })
                     .FirstOrDefaultAsync();
@@ -168,7 +168,7 @@ namespace VectorSearch.EF.Commands
 
                 var secondSearchedWord =
                     await context
-                    .Glove50Ds
+                    .WikipediaFarsis
                     .Where(w => w.Text == request.SecondWord)
                     .Select(w => new WordDto() { Text = w.Text, Vector = w.Vector })
                     .FirstOrDefaultAsync();
@@ -179,7 +179,7 @@ namespace VectorSearch.EF.Commands
                 var thirdSearchedWord = WordDto.Empty;
 
                 if(!string.IsNullOrEmpty(request.ThirdWord))
-                    thirdSearchedWord = await context.Glove50Ds.Where(w => w.Text == request.ThirdWord).Select(w => new WordDto() { Text = w.Text, Vector = w.Vector }).FirstOrDefaultAsync();
+                    thirdSearchedWord = await context.WikipediaFarsis.Where(w => w.Text == request.ThirdWord).Select(w => new WordDto() { Text = w.Text, Vector = w.Vector }).FirstOrDefaultAsync();
 
 
                 if (!string.IsNullOrEmpty(request.ThirdWord) && string.IsNullOrEmpty(thirdSearchedWord?.Text))
@@ -205,7 +205,7 @@ namespace VectorSearch.EF.Commands
                     request.ThirdWord ?? string.Empty,
                 };
 
-                var words = await context.Glove50Ds
+                var words = await context.WikipediaFarsis
                     .AsNoTracking()
                     .Where(w => !string.IsNullOrEmpty(w.Vector) && !excludedWords.Contains(w.Text))
                     .Select(w => new { w.Id, w.Text, w.Vector })
