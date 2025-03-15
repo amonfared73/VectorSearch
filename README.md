@@ -96,12 +96,6 @@ Contributions are welcome! Feel free to fork the repository and submit pull requ
 
 ---
 
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
----
-
 ## Contact
 
 For questions or feedback, feel free to reach out via the repository: [GitHub - VectorSearch](https://github.com/amonfared73/VectorSearch).
