@@ -20,5 +20,6 @@ namespace VectorSearch.EF.Contexts
         public DbSet<Glove200D> Glove200Ds { get; set; }
         public DbSet<Glove300D> Glove300Ds { get; set; }
         public DbSet<WikipediaFarsi> WikipediaFarsis { get; set; }
+        public DbSet<DigikalaGood> DigikalaGoods { get; set; }
     }
 }

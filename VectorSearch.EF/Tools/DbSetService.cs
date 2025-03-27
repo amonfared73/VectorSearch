@@ -27,6 +27,9 @@ namespace VectorSearch.EF.Tools
                 case GloveType.WikipediaFarsi:
                     queryable = context.WikipediaFarsis;
                     break;
+                case GloveType.digikala_goods:
+                    queryable = context.DigikalaGoods;
+                    break;
                 default:
                     throw new ArgumentException("GloveType not assigned");
             }
