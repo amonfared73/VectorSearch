@@ -1,0 +1,2 @@
+﻿Required python packages:
+pip install fastapi pydantic uvicorn sentence-transformers scikit-learn numpy
