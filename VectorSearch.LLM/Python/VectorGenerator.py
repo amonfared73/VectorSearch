@@ -4,7 +4,6 @@ from sentence_transformers import SentenceTransformer
 
 app = FastAPI()
 
-# Load SentenceTransformer
 model = SentenceTransformer('heydariAI/persian-embeddings')
 
 class QueryModel(BaseModel):
