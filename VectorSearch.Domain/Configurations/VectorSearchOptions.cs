@@ -6,5 +6,6 @@
         public string SimilarityThreshold { get; set; }
         public string TakeNearesWords { get; set; }
         public string DictioanryUri { get; set; }
+        public string SemanticSearchUri { get; set; }
     }
 }

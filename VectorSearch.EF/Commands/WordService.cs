@@ -10,6 +10,7 @@ using VectorSearch.Domain.Models;
 using VectorSearch.Domain.ViewModels;
 using VectorSearch.EF.Contexts;
 using VectorSearch.EF.Tools;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace VectorSearch.EF.Commands
 {
@@ -178,7 +179,7 @@ namespace VectorSearch.EF.Commands
 
                 var thirdSearchedWord = WordDto.Empty;
 
-                if(!string.IsNullOrEmpty(request.ThirdWord))
+                if (!string.IsNullOrEmpty(request.ThirdWord))
                     thirdSearchedWord = await context.Glove50Ds.Where(w => w.Text == request.ThirdWord).Select(w => new WordDto() { Text = w.Text, Vector = w.Vector }).FirstOrDefaultAsync();
 
 
@@ -258,6 +259,94 @@ namespace VectorSearch.EF.Commands
                 .ToList();
 
             return (phonetic, simplifiedResult);
+        }
+
+        public async Task<PagedResult<WordDto>> ComplexSemanticSearch(SearchOptions searchOptions)
+        {
+            var vector = await _options.SemanticSearchUri
+                .WithHeader("Content-Type", "application/json")
+                .PostJsonAsync(new { query = searchOptions.Text })
+                .ReceiveJson<VectorResponseViewModel>();
+
+            if (string.IsNullOrEmpty(searchOptions.Text))
+            {
+                return new PagedResult<WordDto>
+                {
+                    Data = new List<WordDto>(),
+                    CurrentPage = searchOptions.PageNumber,
+                    TotalPages = 0,
+                    TotalRecords = 0
+                };
+            }
+
+            using (var context = _contextFactory.CreateDbContext())
+            {
+                IQueryable<IWord> queryable = _dbSetService.GetProperDbSet(searchOptions, context);
+
+                //var searchWord = await queryable
+                //    .Where(w => w.Text == searchOptions.Text)
+                //    .Select(w => new { w.Text, w.Vector })
+                //    .FirstOrDefaultAsync();
+
+                if (searchOptions.Text == null || vector == null)
+                {
+                    return new PagedResult<WordDto>
+                    {
+                        Data = new List<WordDto>(),
+                        CurrentPage = searchOptions.PageNumber,
+                        TotalPages = 0,
+                        TotalRecords = 0
+                    };
+                }
+
+                //var targetVector = _mathService.ParseVector(searchWord.Vector);
+
+                var words = await queryable
+                    .AsNoTracking()
+                    .Where(w => !string.IsNullOrEmpty(w.Vector))
+                    .Select(w => new { w.Id, w.Text, w.Vector })
+                    .ToListAsync();
+
+
+                var similarWords = new ConcurrentBag<WordDto>();
+                Parallel.ForEach(words, word =>
+                {
+                    var wordVector = _mathService.ParseVector(word.Vector);
+                    var similarity = _mathService.ComputeCosineSimilarity(vector.ToArray(), wordVector);
+
+                    if (similarity > Convert.ToDouble(_options.SimilarityThreshold))
+                    {
+                        similarWords.Add(new WordDto
+                        {
+                            Id = word.Id,
+                            Text = word.Text,
+                            Vector = word.Vector,
+                            Similarity = similarity
+                        });
+                    }
+
+                });
+
+
+                var orderedWords = similarWords.OrderByDescending(word => word.Similarity).ToList();
+
+                var totalRecords = orderedWords.Count();
+
+                var pagedData = orderedWords
+                    .Skip((searchOptions.PageNumber - 1) * searchOptions.PageSize)
+                    .Take(searchOptions.PageSize)
+                    .ToList();
+
+                var totalPages = (int)Math.Ceiling((double)totalRecords / searchOptions.PageSize);
+
+                return new PagedResult<WordDto>
+                {
+                    Data = pagedData,
+                    CurrentPage = searchOptions.PageNumber,
+                    TotalPages = totalPages,
+                    TotalRecords = totalRecords
+                };
+            }
         }
     }
 }
