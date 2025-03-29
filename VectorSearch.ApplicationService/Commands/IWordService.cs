@@ -8,6 +8,7 @@ namespace VectorSearch.ApplicationService.Commands
     {
         Task<PagedResult<WordDto>> GetAllAsync(SearchOptions searchOptions);
         Task<PagedResult<WordDto>> GetAllSimilarWordsEF(SearchOptions searchOptions);
+        Task<PagedResult<WordDto>> ComplexSemanticSearch(SearchOptions searchOptions);
         Task<List<WordDto>> CompareWords(CompareWordsRequestViewModel request);
         Task<(string, List<SimplifiedDictionaryResultItem>)> GetWordMeaningFromDictionary(string word);
     }

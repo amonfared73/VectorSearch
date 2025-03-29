@@ -1,6 +1,7 @@
 ﻿using VectorSearch.ApplicationService.Commands;
 using VectorSearch.Domain.DTOs;
 using VectorSearch.Domain.ViewModels;
+using VectorSearch.Domain.Enums;
 
 namespace VectorSearch.WPF.Stores
 {
@@ -19,7 +20,8 @@ namespace VectorSearch.WPF.Stores
 
         public async Task Load(SearchOptions options)
         {
-            Func<SearchOptions, Task<PagedResult<WordDto>>> searchMethod = options.IsVectorSearchEnabled ? _wordService.GetAllSimilarWordsEF : _wordService.GetAllAsync;
+            Func<SearchOptions, Task<PagedResult<WordDto>>> searchMethod = 
+                options.IsVectorSearchEnabled ? (options.GloveType == GloveType.digikala_goods ? _wordService.ComplexSemanticSearch : _wordService.GetAllSimilarWordsEF) : _wordService.GetAllAsync;
             PagedResult<WordDto> pagedWords = await searchMethod(options);
             _pagedWords.Data.Clear();
             _pagedWords.Data.AddRange(pagedWords.Data);
