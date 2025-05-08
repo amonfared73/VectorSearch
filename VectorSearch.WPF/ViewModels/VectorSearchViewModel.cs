@@ -17,7 +17,7 @@ namespace VectorSearch.WPF.ViewModels
         private int? _totalRecords;
         private string _searchText;
         private string _errorMessage;
-        private GloveType _gloveType;
+        private SourceType _gloveType;
         private string? _paginationInfo;
         private bool _isVectorSearchEnabled;
         private readonly VectorSearchStore _vectorSearchStore;
@@ -39,7 +39,7 @@ namespace VectorSearch.WPF.ViewModels
             }
         }
 
-        public GloveType GloveType
+        public SourceType GloveType
         {
             get { return _gloveType; }
             set { if (_gloveType != value) { _gloveType = value; OnPropertyChanged(nameof(GloveType)); } }
@@ -103,7 +103,7 @@ namespace VectorSearch.WPF.ViewModels
             _vectorSearchStore = vectorSearchStore;
             _selectedWordStore = selectedWordStore;
             CurrentPage = 1;
-            GloveType = GloveType.glove_6B_50d;
+            GloveType = SourceType.glove_6B_50d;
             Words = new ObservableCollection<WordDto>();
             SearchCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.CurrentPage);
             PreviousPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.PreviousPage);
