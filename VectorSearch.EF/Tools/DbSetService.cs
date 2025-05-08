@@ -10,28 +10,34 @@ namespace VectorSearch.EF.Tools
         public IQueryable<IWord> GetProperDbSet(SearchOptions searchOptions, VectorSearchDbContext context)
         {
             IQueryable<IWord> queryable;
-            switch (searchOptions.GloveType)
+            switch (searchOptions.SourceType)
             {
-                case GloveType.glove_6B_50d:
+                case SourceType.glove_6B_50d:
                     queryable = context.Glove50Ds;
                     break;
-                case GloveType.glove_6B_100d:
+                case SourceType.glove_6B_100d:
                     queryable = context.Glove100Ds;
                     break;
-                case GloveType.glove_6B_200d:
+                case SourceType.glove_6B_200d:
                     queryable = context.Glove200Ds;
                     break;
-                case GloveType.glove_6B_300d:
+                case SourceType.glove_6B_300d:
                     queryable = context.Glove300Ds;
                     break;
-                case GloveType.WikipediaFarsi:
+                case SourceType.WikipediaFarsi:
                     queryable = context.WikipediaFarsis;
                     break;
-                case GloveType.digikala_goods:
+                case SourceType.digikala_goods:
                     queryable = context.DigikalaGoods;
                     break;
+                case SourceType.faranShimi:
+                    queryable = context.FaranShimiGoods;
+                    break;
+                case SourceType.padidehShimiGharb:
+                    queryable = context.padideShimiGharbGoods;
+                    break;
                 default:
-                    throw new ArgumentException("GloveType not assigned");
+                    throw new ArgumentException("SourceType not assigned");
             }
 
             return queryable;

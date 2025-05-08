@@ -8,6 +8,6 @@ namespace VectorSearch.Domain.DTOs
         public bool IsVectorSearchEnabled { get; set; } = false;
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 15;
-        public GloveType GloveType { get; set; } = GloveType.glove_6B_50d;
+        public SourceType SourceType { get; set; } = SourceType.glove_6B_50d;
     }
 }

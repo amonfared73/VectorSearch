@@ -20,8 +20,34 @@ namespace VectorSearch.WPF.Stores
 
         public async Task Load(SearchOptions options)
         {
-            Func<SearchOptions, Task<PagedResult<WordDto>>> searchMethod = 
-                options.IsVectorSearchEnabled ? (options.GloveType == GloveType.digikala_goods ? _wordService.ComplexSemanticSearch : _wordService.GetAllSimilarWordsEF) : _wordService.GetAllAsync;
+            Func<SearchOptions, Task<PagedResult<WordDto>>> searchMethod;
+
+            if (options.IsVectorSearchEnabled)
+            {
+                switch (options.SourceType)
+                {
+                    case SourceType.digikala_goods:
+                    case SourceType.faranShimi:
+                    case SourceType.padidehShimiGharb:
+                        searchMethod = _wordService.ComplexSemanticSearch;
+                        break;
+                    case SourceType.WikipediaFarsi:
+                    case SourceType.glove_6B_50d:
+                    case SourceType.glove_6B_100d:
+                    case SourceType.glove_6B_200d:
+                    case SourceType.glove_6B_300d:
+                        searchMethod = _wordService.GetAllSimilarWordsEF;
+                        break;
+                    default:
+                        throw new NotSupportedException($"Vector search is not supported for SourceType: {options.SourceType}");
+                }
+            }
+            else
+            {
+                searchMethod = _wordService.GetAllAsync;
+            }
+
+
             PagedResult<WordDto> pagedWords = await searchMethod(options);
             _pagedWords.Data.Clear();
             _pagedWords.Data.AddRange(pagedWords.Data);
