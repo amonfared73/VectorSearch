@@ -17,7 +17,7 @@ namespace VectorSearch.WPF.ViewModels
         private int? _totalRecords;
         private string _searchText;
         private string _errorMessage;
-        private SourceType _gloveType;
+        private SourceType _sourceType;
         private string? _paginationInfo;
         private bool _isVectorSearchEnabled;
         private readonly VectorSearchStore _vectorSearchStore;
@@ -39,10 +39,10 @@ namespace VectorSearch.WPF.ViewModels
             }
         }
 
-        public SourceType GloveType
+        public SourceType SourceType
         {
-            get { return _gloveType; }
-            set { if (_gloveType != value) { _gloveType = value; OnPropertyChanged(nameof(GloveType)); } }
+            get { return _sourceType; }
+            set { if (_sourceType != value) { _sourceType = value; OnPropertyChanged(nameof(SourceType)); } }
         }
         public int CurrentPage
         {
@@ -83,7 +83,7 @@ namespace VectorSearch.WPF.ViewModels
         public bool IsVectorSearchEnabled
         {
             get { return _isVectorSearchEnabled; }
-            set { _isVectorSearchEnabled = value; OnPropertyChanged(nameof(IsVectorSearchEnabled)); OnPropertyChanged(nameof(IsGloveTypeEnabled)); }
+            set { _isVectorSearchEnabled = value; OnPropertyChanged(nameof(IsVectorSearchEnabled)); OnPropertyChanged(nameof(IsSourceTypeEnabled)); }
         }
         public ObservableCollection<WordDto> Words
         {
@@ -96,14 +96,14 @@ namespace VectorSearch.WPF.ViewModels
         public ICommand NextPageCommand { get; set; }
         public ICommand WordDetailCommand { get; set; }
         public string? PaginationInfo => $"PageNumber: {CurrentPage}, TotalPages: {TotalPages}, TotalRecords: {TotalRecords}";
-        public bool IsGloveTypeEnabled => IsVectorSearchEnabled;
+        public bool IsSourceTypeEnabled => IsVectorSearchEnabled;
 
         public VectorSearchViewModel(VectorSearchStore vectorSearchStore, ModalNavigationStore modalNavigationStore, SelectedWordStore selectedWordStore, DictionaryStore dictionaryStore, IDialougeService dialougeService, VectorSearchOptions options)
         {
             _vectorSearchStore = vectorSearchStore;
             _selectedWordStore = selectedWordStore;
             CurrentPage = 1;
-            GloveType = SourceType.glove_6B_50d;
+            SourceType = SourceType.glove_6B_50d;
             Words = new ObservableCollection<WordDto>();
             SearchCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.CurrentPage);
             PreviousPageCommand = new LoadCommand(this, _vectorSearchStore, dialougeService, PaginationType.PreviousPage);

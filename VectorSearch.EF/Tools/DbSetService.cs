@@ -31,7 +31,7 @@ namespace VectorSearch.EF.Tools
                     queryable = context.DigikalaGoods;
                     break;
                 default:
-                    throw new ArgumentException("GloveType not assigned");
+                    throw new ArgumentException("SourceType not assigned");
             }
 
             return queryable;

@@ -37,7 +37,7 @@ namespace VectorSearch.WPF.Commands
                     Text = _vectorSearchViewModel.SearchText,
                     IsVectorSearchEnabled = _vectorSearchViewModel.IsVectorSearchEnabled,
                     PageNumber = _vectorSearchViewModel.GetPageNumber(_paginationType),
-                    SourceType = _vectorSearchViewModel.GloveType
+                    SourceType = _vectorSearchViewModel.SourceType
                 });
             }
             catch (Exception ex)
