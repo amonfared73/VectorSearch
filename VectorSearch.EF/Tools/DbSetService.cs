@@ -30,6 +30,12 @@ namespace VectorSearch.EF.Tools
                 case SourceType.digikala_goods:
                     queryable = context.DigikalaGoods;
                     break;
+                case SourceType.faranShimi:
+                    queryable = context.FaranShimiGoods;
+                    break;
+                case SourceType.padidehShimiGharb:
+                    queryable = context.padideShimiGharbGoods;
+                    break;
                 default:
                     throw new ArgumentException("SourceType not assigned");
             }
