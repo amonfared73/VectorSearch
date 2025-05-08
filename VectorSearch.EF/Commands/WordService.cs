@@ -264,6 +264,7 @@ namespace VectorSearch.EF.Commands
         public async Task<PagedResult<WordDto>> ComplexSemanticSearch(SearchOptions searchOptions)
         {
             var vector = await _options.SemanticSearchUri
+                .SetQueryParam("company", searchOptions.SourceType.GetPklFileName())
                 .WithHeader("Content-Type", "application/json")
                 .PostJsonAsync(new { query = searchOptions.Text })
                 .ReceiveJson<VectorResponseViewModel>();
@@ -282,11 +283,6 @@ namespace VectorSearch.EF.Commands
             using (var context = _contextFactory.CreateDbContext())
             {
                 IQueryable<IWord> queryable = _dbSetService.GetProperDbSet(searchOptions, context);
-
-                //var searchWord = await queryable
-                //    .Where(w => w.Text == searchOptions.Text)
-                //    .Select(w => new { w.Text, w.Vector })
-                //    .FirstOrDefaultAsync();
 
                 if (searchOptions.Text == null || vector == null)
                 {
